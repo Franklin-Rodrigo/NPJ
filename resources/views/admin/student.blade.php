@@ -77,11 +77,11 @@
                           <tr class="object align-middle" name="{{$student->name}}">
                             <td class="text-center align-middle">
                                 @if ($student->status == 'active')
-                                <button type="button" class="btn btn-success" role="button" data-toggle="modal" data-target="#desactivateModalStudent" onclick="desactivateStudent('{{$student->id}}','{{$student->name}}')" title="Desativar aluno">
+                                <button type="button" class="btn btn-success" role="button" data-toggle="modal" data-target="#desactivateModalStudent" onclick="studentStatus('{{$student->id}}','{{$student->name}}')" title="Desativar aluno">
                                   <i class="fas fa-toggle-on"></i>
                                 </button>
                               @else
-                                <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#activateModalStudent" onclick="activateStudent('{{$student->id}}','{{$student->name}}')" title="Ativar aluno">
+                                <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#activateModalStudent" onclick="studentStatus('{{$student->id}}','{{$student->name}}')" title="Ativar aluno">
                                   <i class="fas fa-toggle-off"></i>
                                 </button> 
                               @endif
@@ -241,13 +241,12 @@
         <div class="modal-body">
           <form action="{{route('aluno.desactivate')}}" method="post">
             {{ csrf_field() }}
-            <input type="hidden" name="id" id="desactivateIdStudent" value="">
+            <input type="hidden" name="id" class="statusIdStudent" value="">
             <div class="text-center">
               <i class="fa fa-exclamation-circle fa-x6" aria-hidden="true"></i>
             </div>
-            <h3 class="text-center"><strong style="color:red;">Atenção!</strong></h3>
-            <p class="text-center">Se você realmente deseja desativar o aluno? Ele será removido de sua dupla!</p>
-            <h4 class="text-center"><strong id="desactivateNameStudent"></strong></h4>
+            <h4 class="text-center text-danger"><strong>Atenção!</strong></h4>
+            <p class="text-center">Se você realmente deseja desativar o aluno <strong class="statusNameStudent"></strong>? Ele será removido de sua dupla!</p>
             <br>
             <div class="text-center">
               <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
@@ -266,17 +265,16 @@
         <div class="modal-body">
           <form action="{{route('aluno.activate')}}" method="post">
             {{ csrf_field() }}
-            <input type="hidden" name="id" id="activateIdStudent" value="">
+            <input type="hidden" name="id" class="statusIdStudent" value="">
             <div class="text-center">
               <i class="fa fa-exclamation-circle fa-x6" aria-hidden="true"></i>
             </div>
-            <h3 class="text-center"><strong style="color:red;">Atenção!</strong></h3>
-            <p class="text-center">Se você realmente deseja desativar o aluno? Ele será removido de sua dupla!</p>
-            <h4 class="text-center"><strong id="activateNameStudent"></strong></h4>
+            <h4 class="text-center text-success"><strong>Atenção!</strong></h4>
+            <p class="text-center">Se você realmente ativar o aluno <strong class="statusNameStudent"></strong>?</p>
             <br>
             <div class="text-center">
               <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+              <button type="submit" class="btn btn-success btn-lg">Sim</button>
             </div>
           </form>
         </div>

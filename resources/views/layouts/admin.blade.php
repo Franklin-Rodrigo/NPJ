@@ -110,14 +110,10 @@
     document.getElementById('deleteNomeStudent').innerHTML = nome;
   }
 
-  function desactivateStudent(id,nome) {
-    document.getElementById('desactivateIdStudent').value = id;
-    document.getElementById('desactivateNomeStudent').innerHTML = nome;
-  }
-
-  function activateStudent(id,nome) {
-    document.getElementById('activateIdStudent').value = id;
-    document.getElementById('activateNomeStudent').innerHTML = nome;
+  function studentStatus(id,nome) {
+    console.log(id, nome)
+    $('.statusIdStudent').val(id);
+    $('.statusNameStudent').text(nome);
   }
 
   function editStudent(id,name,email,gender,phone,password){
