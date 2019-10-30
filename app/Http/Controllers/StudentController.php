@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entities\Human;
-use App\Entities\DoubleStudent;
-use App\Entities\Petition;
-use App\Entities\Group;
+// use App\Entities\DoubleStudent;
+// use App\Entities\Petition;
+// use App\Entities\Group;
 use App\User;
 use Auth;
-use Validator;
+// use Validator;
 
-use Iluminate\Http\Response;
+// use Iluminate\Http\Response;
 
 use App\Services\StudentService;
 
@@ -24,12 +24,12 @@ class StudentController extends Controller
   public function index()
   {
     if(Auth::user()->type == 'admin') {
-      $students = Human::all()->where('status','active');
+      $students = Human::all();
       return view('admin.student')->with(['students'=>$students]);
 
     } else if(Auth::user()->type == 'student') {
       $dados = $this->service->index();
-      if (!$dados['error']){
+      if (!isset($dados['error'])){
         return view('student.home')->with($dados);
       } else {//se o aluno nao tiver dupla
         return redirect('Sair')->with('erro', $dados['error']);
@@ -39,6 +39,12 @@ class StudentController extends Controller
 
   public function store(Request $request)
   {
+    $this->validate($request, [
+      'name' => 'required|string|min:3',
+      'email' => 'required|string|email|max:255|unique:users',
+      'password' => 'required|string|min:4',
+    ]);
+
     if(Auth::user()->type != 'admin'){
       return redirect()->back();
     }
@@ -48,6 +54,12 @@ class StudentController extends Controller
 
   public function update(Request $request)
   {
+    $this->validate($request, [
+      'name' => 'required|string|min:3',
+      'email' => 'required|string|email|max:255|unique:users,email,'.$request['id'],
+      'password' => 'required|string|min:4',
+    ]);
+
     if(Auth::user()->type != 'admin'){
       return redirect()->back();
     }
@@ -66,6 +78,26 @@ class StudentController extends Controller
     $student = Human::find($request['id']);
        
     return $this->service->destroy($request, $student);
+  }
+
+  public function desactivate(Request $request)
+  {  
+    if(Auth::user()->type != 'admin'){
+      return redirect()->back();
+    }
+    $student = Human::find($request['id']);
+       
+    return $this->service->desactivate($request, $student);
+  }
+
+  public function activate(Request $request)
+  {  
+    if(Auth::user()->type != 'admin'){
+      return redirect()->back();
+    }
+    $student = Human::find($request['id']);
+       
+    return $this->service->activate($request, $student);
   }
 
   public function preferences()

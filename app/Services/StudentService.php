@@ -51,7 +51,6 @@ class StudentService
                 'status' => 'active',
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'age' => $request->age,
                 'gender' => $request->gender,
                 'doubleS' => 'NAO',
                 'user_id' => $user->id, //id do human Student
@@ -60,6 +59,7 @@ class StudentService
             $request->session()->flash('status', 'Aluno cadastrado com sucesso!');
             return redirect()->back();
         }
+        
 
         $request->session()->flash('erro', 'Email já cadastrado!');
         return redirect()->back()->withInput($request->except(['password', 'password_confirmation']));
@@ -116,7 +116,58 @@ class StudentService
                 return redirect()->back();
             }
         } else {
-            $request->session()->flash('status', 'Erro, Aluno não existe!');
+            $request->session()->flash('status', 'Erro, aluno não encontrado!');
+            return redirect()->back();
+        }
+    }
+
+    public function desactivate(Request $request, Human $student)
+    {
+        if ($student != null) { //se estudante existir
+            if ($student->status == "active" && $student->user->type == "student") { //se estudante for active e for do type student
+                $doubleStudents = DoubleStudent::all()->where('status', 'active');
+                if ($doubleStudents != null) { //se houver duplas
+                    foreach ($doubleStudents as $doubleStudent) {
+                        if ($doubleStudent->student_id == $student->id) { //se o primeiro aluno da dupla for o aluno da requisicao
+                            $doubleStudent->status = 'inactive'; //dupla torna-se inativa
+                            $student2 = Human::find($doubleStudent->student2_id); //pegar estudante2
+                            $student2->doubleS = 'NAO'; //O estudante2 nao esta mais em nenhuma dupla
+                            $student2->save();
+                            $doubleStudent->save();
+                        }
+                        if ($doubleStudent->student2_id == $student->id) { //se o segundo aluno da dupla for o aluno da requisicao
+                            $doubleStudent->status = "inactive"; //dupla torna-se inativa
+                            $student1 = Human::find($doubleStudent->student_id); //pegar estudante1
+                            $student1->doubleS = 'NAO'; //O estudante1 nao esta mais em nenhuma dupla
+                            $student1->save();
+                            $doubleStudent->save();
+                        }
+                    } //fim foreach
+                }
+
+                $student->status = "inactive";
+                $student->save();
+                $request->session()->flash('status', 'Aluno desativado com sucesso!');
+                return redirect()->back();
+            }
+        } else {
+            $request->session()->flash('status', 'Erro, aluno não encontrado!');
+            return redirect()->back();
+        }
+    }
+
+    public function activate(Request $request, Human $student)
+    {
+        if ($student != null) { //se estudante existir
+            if ($student->status == "inactive" && $student->user->type == "student") { //se estudante for active e for do type student
+
+                $student->status = "active";
+                $student->save();
+                $request->session()->flash('status', 'Aluno ativado com sucesso!');
+                return redirect()->back();
+            }
+        } else {
+            $request->session()->flash('status', 'Erro, aluno não encontrado!');
             return redirect()->back();
         }
     }
@@ -134,7 +185,7 @@ class StudentService
         }
         $human->save();
         $user->save();
-        $request->session()->flash('status', 'Dados salvos com sucesso!!');
+        $request->session()->flash('status', 'Dados salvos com sucesso!');
 
         return redirect()->back();
 
