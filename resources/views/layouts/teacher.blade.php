@@ -7,29 +7,20 @@
 @sidebar([
     'url' => "Professor",
     'items' => [
-        
-        [
-            'item' => 'Duplas', 'itemUrl' => '/Professor/Duplas', 'icon' => 'user-friends'
-        ],
-        [
-            'item' => 'Petições', 'itemUrl' => '/Professor/Peticoes', 'icon' => 'file-alt'
-        ],
-        [
-            'item' => 'Templates', 'itemUrl' => '/Professor/Templates', 'icon' => 'file'
-        ],
-      
+        ['item' => 'Duplas', 'itemUrl' => '/Professor/Duplas', 'icon' => 'user-friends'],
+        ['item' => 'Petições', 'itemUrl' => '/Professor/Peticoes', 'icon' => 'file-alt'],
+        ['item' => 'Templates', 'itemUrl' => '/Professor/Templates', 'icon' => 'file'],
     ]
 ])
 @endsidebar
-
 <!-- END Sidebar -->
 
 
 <div id="main">
 <!-- Topbar -->
-@component('components.topbar')  
+@topbar  
   {{Auth::user()->email}}  
-@endcomponent
+@endtopbar
 
 
 <!-- END Topbar -->
@@ -51,9 +42,9 @@
     </nav>
   </footer>
   <!-- END Footer -->
-  @component('components.bottombar')  
+  @bottombar  
     {{Auth::user()->email}}  
-  @endcomponent
+  @endbottombar
 
 <!-- END Main container -->
 </div>

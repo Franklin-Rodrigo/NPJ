@@ -4,36 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Entities\Human;
 use App\Entities\Petition;
-use App\Services\DefenderService;
+use App\Services\SupervisorService;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
-class DefenderController extends Controller
+class SupervisorController extends Controller
 {
 
-    public function __construct(DefenderService $service) {
-
+    public function __construct(SupervisorService $service) {
         $this->service = $service;
-
     }
 
     //
     public function index() {
         if (Auth::user()->type == 'admin') {
             $petitions = Petition::all()->where('visible', 'true');
-            $defenders = Human::all();
-            return view('admin.defender')->with(['defenders' => $defenders, 'petitions' => $petitions]);
-        } else if (Auth::user()->type == 'defender') {
-            $defenders = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active');
-            $defender = $defenders->first();
-            if ($defender == null) {
+            $supervisors = Human::all();
+            return view('admin.supervisor')->with(['supervisors' => $supervisors, 'petitions' => $petitions]);
+        } else if (Auth::user()->type == 'supervisor') {
+            $supervisors = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active');
+            $supervisor = $supervisors->first();
+            if ($supervisor == null) {
                 return redirect('Sair');
             }
             $petitions = Petition::all();
             $user = Auth::user();
 
-            return view('defender.home')->with(['defender' => $defender, 'petitions' => $petitions, 'user' => $user]);
+            return view('supervisor.home')->with(['supervisor' => $supervisor, 'petitions' => $petitions, 'user' => $user]);
         } else {
             return redirect()->back();
         }
@@ -71,43 +69,43 @@ class DefenderController extends Controller
         return $this->service->update($human, $user, $request);
     }
 //--------------------------------------------------------------------------------------------------
-    public function destroy(Request $request) { //
+    public function destroy(Request $request) {
         if (Auth::user()->type != 'admin') {
             return redirect()->back();
         }
 
-        $defender = Human::find($request['id']);
-        $defender_user = User::find($defender->user_id);
+        $supervisor = Human::find($request['id']);
+        $supervisor_user = User::find($supervisor->user_id);
 
-   return $this->service->destroy($request,$defender, $defender_user);
-  }
-//--------------------------------------------------------------------------------------------------
-public function desactivate(Request $request) {
-    if (Auth::user()->type != 'admin') {
-        return redirect()->back();
+        return $this->service->destroy($request, $supervisor, $supervisor_user);
     }
-
-    $defender = Human::find($request['id']);
-    $defender_user = User::find($defender->user_id);
-
-    return $this->service->desactivate($request, $defender, $defender_user);
-}
 //--------------------------------------------------------------------------------------------------
-public function activate(Request $request) {
-    if (Auth::user()->type != 'admin') {
-        return redirect()->back();
+    public function desactivate(Request $request) {
+        if (Auth::user()->type != 'admin') {
+            return redirect()->back();
+        }
+
+        $supervisor = Human::find($request['id']);
+        $supervisor_user = User::find($supervisor->user_id);
+
+        return $this->service->desactivate($request, $supervisor, $supervisor_user);
     }
-
-    $defender = Human::find($request['id']);
-    $defender_user = User::find($defender->user_id);
-
-    return $this->service->activate($request, $defender, $defender_user);
-}
 //--------------------------------------------------------------------------------------------------
-public function preferences() {
+    public function activate(Request $request) {
+        if (Auth::user()->type != 'admin') {
+            return redirect()->back();
+        }
+
+        $supervisor = Human::find($request['id']);
+        $supervisor_user = User::find($supervisor->user_id);
+
+        return $this->service->activate($request, $supervisor, $supervisor_user);
+    }
+//--------------------------------------------------------------------------------------------------
+  public function preferences() {
       $user = User::find(Auth::user()->id);
       $human = Human::where('user_id', $user->id)->first();
-      return view('defender.preferences')->with(['user' => $user, 'human' => $human]);
+      return view('supervisor.preferences')->with(['user' => $user, 'human' => $human]);
   }
 //--------------------------------------------------------------------------------------------------
   public function preferencesEditar(Request $request) {

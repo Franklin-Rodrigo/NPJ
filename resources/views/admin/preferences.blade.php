@@ -23,8 +23,8 @@
                 <div class="row">
                   <div class="col-lg-3">
                     <div class="form-group">
-                      <label for="">Sexo</label>
-                      <select class="form-control" name="gender" required>
+                      <label for="gender">Sexo</label>
+                      <select class="form-control" id="gender" name="gender" required>
                         <option value="{{$human->gender}}" selected>{{$human->gender}}</option>
                         @if($human->gender == 'Masculino')
                         <option value="Feminino">Feminino</option>
@@ -36,15 +36,15 @@
                   </div>
                   <div class="col-lg-9">
                     <div class="form-group">
-                      <label for="">Telefone</label>
-                      <input type="tel" name="phone" class="form-control input-phone" value="{{$human->phone}}">
+                      <label for="phone">Telefone</label>
+                      <input type="tel" id="phone" name="phone" class="form-control input-phone" value="{{$human->phone}}">
                     </div>
                   </div>
                   
                 </div>
                 <div class="form-group">
-                  <label for="">Senha *</label>
-                    <input type="password" name="password" class="form-control">
+                  <label for="password">Senha *</label>
+                    <input type="password" id="password" name="password" class="form-control">
                 </div>
                 <hr>
                 <div class="row justify-content-center">

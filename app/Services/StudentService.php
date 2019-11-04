@@ -10,11 +10,9 @@ use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
-class StudentService
-{
+class StudentService {
 
-    public function index()
-    {
+    public function index() {
         $student = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
 
         $doubleStudent = DoubleStudent::all()->where('student_id', '=', $student->id)->where('status', 'active')->first();
@@ -35,59 +33,63 @@ class StudentService
             return ['error' => 'Aluno não registrado em nenhuma dupla.'];
         }
     }
+    
+    public function store(Request $request) {
+        
+        $user = User::create([
+            'type' => 'student',
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
 
-    public function store(Request $request)
-    {
-        $verifica = User::all()->where('email', $request->email)->first();
+        $human = Human::create([
+            'status' => 'active',
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'doubleS' => 'NAO',
+            'user_id' => $user->id, //id do human Student
+        ]);
+            
+        $request->session()->flash('status', 'Aluno cadastrado com sucesso!');
+        return redirect()->back();
+    }
 
-        if ($verifica == null) {
-            $user = User::create([
-                'type' => 'student',
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+    public function editar(Human $human, User $user, Request $request) {
 
-            $human = Human::create([
-                'status' => 'active',
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'gender' => $request->gender,
-                'doubleS' => 'NAO',
-                'user_id' => $user->id, //id do human Student
-            ]);
+        $human->name = $request['name'];
+        $human->gender = $request['gender'];
+        $human->phone = $request['phone'];
+        $user->email = $request['email'];
 
-            $request->session()->flash('status', 'Aluno cadastrado com sucesso!');
-            return redirect()->back();
+        if ($request['password'] != null) {
+            $user->password = bcrypt($request['password']);
         }
         
+        $human->save();
+        $user->save();
+        $request->session()->flash('status', 'Dados salvos com sucesso!');
 
-        $request->session()->flash('erro', 'Email já cadastrado!');
-        return redirect()->back()->withInput($request->except(['password', 'password_confirmation']));
+        return redirect()->back();
+
+    }
+        
+    public function update(Human $human, User $user, Request $request) {
+
+        $human->name = $request['name'];
+        $human->gender = $request['gender'];
+        $human->phone = $request['phone'];
+        $user->email = $request['email'];
+
+        !empty($request['password']) ? $user->password = bcrypt($request['password']) : null;
+
+        $user->save();
+        $human->save();
+        $request->session()->flash('status', 'Aluno editado com sucesso!');
+        return redirect()->back();
     }
 
-    public function update(Human $human, User $user, Request $request)
-    {
-        $verifica = User::all()->where('status', 'active')->where('email', $request->email)->first();
-
-        if ($verifica == null || $user->email == $request->email) {
-            if ($request['password'] != null) {
-                $user->password = bcrypt($request['password']);
-            }
-            $human->name = $request['name'];
-            $human->gender = $request['gender'];
-            $human->phone = $request['phone'];
-            $user->email = $request['email'];
-            $user->save();
-            $human->save();
-            $request->session()->flash('status', 'Aluno editado com sucesso!');
-            return redirect()->back();
-        }
-        $request->session()->flash('erro', 'Email já cadastrado!');
-        return redirect()->back()->withInput($request->except(['password', 'password_confirmation']));
-    }
-
-    public function destroy(Request $request, Human $student)
-    {
+    public function destroy(Request $request, Human $student) {
         if ($student != null) { //se estudante existir
             if ($student->status == "active" && $student->user->type == "student") { //se estudante for active e for do type student
                 $doubleStudents = DoubleStudent::all()->where('status', 'active');
@@ -121,8 +123,7 @@ class StudentService
         }
     }
 
-    public function desactivate(Request $request, Human $student)
-    {
+    public function desactivate(Request $request, Human $student) {
         if ($student != null) { //se estudante existir
             if ($student->status == "active" && $student->user->type == "student") { //se estudante for active e for do type student
                 $doubleStudents = DoubleStudent::all()->where('status', 'active');
@@ -156,8 +157,7 @@ class StudentService
         }
     }
 
-    public function activate(Request $request, Human $student)
-    {
+    public function activate(Request $request, Human $student) {
         if ($student != null) { //se estudante existir
             if ($student->status == "inactive" && $student->user->type == "student") { //se estudante for active e for do type student
 
@@ -170,24 +170,5 @@ class StudentService
             $request->session()->flash('status', 'Erro, aluno não encontrado!');
             return redirect()->back();
         }
-    }
-
-    public function editar(Human $human, User $user, Request $request)
-    {
-
-        $human->name = $request['name'];
-        $human->gender = $request['gender'];
-        $human->phone = $request['phone'];
-        $user->email = $request['email'];
-
-        if ($request['password'] != null) {
-            $user->password = bcrypt($request['password']);
-        }
-        $human->save();
-        $user->save();
-        $request->session()->flash('status', 'Dados salvos com sucesso!');
-
-        return redirect()->back();
-
     }
 }

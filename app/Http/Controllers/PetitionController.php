@@ -32,6 +32,10 @@ class PetitionController extends Controller
 
             return view('teacher.petition')->with($dados);
 
+        } else if (Auth::user()->type == 'supervisor') {
+            $dados = $this->service->supervisorIndex();
+
+            return view('supervisor.petition')->with($dados);
         } else if (Auth::user()->type == 'defender') {
             $dados = $this->service->defenderIndex();
 
@@ -40,13 +44,13 @@ class PetitionController extends Controller
     }
 
     public function add()
-    { //aluno
+    {
         if (Auth::user()->type != 'student') {
             return redirect()->back();
         }
 
-        return view('student.petitionCadastrar')->with(['templates' => $templates]);
-
+        // return view('student.petitionCadastrar')->with(['templates' => $templates]);
+        return view('student.petitionCadastrar');
     }
 
     public function store(Request $request)
@@ -55,8 +59,7 @@ class PetitionController extends Controller
         if (Auth::user()->type == 'student') { // só autenticação
 
             $student = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
-            $this->service->newPetition($request, $student);
-
+            $erro = $this->service->newPetition($request, $student);
             return redirect('Aluno/Peticoes');
 
         } else { //se nao for Aluno

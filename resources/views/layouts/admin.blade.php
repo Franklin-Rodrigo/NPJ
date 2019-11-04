@@ -111,9 +111,8 @@
   }
 
   function studentStatus(id,nome) {
-    console.log(id, nome)
-    $('.statusIdStudent').val(id);
-    $('.statusNameStudent').text(nome);
+    $('.studentStatusId').val(id);
+    $('.studentStatusName').text(nome);
   }
 
   function editStudent(id,name,email,gender,phone,password){
@@ -142,19 +141,50 @@
     <!--document.getElementById('deleteNomeTeacher').innerHTML = nome;-->
   }
 
+  function teacherStatus(id,nome) {
+    $('.teacherStatusId').val(id);
+    $('.teacherStatusName').text(nome);
+  }
+
   function editTeacher(id,name,email,gender,phone,password){
     $('#teacherId').val(id);
     $('#teacherName').val(name);
     $('#teacherEmail').val(email);
-    $('#teacherGender').val(gender);
+    $('#teacherGender').val(gender).change();
     $('#teacherPhone').val(phone);
     $('#teacherPassword').val(password);
   }
 
+ /* Supervisor */
+  function deleteSupervisor(id,nome) {
+    document.getElementById('deleteIdSupervisor').value = id;
+    document.getElementById('deleteNomeSupervisor').innerHTML = nome;
+  }
+
+  function supervisorStatus(id,nome) {
+    $('.supervisorStatusId').val(id);
+    $('.supervisorStatusName').text(nome);
+  }
+
+  function editSupervisor(id,name,email,gender,phone){
+    $('#supervisorId').val(id);
+    $('#supervisorName').val(name);
+    $('#supervisorEmail').val(email);
+    $('#supervisorGender').val(gender).change();
+    $('#supervisorPhone').val(phone);
+  }
+  
+ /* Defensor */
   function deleteDefender(id,nome) {
     document.getElementById('deleteIdDefender').value = id;
     document.getElementById('deleteNomeDefender').innerHTML = nome;
   }
+
+  function defenderStatus(id,nome) {
+    $('.defenderStatusId').val(id);
+    $('.defenderStatusName').text(nome);
+  }
+
 
   function editDefender(id,name,email,gender,phone){
     $('#defenderId').val(id);
@@ -164,10 +194,14 @@
     $('#defenderPhone').val(phone);
   }
 
-
   function deleteGroup(id,nome) {
     document.getElementById('deleteIdGroup').value = id;
     document.getElementById('deleteNameGroup').innerHTML = nome;
+  }
+
+  function groupStatus(id,nome) {
+    $('.groupStatusId').val(id);
+    $('.groupStatusName').text(nome);
   }
 
   function editModalGroup(id,name,teacher_id){

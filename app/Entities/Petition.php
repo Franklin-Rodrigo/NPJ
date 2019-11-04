@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Petition extends Model
 {
   protected $fillable = [
-      'description','content', 'student_ok','teacher_ok','defender_ok', 'template_id','defender_id','doubleStudent_id','group_id','version','visible','petitionFirst',
+      'description','content','student_ok','teacher_ok','supervisor_ok','defender_ok','template_id','defender_id','supervisor_id','doubleStudent_id','group_id','version','visible','petitionFirst',
   ];
 
   public function human()

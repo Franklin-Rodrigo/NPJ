@@ -14,8 +14,7 @@ use Validator;
 class TeacherService
 {
 
-    public function index()
-    {
+    public function index() {
         $teacher = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
 
         $group = Group::all()->where('status', '=', 'active')->where('teacher_id', '=', $teacher->id)->first();
@@ -35,8 +34,7 @@ class TeacherService
         return ['teacher' => $teacher, 'group' => $group, 'doubleStudents' => $doubleStudents, 'petitions' => $petitions, 'humans' => $humans, 'user' => $user, 'count' => $count];
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $validate = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
@@ -79,8 +77,7 @@ class TeacherService
         return redirect()->back()->withErrors($validate)->withInput();
     }
 
-    public function editar(Human $human, User $user, Request $request)
-    {
+    public function editar(Human $human, User $user, Request $request) {
         if ($request['password'] != null) {
             $user->password = bcrypt($request['password']);
         }
@@ -128,7 +125,61 @@ class TeacherService
             $request->session()->flash('status', 'Professor excluído com sucesso!');
             return redirect()->back();
         } else {
-            $request->session()->flash('status', 'Erro ao tentar excluir o Professor!');
+            $request->session()->flash('status', 'Erro, professor não encontrado!');
+            return redirect()->back();
+        }
+    }
+
+    public function desactivate(Request $request, Human $teacher) {
+        if($teacher != null && $teacher->status == 'active'){
+            $groups = Group::all();
+            foreach ($groups as $group) {
+                if ($group->teacher_id == $teacher->id) {
+                    if ($group != null && $group->status == 'active') { //se o professor participar de algum grupo e se esse for active
+                        $group->status = 'inactive';
+                        $group->save();
+                        $teacher->groupT = 'NAO';
+                        $teacher->save();
+
+                        $doubleStudents = DoubleStudent::all(); //todas as duplas
+                        //dd($doubleStudents);
+                        if ($doubleStudents != null) {
+                            foreach ($doubleStudents as $doubleStudent) {
+                                if ($doubleStudent->group_id == $group->id) { //se o grupo da dupla iterada for o grupo a qual o professor pertence
+                                    $doubleStudent->status = 'inactive';
+                                    $student1 = Human::find($doubleStudent->student_id);
+                                    $student1->doubleS = 'NAO';
+                                    $student1->save();
+                                    $student2 = Human::find($doubleStudent->student2_id);
+                                    $student2->doubleS = 'NAO';
+                                    $student2->save();
+                                    $doubleStudent->save();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $teacher->status = 'inactive';
+
+            $teacher->save();
+            $request->session()->flash('status', 'Professor desativado com sucesso!');
+            return redirect()->back();
+        } else {
+            $request->session()->flash('status', 'Erro, professor não encontrado!');
+            return redirect()->back();
+        }
+    }
+
+    public function activate(Request $request, Human $teacher) {
+        if ($teacher != null && $teacher->status == 'inactive'){
+
+            $teacher->status = 'active';
+            $teacher->save();
+            $request->session()->flash('status', 'Professor ativado com sucesso!');
+            return redirect()->back();
+        } else {
+            $request->session()->flash('status', 'Erro, professor não encontrado!');
             return redirect()->back();
         }
     }

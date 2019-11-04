@@ -7,10 +7,7 @@
 @sidebar([
 'url' => "Defensor",
   'items' => [
-      [
-          'item' => 'Petições', 'itemUrl' => '/Defensor/Peticoes', 'icon' => 'file-alt'
-      ], 
-    
+    ['item' => 'Petições', 'itemUrl' => '/Defensor/Peticoes', 'icon' => 'file-alt'],
   ]
 ])
 @endsidebar
@@ -70,12 +67,15 @@
     document.getElementById('deleteNomeStudent').innerHTML = nome;
   }
 
-  function editStudent(id,name,email,gender,age,phone,password){
+  function editStudent(id,name,email,gender,phone,password){
     $('#studentId').val(id);
     $('#studentName').val(name);
     $('#studentEmail').val(email);
-    $('#studentGender').val(gender);
-    $('#studentAge').val(age);
+    // $('#studentGender').val(gender);
+    $("#studentGender").val(gender).change();
+    $('#studentGender option[value=' + gender + ']').attr('selected','selected');
+    console.log(gender + 'teste');
+    // $('#studentAge').val(age);
     $('#studentPhone').val(phone);
     $('#studentPassword').val(password);
   }

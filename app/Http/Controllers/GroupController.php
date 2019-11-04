@@ -54,4 +54,22 @@ class GroupController extends Controller
         return redirect()->back();
     }
 //--------------------------------------------------------------------------------------------------
+    public function desactivate(Request $request)
+    {
+        if (Auth::user()->type != 'admin') {
+            return redirect()->back();
+        }
+        return $this->service->desactivate($request);
+        return redirect()->back();
+    }
+//--------------------------------------------------------------------------------------------------
+    public function activate(Request $request)
+    {
+        if (Auth::user()->type != 'admin') {
+            return redirect()->back();
+        }
+        return $this->service->activate($request);
+        return redirect()->back();
+    }
+//--------------------------------------------------------------------------------------------------
 }

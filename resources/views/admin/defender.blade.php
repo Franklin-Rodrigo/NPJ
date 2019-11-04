@@ -43,6 +43,7 @@
                   <table class="table table-striped">
                     <thead class="thead-dark">
                       <tr>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Nome</th>
                         <th class="text-center">E-mail</th>
                         <th class="text-center">Gênero</th>
@@ -52,15 +53,27 @@
                     </thead>
                     <tbody>
                       @forelse($defenders as $defender)
-                        @if($defender->user->type == "defender" && $defender->status == "active")
+                        @if($defender->user->type == "defender")
                           <tr class="object align-middle" name="{{$defender->name}}">
+                            <td class="text-center align-middle">
+                              @if ($defender->status == 'active')
+                                <button type="button" class="btn btn-success" role="button" data-toggle="modal" data-target="#desactivateModalDefender" onclick="defenderStatus('{{$defender->id}}','{{$defender->name}}')" title="Desativar supervisor">
+                                  <i class="fas fa-toggle-on"></i>
+                                </button>
+                              @else
+                                <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#activateModalDefender" onclick="defenderStatus('{{$defender->id}}','{{$defender->name}}')" title="Ativar supervisor">
+                                  <i class="fas fa-toggle-off"></i>
+                                </button> 
+                              @endif
+                            </td>
                             <td class="text-center align-middle">{{$defender->name}}</td>
                             <td class="text-center align-middle">{{$defender->user->email}}</td>
                             <td class="text-center align-middle">{{$defender->gender}}</td>
                             <td class="text-center align-middle">{{$defender->phone}}</td>
                             <td style="font-size:18pt;width:15%" class="text-center">
-                              <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editModalDefender" onclick="editDefender('{{$defender->id}}','{{$defender->name}}','{{$defender->user->email}}','{{$defender->gender}}','{{$defender->phone}}')"><i class="fa fa-edit"></i></button>
-                              <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModalDefender" onclick="deleteDefender('{{$defender->id}}','{{$defender->name}}')"><i class="fa fa-trash"></i></button>
+                              <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModalDefender" onclick="editDefender('{{$defender->id}}','{{$defender->name}}','{{$defender->user->email}}','{{$defender->gender}}','{{$defender->phone}}')" title="Editar {{$defender->name}}">
+                                <i class="fa fa-edit"></i> Editar
+                              </button>
                             </td>
                           </tr>
                         @endif
@@ -95,18 +108,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="">Nome *</label>
-            <input type="text" name="name" class="form-control" maxlength="80" value="" required>
+            <label for=name"">Nome *</label>
+            <input type="text" id="name" name="name" class="form-control" maxlength="80" value="" required>
           </div>
           <div class="form-group">
-            <label for="">E-mail *</label>
-            <input type="text" name="email" class="form-control" maxlength="80" value="" required>
+            <label for="email">E-mail *</label>
+            <input type="text" id="email" name="email" class="form-control" maxlength="80" value="" required>
           </div>
           <div class="row">
               <div class="col-lg-5">
                 <div class="form-group">
-                  <label for="">Sexo</label>
-                  <select class="form-control" name="gender" required>
+                  <label for="gender">Sexo</label>
+                  <select class="form-control" id="gender" name="gender" required>
                     <option value="">Selecione o sexo</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Feminino">Feminino</option>
@@ -115,15 +128,15 @@
             </div>
             <div class="col-lg-7">
               <div class="form-group">
-                <label for="">Telefone</label>
-                <input type="tel" name="phone" class="form-control input-phone" value="">
+                <label for="phone">Telefone</label>
+                <input type="tel" id="phone" name="phone" class="form-control input-phone" value="">
               </div>
             </div>
             </div>
           <div class="form-group">
-            <label for="">Senha *</label>
+            <label for="password">Senha *</label>
             <div class="input-group">
-              <input type="password" name="password" class="form-control" required>
+              <input type="password" id="password" name="password" class="form-control" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -155,19 +168,19 @@
           </div>
           <input type="hidden" name="id" id="defenderId">
           <div class="form-group">
-            <label for="">Nome</label>
+            <label for="defenderName">Nome</label>
             <input type="text" name="name" class="form-control" maxlength="80" value="" id="defenderName" required>
           </div>
 
           <div class="form-group">
-            <label for="">E-mail</label>
+            <label for="defenderEmail">E-mail</label>
             <input type="text" name="email" class="form-control" maxlength="80" value="" id="defenderEmail" required>
           </div>
           <div class="row">
               <div class="col-lg-5">
                 <div class="form-group">
-                  <label for="">Sexo</label>
-                  <select class="form-control" name="gender" required>
+                  <label for="defenderGender">Sexo</label>
+                  <select class="form-control" id="defenderGender" name="gender" required>
                     <option value="">Selecione o sexo</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Feminino">Feminino</option>
@@ -176,14 +189,14 @@
             </div>
             <div class="col-lg-7">
               <div class="form-group">
-                <label for="">Telefone</label>
+                <label for="defenderPhone">Telefone</label>
                 <input type="tel" name="phone" class="form-control input-phone" value="">
               </div>
             </div>
             </div>
           <div class="form-group">
-            <label for="">Senha</label>
-            <input type="password" name="password" class="form-control">
+            <label for="defenderPassword">Senha</label>
+            <input type="password" id="defenderPassowrd" name="password" id="password" class="form-control">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -219,6 +232,51 @@
     </div>
   </div>
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="desactivateModalDefender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form action="{{route('defender.desactivate')}}" method="post">
+              {{ csrf_field() }}
+              <input type="hidden" name="id" class="defenderStatusId" value="">
+              <div class="text-center text-danger">
+                <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
+              </div>
+              <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o supervisor <strong class="defenderStatusName"></strong>?</p>
+              <div class="text-center">
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
+                <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="activateModalDefender" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form action="{{route('defender.activate')}}" method="post">
+              {{ csrf_field() }}
+              <input type="hidden" name="id" class="defenderStatusId" value="">
+              <div class="text-center text-success">
+                <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
+              </div>
+              <p class="text-center mt-3 mb-0">Se você realmente deseja ativar o supervisor <strong class="defenderStatusName"></strong>?</p>
+              <div class="text-center">
+                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
+                <button type="submit" class="btn btn-success btn-lg">Sim</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
 
 </div>
 @endsection

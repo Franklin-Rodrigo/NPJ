@@ -19,7 +19,7 @@
               <div class="row">
                 @if ($errors->any())
                 <div class="alert alert-danger">
-                  <ul>
+                  <ul class="m-0">
                     @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                     @endforeach
@@ -70,8 +70,8 @@
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
                       @forelse($students as $student)
                         @if($student->user->type == "student")
                           <tr class="object align-middle" name="{{$student->name}}">
@@ -106,7 +106,9 @@
                           </tr>
                         @endif
                       @empty
-                      <td class="text-center">Nenhum Aluno registrado!</td>
+                      <tr class="my-auto align-middle">
+                        <td class="text-center">Nenhum aluno registrado!</td>
+                      </tr>
                       @endforelse
                     </tbody>
                   </table>
@@ -241,13 +243,12 @@
         <div class="modal-body">
           <form action="{{route('aluno.desactivate')}}" method="post">
             {{ csrf_field() }}
-            <input type="hidden" name="id" class="statusIdStudent" value="">
-            <div class="text-center">
-              <i class="fa fa-exclamation-circle fa-x6" aria-hidden="true"></i>
+            <input type="hidden" name="id" class="studentStatusId" value="">
+            <div class="text-center text-danger">
+              <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
             </div>
-            <h4 class="text-center text-danger"><strong>Atenção!</strong></h4>
-            <p class="text-center">Se você realmente deseja desativar o aluno <strong class="statusNameStudent"></strong>? Ele será removido de sua dupla!</p>
-            <br>
+            <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o aluno <strong class="studentStatusName"></strong>?</p>
+            <p class="text-center">Ele será removido de sua dupla!</p>
             <div class="text-center">
               <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
               <button type="submit" class="btn btn-danger btn-lg">Sim</button>
@@ -265,13 +266,11 @@
         <div class="modal-body">
           <form action="{{route('aluno.activate')}}" method="post">
             {{ csrf_field() }}
-            <input type="hidden" name="id" class="statusIdStudent" value="">
-            <div class="text-center">
-              <i class="fa fa-exclamation-circle fa-x6" aria-hidden="true"></i>
+            <input type="hidden" name="id" class="studentStatusId" value="">
+            <div class="text-center text-success">
+              <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
             </div>
-            <h4 class="text-center text-success"><strong>Atenção!</strong></h4>
-            <p class="text-center">Se você realmente ativar o aluno <strong class="statusNameStudent"></strong>?</p>
-            <br>
+            <p class="text-center">Se você realmente ativar o aluno <strong class="studentStatusName"></strong>?</p>
             <div class="text-center">
               <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
               <button type="submit" class="btn btn-success btn-lg">Sim</button>

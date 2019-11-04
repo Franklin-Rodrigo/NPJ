@@ -45,45 +45,59 @@
                 </div>
               </div>
 
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th  class="text-center">Nome</th>
-                        <th  class="text-center">E-mail</th>
-                        <th  class="text-center">Gênero</th>
-                        <th  class="text-center">Telefone</th>
-                        <th  class="text-center">Grupo</th>
-                        <th  class="text-center">Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @forelse($teachers as $teacher)
-                        @if($teacher->user->type == "teacher")
-                          <tr class="object align-middle" name="{{$teacher->name}}">
-                            <td class="text-center align-middle">{{$teacher->name}}</td>
-                            <td class="text-center align-middle">{{$teacher->user->email}}</td>
-                            <td class="text-center align-middle">{{$teacher->gender}}</td>
-                            <td class="text-center align-middle">{{$teacher->phone}}</td>
-                            <td class="text-center align-middle">
-                              @if($teacher->groupT == "SIM")
-                              <span class="fas fa-check-circle fa-lg text-success"></span>
-                              @else
-                              <span class="fas fa-times-circle fa-lg text-danger"></span>
-                              @endif
-                            </td>
-                            <td style="font-size:10pt;width:15%" class="text-center">
-                              <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editModalTeacher" onclick="editTeacher('{{$teacher->id}}','{{$teacher->name}}','{{$teacher->user->email}}','{{$teacher->gender}}','{{$teacher->phone}}')"><i class="fa fa-edit"></i></button>
-                              <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModalTeacher" onclick="deleteTeacher('{{$teacher->id}}','{{$teacher->name}}')"><i class="fa fa-trash"></i></button>
-                            </td>
-                          </tr>
-                        @endif
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">Nome</th>
+                      <th class="text-center">E-mail</th>
+                      <th class="text-center">Gênero</th>
+                      <th class="text-center">Telefone</th>
+                      <th class="text-center">Grupo</th>
+                      <th class="text-center">Ações</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                    @forelse($teachers as $teacher)
+                      @if($teacher->user->type == "teacher")
+                        <tr class="object align-middle" name="{{$teacher->name}}">
+                          <td class="text-center align-middle">
+                            @if ($teacher->status == 'active')
+                              <button type="button" class="btn btn-success" role="button" data-toggle="modal" data-target="#desactivateModalTeacher" onclick="teacherStatus('{{$teacher->id}}','{{$teacher->name}}')" title="Desativar professor">
+                                <i class="fas fa-toggle-on"></i>
+                              </button>
+                            @else
+                              <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#activateModalTeacher" onclick="teacherStatus('{{$teacher->id}}','{{$teacher->name}}')" title="Ativar professor">
+                                <i class="fas fa-toggle-off"></i>
+                              </button> 
+                            @endif
+                          </td>
+                          <td class="text-center align-middle">{{$teacher->name}}</td>
+                          <td class="text-center align-middle">{{$teacher->user->email}}</td>
+                          <td class="text-center align-middle">{{$teacher->gender}}</td>
+                          <td class="text-center align-middle">{{$teacher->phone}}</td>
+                          <td class="text-center align-middle">
+                            @if($teacher->groupT == "SIM")
+                              <span class="fas fa-check-circle fa-lg text-success" title="Possui grupo"></span>
+                            @else
+                              <span class="fas fa-times-circle fa-lg text-danger" title="Não possui grupo"></span>
+                            @endif
+                          </td>
+                          <td style="font-size:10pt;width:15%" class="text-center">
+                            <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModalTeacher" onclick="editTeacher('{{$teacher->id}}','{{$teacher->name}}','{{$teacher->user->email}}','{{$teacher->gender}}','{{$teacher->phone}}')">
+                              <i class="fa fa-edit"></i> Editar
+                            </button>
+                          </td>
+                        </tr>
+                      @endif
                       @empty
                       <tr class="my-auto align-middle">
-                        <td class="text-center" colspan="6">Nenhum Professor registrado!</td>
-                      </tr>
-                      @endforelse
-                    </tbody>
+                        <td class="text-center" colspan="6">Nenhuma professor registrado!</td>
+                      </tr>  
+                    @endforelse
+                  </tbody>
                   </table>
                 </div>
           </div>
@@ -235,5 +249,51 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="desactivateModalTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="{{route('professor.desactivate')}}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="id" class="teacherStatusId" value="">
+            <div class="text-center text-danger">
+              <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
+            </div>
+            <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o professor <strong class="teacherStatusName"></strong>?</p>
+            <p class="text-center">Seus grupos serão removidos!</p>
+            <div class="text-center">
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
+              <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="activateModalTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="{{route('professor.activate')}}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="id" class="teacherStatusId" value="">
+            <div class="text-center text-success">
+              <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
+            </div>
+            <p class="text-center">Se você realmente ativar o professor <strong class="teacherStatusName"></strong>?</p>
+            <div class="text-center">
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
+              <button type="submit" class="btn btn-success btn-lg">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 @endsection

@@ -20,8 +20,10 @@ class CreatePetitionsTable extends Migration
           $table->longText('content',9000);
           $table->enum("student_ok",array('true','false'))->nullable();
           $table->enum("teacher_ok",array('true','false'))->nullable();
+          $table->enum("supervisor_ok",array('true','false'))->nullable();
           $table->enum("defender_ok",array('true','false'))->nullable();
           $table->integer('template_id')->unsigned();//referencia de qual template é
+          $table->integer('supervisor_id')->nullable();//referencia qual supervisor pegou e avaliou a peticao
           $table->integer('defender_id')->nullable();//referencia qual defensor pegou e avaliou a peticao
           $table->integer('doubleStudent_id')->unsigned();//referencia que foi a dupla que fez a petiçao
           $table->integer('group_id');//referencia a qual grupo pertence

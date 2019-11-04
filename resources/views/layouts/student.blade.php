@@ -19,9 +19,9 @@
 
 <div id="main">
   <!-- Topbar -->
-  @component('components.topbar')  
+  @topbar  
     {{Auth::user()->email}}  
-  @endcomponent
+  @endtopbar
   
 
 <!-- END Topbar -->
@@ -43,9 +43,9 @@
   </nav>
 </footer>
 <!-- END Footer -->
-@component('components.bottombar')  
+@bottombar  
   {{Auth::user()->email}}  
-@endcomponent
+@endbottombar
 
 <!-- END Main container -->
 </div>

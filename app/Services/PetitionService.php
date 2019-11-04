@@ -17,8 +17,7 @@ use Storage;
 class PetitionService
 {
 
-    public function studentIndex()
-    {
+    public function studentIndex() {
         $student = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
 
         $doubleStudent = DoubleStudent::all()->where('status', '=', 'active')->where('student_id', '=', $student->id)->first();
@@ -39,8 +38,7 @@ class PetitionService
         return ['student' => $student, 'doubleStudent' => $doubleStudent, 'petitions' => $petitions, 'group' => $group, 'teacher' => $teacher, 'humans' => $humans, 'user' => $user, 'templates' => $templates];
     }
 
-    public function teacherIndex()
-    {
+    public function teacherIndex() {
 
         $teacher = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
         $group = Group::all()->where('status', '=', 'active')->where('teacher_id', '=', $teacher->id)->first();
@@ -55,8 +53,16 @@ class PetitionService
         return ['teacher' => $teacher, 'group' => $group, 'doubleStudents' => $doubleStudents, 'petitions' => $petitions, 'humans' => $humans, 'user' => $user];
     }
 
-    public function defenderIndex()
-    {
+    public function supervisorIndex() {
+
+        $supervisor = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
+        $petitions = Petition::all()->where('visible', 'true')->sortByDesc('updated_at');
+        $user = Auth::user();
+
+        return ['defender' => $supervisor, 'petitions' => $petitions, 'user' => $user];
+    }
+
+    public function defenderIndex() {
 
         $defender = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
         $petitions = Petition::all()->where('visible', 'true')->sortByDesc('updated_at');
@@ -65,8 +71,7 @@ class PetitionService
         return ['defender' => $defender, 'petitions' => $petitions, 'user' => $user];
     }
 
-    public function newPetition(Request $request, Human $student)
-    {
+    public function newPetition(Request $request, Human $student) {
 
         //Se o Student estiver na primeira posição da DUPLA
         $doubleStudent = DoubleStudent::all()->where('status', '=', 'active')->where('student_id', '=', $student->id)->first();
@@ -114,8 +119,7 @@ class PetitionService
         $request->session()->flash('status', $mensagem);
     }
 
-    public function updateDraft(Request $request, Petition $petition)
-    {
+    public function updateDraft(Request $request, Petition $petition) {
 
         $this->addImages($request, $petition);
 
@@ -124,8 +128,7 @@ class PetitionService
         $petition->save();
     }
 
-    public function addImages(Request $request, Petition $petition)
-    {
+    public function addImages(Request $request, Petition $petition) {
         if ($request['images'] != null) {
 
             $files = $request->file('images');
@@ -142,8 +145,7 @@ class PetitionService
         }
     }
 
-    public function countPetition(DoubleStudent $doubleStudent)
-    {
+    public function countPetition(DoubleStudent $doubleStudent) {
         $doubleStudent->qtdPetitions = ($doubleStudent->qtdPetitions + 1);
         $group = Group::find($doubleStudent->group_id);
         $group->qtdPetitions = ($group->qtdPetitions + 1);
@@ -151,9 +153,8 @@ class PetitionService
         $group->save();
     }
 
-    public function newVersion(Request $request, Petition $petition)
-    {
-//cria nova versao da peticao
+    public function newVersion(Request $request, Petition $petition) {
+        //cria nova versao da peticao
         $totalVersao = Petition::all()->where('petitionFirst', $petition->petitionFirst)->count();
 
         $newPetition = new Petition([
@@ -161,7 +162,9 @@ class PetitionService
             'content' => $request['content'],
             'student_ok' => $petition->student_ok, 
             'teacher_ok' => $petition->teacher_ok,
+            'supervisor_ok' => $petition->supervisor_ok,
             'defender_ok' => $petition->defender_ok,
+            'supervisor_id' => $petition->supervisor_id,
             'defender_id' => $petition->defender_id,
             'template_id' => $petition->template_id,
             'doubleStudent_id' => $petition->doubleStudent_id,
@@ -205,17 +208,20 @@ class PetitionService
         $petition->visible = 'false'; //tornour-se versão anterior
         $petition->student_ok = null;
         $petition->teacher_ok = null;
+        $petition->supervisor_ok = null;
         $petition->defender_ok = null;
+        $petition->supervisor_id = null; //defensor nao deve estar vinculado a uma versao anterior, somente a vesao finalizada
         $petition->defender_id = null; //defensor nao deve estar vinculado a uma versao anterior, somente a vesao finalizada
         $petition->save();
     }
 
-    public function changePetition(Petition $petition, Petition $oldPetition)
-    {
+    public function changePetition(Petition $petition, Petition $oldPetition) {
         $oldPetition->visible = 'false';
         $petition->student_ok = $oldPetition->student_ok;
         $petition->teacher_ok = $oldPetition->teacher_ok;
+        $petition->supervisor_ok = $oldPetition->supervisor_ok;
         $petition->defender_ok = $oldPetition->defender_ok;
+        $petition->supervisor_id = $oldPetition->supervisor_id;
         $petition->defender_id = $oldPetition->defender_id;
 
         //$comment = Comment::where('petition_id', $oldPetition->id)->orderBy('id', 'desc')->first(); //pegar o ultimo comentario da petição antiga
@@ -233,15 +239,16 @@ class PetitionService
         $oldPetition->student_ok = null;
         $oldPetition->teacher_ok = null;
         $oldPetition->defender_ok = null;
+        $oldPetition->supervisor_ok = null;
         $oldPetition->defender_id = null;
+        $oldPetition->supervisor_id = null;
         $oldPetition->save();
         $petition->visible = 'true';
         $petition->save();
-        $status = "Deu certo";
+        // $status = "Deu certo";
     }
 
-    public function copyPetition(Petition $petition)
-    {
+    public function copyPetition(Petition $petition) {
         $p = Petition::create([
             'description' => $petition->description,
             'content' => $petition->content,
@@ -259,8 +266,7 @@ class PetitionService
         return $status;
     }
 
-    public function delete(Petition $petition)
-    {
+    public function delete(Petition $petition) {
         $photos = Photo::all()->where('petition_id', $petition->id);
 
         if ($photos != null) {
@@ -273,15 +279,13 @@ class PetitionService
 
     }
 
-    public function deletePhoto($photo_id)
-    {
+    public function deletePhoto($photo_id) {
         $photo = Photo::find($photo_id);
         Storage::disk(env('STORAGE_TYPE', 'dropbox'))->delete($photo->photo);
         $photo->delete();
     }
 
-    public function edit(Petition $petition)
-    {
+    public function edit(Petition $petition) {
         $templates = Template::all();
         $photos = Photo::all()->where('petition_id', $petition->id);
         $IsPhotos = $photos->count() != 0 ? 'true' : 'false';
@@ -289,15 +293,17 @@ class PetitionService
         $profComments = $comments->reject(function($c){
             return $c->human->user->type == 'teacher';
         })->all();
+        $supComments = $comments->reject(function($c){
+            return $c->human->user->type == 'supervisor';
+        })->all();
         $defComments =  $comments->reject(function($c){
             return $c->human->user->type == 'defender';
         })->all();
 
-        return ['petition' => $petition, 'templates' => $templates, 'photos' => $photos, 'IsPhotos' => $IsPhotos, 'comments' => $comments, 'profComments' => $profComments, 'defComments' => $defComments];
+        return ['petition' => $petition, 'templates' => $templates, 'photos' => $photos, 'IsPhotos' => $IsPhotos, 'comments' => $comments, 'profComments' => $profComments, 'supComments' => $supComments,'defComments' => $defComments];
     }
 
-    public function show(Petition $petition)
-    {
+    public function show(Petition $petition) {
         $humans = Human::all()->where('status', 'active');
         $temps = Template::all();
         $petitions = Petition::all()->where('petitionFirst', $petition->petitionFirst);
@@ -307,15 +313,17 @@ class PetitionService
         $profComments = $comments->reject(function ($c) {
             return $c->human->user->type != 'teacher';
         })->all();
+        $supComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'supervisor';
+        })->all();
         $defComments = $comments->reject(function ($c) {
             return $c->human->user->type != 'defender';
         })->all();
 
-        return ['petition' => $petition, 'humans' => $humans, 'temps' => $temps, 'petitions' => $petitions, 'photos' => $photos, 'comments' => $comments, 'profComments' => $profComments, 'defComments' => $defComments];
+        return ['petition' => $petition, 'humans' => $humans, 'temps' => $temps, 'petitions' => $petitions, 'photos' => $photos, 'comments' => $comments, 'profComments' => $profComments, 'supComments' => $supComments, 'defComments' => $defComments];
     }
 
-    public function avaliar(Petition $petition)
-    {
+    public function avaliar(Petition $petition) {
 
         $photos = Photo::all()->where('petition_id', $petition->id);
         $humans = Human::all()->where('status', 'active');
@@ -324,24 +332,29 @@ class PetitionService
         $profComments = $comments->reject(function($c){
             return $c->human->user->type == 'teacher';
         })->all();
+        $supComments =  $comments->reject(function($c){
+            return $c->human->user->type == 'defender';
+        })->all();
         $defComments =  $comments->reject(function($c){
             return $c->human->user->type == 'defender';
         })->all();
 
-        return ['petition' => $petition, 'photos' => $photos, 'humans' => $humans, 'template' => $template, 'comments' => $comments, 'profComments' => $profComments, 'defComments' => $defComments];
+        return ['petition' => $petition, 'photos' => $photos, 'humans' => $humans, 'template' => $template, 'comments' => $comments, 'profComments' => $profComments, 'supComments' => $supComments, 'defComments' => $defComments];
     }
 
-    public function emitir(Petition $petition)
-    {
+    public function emitir(Petition $petition) {
         $photos = Photo::all()->where('petition_id', $petition->id);
         $comments = Comment::all()->where('petition_id', $petition->id);
         $profComments = $comments->reject(function($c){
             return $c->human->user->type == 'teacher';
         })->all();
+        $supComments =  $comments->reject(function($c){
+            return $c->human->user->type == 'supervisor';
+        })->all();
         $defComments =  $comments->reject(function($c){
             return $c->human->user->type == 'defender';
         })->all();
 
-        return ['petition' => $petition, 'photos' => $photos, 'profComments' => $profComments, 'defComments' => $defComments];
+        return ['petition' => $petition, 'photos' => $photos, 'profComments' => $profComments, 'supComments' => $supComments, 'defComments' => $defComments];
     }
 }

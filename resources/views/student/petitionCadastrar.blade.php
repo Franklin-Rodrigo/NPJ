@@ -4,7 +4,7 @@
     <div class="row justify-content-center mt-3">
       <div class="col-lg-10">
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
-      <form action="{{URL::to('Aluno/Peticao/Cadastrar')}}" method="post" enctype="multipart/form-data">
+      <form action="{{ route('peticao.cadastrar')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="template_id" value="{{$template->id}}"/>
         <label for="">Título da petição</label>
@@ -14,7 +14,7 @@
         <input class="form-control" type="text" name="description" value="" required/>
         <br>
         <label for="">Conteúdo</label>
-        <textarea  class="ckeditor" maxlength="99999" name="content" required>{{$template->content}}</textarea>
+        <textarea class="ckeditor" maxlength="99999" name="content" required>{{$template->content}}</textarea>
         <br>
         <div class="row">
           <div class="col-md-6">

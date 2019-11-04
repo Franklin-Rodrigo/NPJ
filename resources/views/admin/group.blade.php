@@ -5,83 +5,93 @@
     <div class="col-lg-12 my-5">
       <div class="card my-5">
         <div class="card-header">
-             <h4>Gerenciar Grupos
-                <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalGroup" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
-                    <i class="fa fa-plus"></i>
-                    Novo Grupo
-                  </button>
-             </h4>
+          <h4>Gerenciar Grupos
+            <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalGroup" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
+              <i class="fa fa-plus"></i>
+              Novo Grupo
+            </button>
+          </h4>
                
         </div>
         <div class="card-body">
           <div class="col-lg-12">
            
-              <div class="row">
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                </div>
-                @endif
-                @if(Session::has('status'))
-                  <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                @endif
+            <div class="row">
+              @if ($errors->any())
+              <div class="alert alert-danger">
+                <ul>
+                  @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
               </div>
+              @endif
+              @if(Session::has('status'))
+                <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+              @endif
+            </div>
               <div class="row mb-3">
-                  <div class="col-md-4">
-                    <div class="input-group">
-                      <input type="search" name="" class="form-control" value="" placeholder="Buscar por nome..." onkeyup="filtroDeBusca(this.value)">
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <i class="fas fa-search"></i>
-                        </span>
-                      </div>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <input type="search" name="" class="form-control" value="" placeholder="Buscar por nome..." onkeyup="filtroDeBusca(this.value)">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                      </span>
                     </div>
                   </div>
                 </div>
+              </div>
               
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th class="text-center">Nome</th>
-                        <th class="text-center">Professor</th>
-                        <th class="text-center">Duplas</th>
-      <!--                  <th>QTD PETIÇÕES</th>-->
-                        <th class="text-center">Ações</th>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">Nome</th>
+                      <th class="text-center">Professor</th>
+                      <th class="text-center">Duplas</th>
+                      <!--<th>QTD PETIÇÕES</th>-->
+                      <th class="text-center">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @forelse($groups as $group)
+                      <tr class="object align-middle" name="{{$group->name}}">
+                        <td class="text-center align-middle">
+                          @if ($group->status == 'active')
+                            <button type="button" class="btn btn-success" role="button" data-toggle="modal" data-target="#desactivateModalGroup" onclick="groupStatus('{{$group->id}}','{{$group->name}}')" title="Desativar grupo">
+                              <i class="fas fa-toggle-on"></i>
+                            </button>
+                          @else
+                            <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#activateModalGroup" onclick="groupStatus('{{$group->id}}','{{$group->name}}')" title="Ativar grupo">
+                              <i class="fas fa-toggle-off"></i>
+                            </button> 
+                          @endif
+                        </td>
+                        <td class="text-center">{{$group->name}}</td>
+                        <td class="text-center">{{$humans->find($group->teacher_id)->name}}</td>
+                        <td class="text-center">{{$doubleStudents->where('group_id',$group->id)->count()}}</td>
+                        <!--Pegar qtd de peticoes por dupla-->
+                        <td style="font-size:10pt;width:15%" class="text-center">
+                          <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModalGroup" onclick="editModalGroup('{{$group->id}}','{{$group->name}}','{{$group->teacher_id}}')" title="Editar Grupo">
+                            <i class="fa fa-edit"></i> Editar
+                          </button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      @forelse($groups as $group)
-                        @if($group->status == 'active')
-                            <tr class="object align-middle" name="{{$group->name}}">
-                              <td class="text-center">{{$group->name}}</td>
-                              <td class="text-center">{{$humans->find($group->teacher_id)->name}}</td>
-                              <td class="text-center">{{$doubleStudents->where('group_id',$group->id)->count()}}</td>
-                              <!--Pegar qtd de peticoes por dupla-->
-                              <td style="font-size:10pt;width:15%" class="text-center">
-                                <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editModalGroup" onclick="editModalGroup('{{$group->id}}','{{$group->name}}','{{$group->teacher_id}}')" title="Editar Grupo"><i class="fa fa-edit"></i></button>
-                                <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModalGroup" onclick="deleteGroup('{{$group->id}}','{{$group->name}}')" title="Excluir Grupo"><i class="fa fa-trash"></i></button>
-                              </td>
-                            </tr>
-                        @endif
-                      @empty
-                          <td class="text-center">Nenhum Grupo registrado!</td>
-                      @endforelse
-                    </tbody>
-                  </table>
-               
-              
+                    @empty
+                    <tr class="my-auto align-middle">
+                      <td class="text-center" colspan="5">Nenhuma grupo registrado!</td>
+                    </tr>  
+                    @endforelse
+                  </tbody>
+                </table>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 
   <!-- Modal -->
   <div class="modal fade" id="newModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -101,42 +111,36 @@
             {{ csrf_field() }}
             <div class="row">
               <div class="col-lg-6">
-                  <div class="form-group">
-                      <label for="">Nome</label>
-                      <input type="text" name="name" class="form-control" maxlength="80" value="" required>
-                    </div>
+                <div class="form-group">
+                  <label for="name">Nome</label>
+                  <input type="text" id="name" name="name" class="form-control" maxlength="80" value="" required>
+                </div>
               </div>
               <div class="col-lg-6">
-                  <div class="form-group">
-                      <label for="">Professor</label>
-                      <select class="form-control" name="teacher_id" required>
-                        <option value="">Selecione o professor</option>
-                        @foreach($humans as $human)
-                          <!--Está sem validação-->
-                          @if($human->user->type == 'teacher' && $human->status == 'active' && $human->groupT == 'NAO')
-                            <option value="{{$human->id}}">{{$human->name}}</option>
-                          @endif
-                        @endforeach
-                      </select>
-                    </div>
+                <div class="form-group">
+                  <label for="">Professor</label>
+                  <select class="form-control" name="teacher_id" required>
+                    <option value="">Selecione o professor</option>
+                    @foreach($humans as $human)
+                      <!--Está sem validação-->
+                      @if($human->user->type == 'teacher' && $human->status == 'active' && $human->groupT == 'NAO')
+                        <option value="{{$human->id}}">{{$human->name}}</option>
+                      @endif
+                    @endforeach
+                  </select>
+                </div>
               </div>
             </div>
             
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
-              </div>
-            
-        </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>        
+          </form>
+        </div>
       </div>
     </div>
   </div>
-  
-  </div>
-
-
-
-
 
   <div class="modal fade" id="editModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
@@ -152,11 +156,11 @@
             <div class="row" style="margin-left:2%">
               <input type="hidden" name="id" id="groupId">
               <div class="form-group">
-                <label for="">Nome</label>
+                <label for="groupName">Nome</label>
                 <input type="text" name="name" class="form-control" maxlength="80" value="" id="groupName" required>
               </div>
               <div class="form-group">
-                <label for="">Professor</label>
+                <label for="groupTeacher_id">Professor</label>
                 <select class="form-control" name="teacher_id" id="groupTeacher_id">
                   <option value="">Selecione o professor</option>
                   @foreach($humans as $human)
@@ -202,5 +206,50 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="desactivateModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="{{route('grupo.desactivate')}}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="id" class="groupStatusId" value="">
+            <div class="text-center text-danger">
+              <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
+            </div>
+            <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o grupo <strong class="groupStatusName"></strong>?</p>
+            <div class="text-center">
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
+              <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="activateModalGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="{{route('grupo.activate')}}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="id" class="groupStatusId" value="">
+            <div class="text-center text-success">
+              <i class="fa fa-exclamation-circle fa-x9" aria-hidden="true"></i> <h4 class="text-center"><strong>Atenção!</strong></h4>
+            </div>
+            <p class="text-center mt-3 mb-0">Se você realmente deseja ativar o grupo <strong class="groupStatusName"></strong>?</p>
+            <div class="text-center">
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
+              <button type="submit" class="btn btn-success btn-lg">Sim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 @endsection

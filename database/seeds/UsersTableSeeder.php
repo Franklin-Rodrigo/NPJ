@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
       $user = User::create([
           'type'     => 'admin',
           'email'    => 'admin@npj.com',
-          'password' =>bcrypt('1234mudar'),
+          'password' =>bcrypt('admin'),
       ]);
 
       $human = Human::create([
@@ -26,7 +26,6 @@ class UsersTableSeeder extends Seeder
           'gender'    => 'Masculino',
           'user_id'   => $user->id
       ]);
-
 
     }
 }

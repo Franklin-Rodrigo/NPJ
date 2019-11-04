@@ -10,18 +10,16 @@ use Illuminate\Http\Request;
 
 class GroupService
 {
-    public function index()
-    {
+    public function index() {
 
         $petitions = Petition::all();
-        $humans = Human::all()->where('status', '=', 'active');
-        $groups = Group::all()->where('status', '=', 'active');
-        $doubleStudents = DoubleStudent::all()->where('status', '=', 'active');
+        $humans = Human::all();
+        $groups = Group::all();
+        $doubleStudents = DoubleStudent::all();
         return ['petitions' => $petitions, 'humans' => $humans, 'groups' => $groups, 'doubleStudents' => $doubleStudents];
     }
 //--------------------------------------------------------------------------------------------------
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $gp = Group::all()->where('name', $request['name'])->first();
         if ($gp != null) {
             $request->session()->flash('status', 'Cadastro Impossível, Já existe um Grupo com esse Nome!');
@@ -45,8 +43,7 @@ class GroupService
 
     }
 //--------------------------------------------------------------------------------------------------
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         $group = Group::find($request['id']);
         if ($group->teacher_id != $request['teacher_id'] && $request['teacher_id'] != null) //se houver alteracão do professor
         {
@@ -72,8 +69,7 @@ class GroupService
         return redirect()->back();
     }
 //--------------------------------------------------------------------------------------------------
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request) {
 
         $group = Group::find($request['id']);
         //dd($group);
@@ -112,6 +108,67 @@ class GroupService
             return redirect()->back();
         }
         $request->session()->flash('status', 'Erro ao tentar excluir Grupo!');
+    }
+//--------------------------------------------------------------------------------------------------
+    public function desactivate(Request $request) {
+
+        $group = Group::find($request['id']);
+        //dd($group);
+
+        if ($group != null && $group->status == 'active') { //se o professor participar de algum grupo e se esse for active
+            $group->status = 'inactive';
+            $teacher = Human::find($group->teacher_id); //pega o professor do grupo
+            $teacher->groupT = 'NAO'; //o professor fica sem grupo
+            $teacher->save();
+            $group->save();
+
+            $doubleStudents = DoubleStudent::all()->where('status', 'active'); //todas as duplas
+            foreach ($doubleStudents as $doubleStudent) { ///
+                if ($doubleStudent->group_id == $group->id) { //se o grupo da dupla iterada for o grupo
+                    $doubleStudent->status = 'inactive';
+                    $student1 = Human::find($doubleStudent->student_id);
+                    $student1->doubleS = 'NAO';
+                    $student1->save();
+                    $student2 = Human::find($doubleStudent->student2_id);
+                    $student2->doubleS = 'NAO';
+                    $student2->save();
+                    $doubleStudent->save();
+                }
+            }
+            $request->session()->flash('status', 'Grupo desativado com sucesso!');
+            return redirect()->back();
+        }
+
+        $request->session()->flash('status', 'Erro ao tentar desativar Grupo!');
+    }
+//--------------------------------------------------------------------------------------------------
+    public function activate(Request $request) {
+
+        $group = Group::find($request['id']);
+        //dd($group);
+
+        if ($group != null && $group->status == 'inactive') { //se o professor participar de algum grupo e se esse for inactive
+            $doubleStudents = DoubleStudent::all()->where('group_id', $group->id); //todas as duplas
+            $teacher = Human::find($group->teacher_id);//Verifica se há algum outro grupo ativo sob responsabilidade do mesmo professor.
+            if (count($doubleStudents) > 0) {
+                $request->session()->flash('status', 'Este grupo não pode ser reativado, visto que já possuiu duplas vinculadas a ele!');
+                return redirect()->back();
+            } else if ($teacher->groupT == 'SIM') {
+                $request->session()->flash('status', 'Este grupo não pode ser reativado, visto que possui outro grupo ativo sob responsabilidade do mesmo professor!');
+                return redirect()->back();
+            }
+            
+            $group->status = 'active';
+            $teacher = Human::find($group->teacher_id); //pega o professor do grupo
+            $teacher->groupT = 'SIM'; //o professor fica sem grupo
+            $teacher->save();
+            $group->save();
+            
+            $request->session()->flash('status', 'Grupo ativado com sucesso!');
+            return redirect()->back();
+        }
+        
+        $request->session()->flash('status', 'Erro, grupo não encontrado!');
     }
 //--------------------------------------------------------------------------------------------------
 }

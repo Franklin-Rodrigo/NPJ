@@ -16,8 +16,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        Blade::component('components.sidebar');
-        Blade::component('components.cardHome');
+        Blade::component('components.bottombar', 'bottombar');
+        Blade::component('components.cardhome', 'cardhome');
+        Blade::component('components.sidebar', 'sidebar');
+        Blade::component('components.topbar', 'topbar');
     }
 
     /**
