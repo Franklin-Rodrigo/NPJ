@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Auth;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller {
     /**
      * Create a new controller instance.
      *
@@ -34,6 +33,6 @@ class HomeController extends Controller
       } elseif (Auth::user()->type == "defender"){
         return redirect('Defensor');
       }
-      return view('auth.login');
+      return redirect('Sair');
     }
 }

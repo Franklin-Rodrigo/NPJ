@@ -5,9 +5,9 @@
 
 <!-- Sidebar -->
 @sidebar([
-'url' => "Defensor",
+'url' => "Supervisor",
   'items' => [
-    ['item' => 'Petições', 'itemUrl' => '/Defensor/Peticoes', 'icon' => 'file-alt'],
+    ['item' => 'Petições', 'itemUrl' => '/Supervisor/Peticoes', 'icon' => 'file-alt'],
   ]
 ])
 @endsidebar
@@ -96,19 +96,19 @@
     $('#teacherPassword').val(password);
   }
 
-  function deleteDefender(id,nome) {
-    document.getElementById('deleteIdDefender').value = id;
-    document.getElementById('deleteNomeDefender').innerHTML = nome;
+  function deleteSupervisor(id,nome) {
+    document.getElementById('deleteIdSupervisor').value = id;
+    document.getElementById('deleteNomeSupervisor').innerHTML = nome;
   }
 
-  function editDefender(id,name,email,gender,age,phone,password){
-    $('#defenderId').val(id);
-    $('#defenderName').val(name);
-    $('#defenderEmail').val(email);
-    $('#defenderGender').val(gender);
-    $('#defenderAge').val(age);
-    $('#defenderPhone').val(phone);
-    $('#defenderPassword').val(password);
+  function editSupervisor(id,name,email,gender,age,phone,password){
+    $('#supervisorId').val(id);
+    $('#supervisorName').val(name);
+    $('#supervisorEmail').val(email);
+    $('#supervisorGender').val(gender);
+    $('#supervisorAge').val(age);
+    $('#supervisorPhone').val(phone);
+    $('#supervisorPassword').val(password);
   }
 
 
