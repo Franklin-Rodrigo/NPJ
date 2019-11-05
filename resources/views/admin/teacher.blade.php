@@ -6,13 +6,13 @@
 
       <div class="card my-5">
         <div class="card-header">
-              <h4>
-                Gerenciar Professores
-                <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalTeacher" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
-                  <i class="fa fa-plus"></i>
-                  Novo Professor
-                </button>
-              </h4>
+          <h4>
+            Gerenciar Professores
+            <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalTeacher" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
+              <i class="fa fa-plus"></i>
+              Novo Professor
+            </button>
+          </h4>
         </div>
 
         <div class="card-body">

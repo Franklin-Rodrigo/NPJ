@@ -52,12 +52,14 @@
                       $petition->teacher_ok == 'true' && $petition->defender_ok == '' && $petition->defender_id == ''))
                       <tr class="object" name="{{$petition->description}}">
                         <td class="text-center align-middle">
-                          @if($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->defender_ok != 'true')
+                          @if($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok == 'true' && $petition->defender_ok != 'true')
                             Avaliação Pendente
-                          @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'false' && $petition->defender_ok != 'true')
-                            Recusada - Aguardando Correção
-                          @elseif($petition->defender_ok == 'false' && $petition->student_ok == 'false')
-                            Recusada - Aguardando Correção
+                          @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok == 'false')
+                            Recusada - Aguardando correção do supervisor
+                          @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'false' && $petition->supervisor_ok == 'false')
+                            Recusada - Aguardando correção do professor
+                          @elseif($petition->student_ok == 'false' && $petition->teacher_ok == 'false' && $petition->supervisor_ok == 'false')
+                            Recusada - Aguardando correção do aluno
                           @elseif($petition->defender_ok == 'true' && $petition->defender_id == $defender->id )
                             Finalizada
                           @endif

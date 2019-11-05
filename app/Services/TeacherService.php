@@ -59,19 +59,20 @@ class TeacherService
                 'groupT' => 'NAO',
             ]);
 
-            $request->session()->flash('status', 'Professor cadastrado com sucesso!');
-
-            // Cadastrar Grupo automaticamente -------------------------
-
+            
+            // Cadastrar Grupo automaticamente -------------------------            
+            $periodo = date('Y') . '.' . ((date('n') > 6) ? 2 : 1); //Cadastra o grupo [período] - [professor]
+            
             Group::create([
-                'name' => $human->name,
+                'name' => $periodo . ' - ' . $human->name,
                 'teacher_id' => $human->id,
                 'qtdPetitions' => 0,
             ]);
-
+                
             $human->groupT = 'SIM';
             $human->save();
             
+            $request->session()->flash('status', 'Professor e grupo cadastrado com sucesso!');
             // --------------
         }
         return redirect()->back()->withErrors($validate)->withInput();

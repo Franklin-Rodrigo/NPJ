@@ -1,88 +1,104 @@
-@extends('layouts.teacher')
+@extends('layouts.student')
 @section('component')
+  <div class="container">
+    <div class="row justify-content-center my-3">
+      <div class="text-center">
+      <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">
+          Ver comentários
+          <span class="fas fa-comments ml-2"></span>
+        </button>
+      </div>
+    </div>
 
-<div class="container">
-  <div class="row justify-content-center my-3">
-    <div class="col-lg-10">
-        <div class="row justify-content-center">
-            <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#comments"
-              aria-expanded="false" aria-controls="comments">
-              Ver comentários
-              <span class="fas fa-comments ml-2"></span>
-            </button>
-          </div>
+    <!-- pra mostrar quando a petição é salva -->
+    <div class="row justify-content-center">
+    @if ($errors->any())
+    <div class="alert alert-danger col-lg-6">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+    @if(Session::has('status'))
+      <p class="alert alert-info">
+      {{ Session::get('status') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+    @endif
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
-      <form action="{{URL::to('Supervisor/Comentario/Cadastrar')}}" method="post" enctype="multipart/form-data">
+      <form action="{{URL::to('Supervisor/Peticao/Editar')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="idPetition" value="{{$petition->id}}">
+        <input type="hidden" name="id" value="{{$petition->id}}">
         <div class="row">
-          <label for="">Template:</label>
-          <input class="form-control" type="text" name="template_id" value="{{$template->title}}" disabled/>
+          <label for="">Template</label>
+          <select class="form-control" name="template_id" disabled>
+            <option value="{{$templates->find($petition->template_id)->id}}">{{$templates->find($petition->template_id)->title}}</option>
+          </select>
         </div>
         <br>
         <div class="row">
-          <label for="">Descrição:</label>
-          <input class="form-control" type="text" name="description" value="{{$petition->description}}" disabled/>
-        </div>
-        <br>
+          <label for="">Descrição</label>
+          <input class="form-control" name="description" value="{{$petition->description}}" />
+        </div><br>
         <div class="row">
-          <label for="">Conteúdo:</label>
-          <textarea  class="ckeditor" maxlength="99999" name="content" disabled>{{$petition->content}}</textarea>
+          <label>Conteúdo:</label><br>
+          <textarea  class="ckeditor" maxlength="99999" name="content" required>{{$petition->content}}</textarea>
         </div>
         <br>
-  
-        @if(count($photos) >= 1)
-        <label>Documentação:</label>
+
+        <label class="row">Documentação:</label>
         <div class="row align-items-center">
+            <br>
             @foreach($photos as $photo)
-              @if($photo->photo == "" || $photo->photo == null)
+              @if($photo->photo != "" || $photo->photo != null)
               <div class="col-3 mb-3">
-                <img id="myImg" src="{{URL::asset('storage/1')}}" class="img-fluid img-thumbnail" style="width:200px; height:200px;" onclick="showImage(this)">
-              </div>
-              @else
-              <div class="col-3 mb-3 text-center">
+                <div class="text-center">
                   @if(explode('/', File::mimeType('storage/'.$photo->photo))[0] == 'image')
                   <img id="myImg" src="{{URL::asset('storage/'.$photo->photo)}}" class="img-fluid img-thumbnail" style="width:200px; height:200px;" onclick="showImage(this)">
                   @else
                   <a target="_blank" href="{{URL::asset('storage/'.$photo->photo)}}">Abrir {{explode('/', $photo->photo)[2]}} em nova guia</a>
                   @endif
-              </div>                  
+                  <br>
+                  <button type="button" class="btn btn-sm btn-danger mt-1" onClick="location.href='{{URL::to('Supervisor/Peticao/Edit/' . $petition->id . '/DeletePhoto/' . $photo->id )}}'">
+                    <span class="fas fa-trash"></span>
+                  </button>
+                </div>
+              </div>
               @endif
             @endforeach
-          </div>
-        @else
-          <div class="row">
-            <div>
-              <label>Documentação:</label>        
-              <p class="text-secondary">Nenhuma documentação em anexo.</p>
-            </div>
-          </div>          
-        @endif
-        <br>
-        <div class="row">
-          <label>Comentário:</label>
-          <textarea  cols="100" rows="10" maxlength="99999" name="comment" id="comment" placeholder="Preencha caso necessite de correção!" ></textarea>
         </div>
-        <div class="row justify-content-center mt-3">
-          <div class="text-center">
+        <br>
+
+        <div class="row">
+          <input type="file" accept="image/*" name="images[]" multiple>
+        </div>
+
+        <br>
+        <div class="row justify-content-center">
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Supervisor/Peticoes')}}'">
               Cancelar
               <span class="fas fa-times ml-2"></span>
             </button>
-            <button type="submit" name="botao" class="btn btn-danger"  id="btnReprovar" value="REPROVAR">
-              Reprovar
-              <span class="fas fa-thumbs-down ml-2"></span>
+            <button type="submit" name="botao" class="btn btn-primary" value="SALVAR">
+              Salvar
+              <span class="fas fa-save ml-2"></span>
             </button>
-            <button type="submit" name="botao" class="btn btn-success" value="APROVAR">
-              Aprovar
-              <span class="fas fa-thumbs-up ml-2"></span>
+            <button type="submit" name="botao" class="btn btn-success" value="ENVIAR">
+              Enviar
+              <span class="fas fa-share ml-2"></span>
             </button>
-  
           </div>
         </div>
       </form>
     </div>
-  </div>
+
+
   <div class="modal fade" id="comments" tabindex="-1" role="dialog" aria-labelledby="comments" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -131,19 +147,20 @@
                 <p class="text-center">Nenhum Comentário!</p>
                 @endif
               </div>
-            </div>
+
           </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div id="myModal" class="img-modal">
-  <span id="close" class="img-close">&times;</span>
-  <img class="img-modal-content" id="img-view">
-</div>
+  </div>
+
+  <div id="myModal" class="img-modal">
+      <span id="close" class="img-close">&times;</span>
+      <img class="img-modal-content" id="img-view">
+    </div>
 
 @endsection

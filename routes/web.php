@@ -141,7 +141,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Supervisor'], function () {
     /*************Peticoes*************/
     Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes do grupo
     Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('peticao.avaliar');
-    Route::post('Peticao/Template', 'PetitionController@template')->name('peticao.template'); //ver as peticoes do grupo
     Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');// falta metodos de editar petição que o professor deve poder    
     Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('peticao.edit');
     Route::post('Peticao/Editar', 'PetitionController@update')->name('peticao.editar');

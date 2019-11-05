@@ -58,17 +58,19 @@
                               {{$petition->version}}.0
                             </td>
                             <td class="text-center align-middle">
-                            @if($petition->defender_ok == 'true')
-                              Finalizada
-                            @elseif($petition->student_ok == 'true' && $petition->teacher_ok != 'true')
-                              Avaliação Pendente {{-- falta o professor avaliar --}}
-                            @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok != 'true')
-                              Avaliação Pendente - Supervisor {{-- falta o supervisor avaliar --}}
-                            @elseif($petition->student_ok == 'false' && $petition->supervisor_ok == 'false')
-                              Petição recusada - Supervisor
-                            @elseif($petition->student_ok == 'false' && $petition->teacher_ok == 'false')
-                              Petição recusada - Aguardando correção do aluno
-                            @endif
+                              @if($petition->defender_ok == 'true')
+                                Finalizada
+                              @elseif($petition->student_ok == '')
+                                Rascunho
+                              @elseif($petition->teacher_ok == 'false' && $petition->student_ok == 'false')
+                                Petição recusada - Professor
+                              @elseif($petition->student_ok == 'true' && $petition->teacher_ok != 'true')
+                                Avaliação pendente - Professor
+                              @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok != 'true')
+                                Avaliação pendente - Supervisor
+                              @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok == 'true')
+                                Avaliação pendente - Defensor
+                              @endif
                             </td>
                             <td class="text-center align-middle">
                               {{$petition->description}}

@@ -215,7 +215,7 @@ class PetitionController extends Controller
     }
 
     public function avaliar(Request $request, $id) {
-        if (Auth::user()->type == 'teacher' || Auth::user()->type == 'superivisor' || Auth::user()->type == 'defender') {
+        if (Auth::user()->type == 'teacher' || Auth::user()->type == 'supervisor' || Auth::user()->type == 'defender') {
             $petition = Petition::find($id);
             if ($petition != null) {
                 $human = Human::all()->where('user_id', Auth::user()->id)->first();

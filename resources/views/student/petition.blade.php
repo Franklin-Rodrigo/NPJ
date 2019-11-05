@@ -68,7 +68,7 @@
                                   Petição recusada - Professor
                                 @elseif($petition->student_ok == 'true' && $petition->teacher_ok != 'true')
                                   Avaliação pendente - Professor
-                                @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true')
+                                @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok != 'true')
                                   Avaliação pendente - Supervisor
                                 @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok == 'true')
                                   Avaliação pendente - Defensor
