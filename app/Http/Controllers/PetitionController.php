@@ -8,20 +8,18 @@ use App\Entities\Human;
 use App\Entities\Petition;
 use App\Entities\Template;
 use App\Services\PetitionService;
-use App\User;
+// use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
 class PetitionController extends Controller
 {
     //
-    public function __construct(PetitionService $service)
-    {
+    public function __construct(PetitionService $service) {
         $this->service = $service;
     }
 
-    public function index()
-    {
+    public function index() {
         if (Auth::user()->type == 'student') {
             $dados = $this->service->studentIndex();
 
@@ -43,8 +41,7 @@ class PetitionController extends Controller
         }
     }
 
-    public function add()
-    {
+    public function add() {
         if (Auth::user()->type != 'student') {
             return redirect()->back();
         }
@@ -53,8 +50,7 @@ class PetitionController extends Controller
         return view('student.petitionCadastrar');
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //dd($request->botao);
         if (Auth::user()->type == 'student') { // só autenticação
 
@@ -67,18 +63,17 @@ class PetitionController extends Controller
         }
     }
 
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         $user = Auth::user();
-        $tipo = $user->type == 'student' ? 'Aluno' : 'Professor';
-        if ($user->type == 'student' || $user->type == 'teacher') { // autenticação
+        $tipo = $user->type == 'student' ? 'Aluno' : $user->type == 'teacher' ? 'Professor' : 'Supervisor'; 
+        if ($user->type == 'student' || $user->type == 'teacher' || $user->type == 'supervisor') { // autenticação
             $petition = Petition::find($request['id']);
             if ($petition != null) { // não requisitar id indisponível
-                if ($petition->student_ok == 'false' || ($petition->student_ok == 'true' && $petition->teacher_ok != 'true')) { //aluno esta editando Peticao RECUSADA
+                if ($petition->student_ok == 'false' || ($petition->student_ok == 'true' && $petition->teacher_ok != 'true') || ($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok != 'true')) { //aluno esta editando Peticao RECUSADA, ou o professor está editando a petição, ou o supervisor
                     if ($request->botao == 'ENVIAR') { //aluno vai ENVIAR a Petição RECUSADA editada
                         $this->service->newVersion($request, $petition);
 
-                        $request->session()->flash('status', 'Petição Enviada com sucesso!');
+                        $request->session()->flash('status', 'Petição enviada com sucesso!');
 
                     } else if ($request->botao == 'SALVAR') { //aluno vai apenas salvar as alterações e nao vai ENVIAR a Petição RECUSADA
                         $this->service->updateDraft($request, $petition);
@@ -87,7 +82,7 @@ class PetitionController extends Controller
                     }
                     return redirect($tipo . '/Peticoes');
 
-                } else if ($petition->student_ok == null) { //aluno esta editando Peticao RASCUNHO
+                } else if ($petition->student_ok == null) { //aluno está editando Peticao RASCUNHO
                     if ($request->botao == 'ENVIAR') { //aluno vai enviar Petição RASCUNHO editada
 
                         $petition->student_ok = 'true'; //student_ok era null, agr é true
@@ -96,7 +91,7 @@ class PetitionController extends Controller
                         $doubleStudent = DoubleStudent::find($petition->doubleStudent_id);
                         $this->service->countPetition($doubleStudent);
 
-                        $request->session()->flash('status', 'Petição Enviada com sucesso!');
+                        $request->session()->flash('status', 'Petição enviada com sucesso!');
 
                     } else if ($request->botao == 'SALVAR') { //aluno vai salvar Petição RASCUNHO editada
                         $this->service->updateDraft($request, $petition);
@@ -109,13 +104,12 @@ class PetitionController extends Controller
             } else { // se petição nula
                 return redirect()->back();
             }
-        } else { // se usuário não é aluno
+        } else { // se usuário não é aluno, professor ou supervisor
             return redirect()->back();
         }
     }
 
-    public function changePetition(Request $request)
-    {
+    public function changePetition(Request $request) {
 
         $p = Petition::find($request['id']); //Peticao escolhida
         $pOld = Petition::all()->where('petitionFirst', $p->petitionFirst)->where('visible', 'true')->first(); //Peticao antiga
@@ -124,7 +118,6 @@ class PetitionController extends Controller
                 // if separado para não quebrar caso $pOld seja null
                 $this->service->changePetition($p, $pOld);
                 return response()->json(['status' => $status]);
-
             }
         }
 
@@ -132,8 +125,7 @@ class PetitionController extends Controller
 
     }
 
-    public function copyPetition(Request $request)
-    {
+    public function copyPetition(Request $request) {
         $petition = Petition::find($request['id']); //Peticao escolhida
         //$pOld = Petition::all()->where('petitionFirst',$p->petitionFirst)->where('visible','true')->first();//Peticao antiga
 
@@ -146,25 +138,22 @@ class PetitionController extends Controller
         return redirect()->back();
     }
 
-    public function escolherTemplate(Request $request)
-    {
+    public function escolherTemplate(Request $request) {
         $template = Template::find($request->template_id);
         return view('student.petitionCadastrar')->with(['template' => $template]);
     }
 
-    public function delete(Request $request)
-    {
+    public function delete(Request $request) {
         $petition = Petition::find($request['id']);
         if ($petition != null && $petition->student_ok == '') { //peticao diferente de nulo e sendo RASCUNHO
             $this->service->delete($petition);
-            $request->session()->flash('status', 'Petição rascunho excluida com Sucesso!!');
+            $request->session()->flash('status', 'Rascunho de petição excluida com sucesso!');
         }
         return redirect('Aluno/Peticoes');
 
     }
 
-    public function edit(Request $request, $id)
-    {
+    public function edit(Request $request, $id) {
         $petition = Petition::find($id);
 
         if ($petition != null) {
@@ -181,6 +170,8 @@ class PetitionController extends Controller
                     $autorizado = true;
                 } else if (Auth::user()->type == 'teacher' && $petition->teacher_ok != 'true' && $petition->student_ok == 'true') {
                     $autorizado = true;
+                } else if (Auth::user()->type == 'supervisor' && $petition->supervisor_ok != 'true' && $petition->teacher_ok == 'true' && $petition->student_ok == 'true') {
+                    $autorizado = true;
                 }
 
                 if ($autorizado) {
@@ -194,8 +185,7 @@ class PetitionController extends Controller
 
     }
 
-    public function show(Request $request, $id)
-    {
+    public function show(Request $request, $id) {
         $petition = Petition::find($id);
 
         if ($petition != null) {
@@ -210,7 +200,7 @@ class PetitionController extends Controller
                 if ($doubleHu != null) { //se o usuario estiver consultando a sua peticao entoa OK
                     $autorizado = true;
                 }
-            } else if (Auth::user()->type == 'teacher' || Auth::user()->type == 'defender') {
+            } else if (Auth::user()->type == 'teacher' || Auth::user()->type == 'superivisor' || Auth::user()->type == 'defender') {
                 $autorizado = true;
             }
             if ($autorizado) {
@@ -224,9 +214,8 @@ class PetitionController extends Controller
 
     }
 
-    public function avaliar(Request $request, $id)
-    {
-        if (Auth::user()->type == 'teacher' || Auth::user()->type == 'defender') {
+    public function avaliar(Request $request, $id) {
+        if (Auth::user()->type == 'teacher' || Auth::user()->type == 'superivisor' || Auth::user()->type == 'defender') {
             $petition = Petition::find($id);
             if ($petition != null) {
                 $human = Human::all()->where('user_id', Auth::user()->id)->first();
@@ -246,8 +235,7 @@ class PetitionController extends Controller
         return redirect()->back();
     }
 
-    public function emitir(Request $request, $id)
-    {
+    public function emitir(Request $request, $id) {
         $defender = Human::all()->where('user_id', Auth::user()->id)->first();
         #$humans = Human::all()->where('status', 'active');
         #$temps = Template::all()->where('status', 'active');
@@ -261,8 +249,7 @@ class PetitionController extends Controller
 
     }
 
-    public function deletePhoto(Request $request, $petition_id, $photo_id)
-    {
+    public function deletePhoto(Request $request, $petition_id, $photo_id) {
         //rota tem que ter dois id ex http://localhost:8000/Aluno/Peticao/Edit/16/DeletePhoto/1
         $petition = Petition::find($petition_id);
 

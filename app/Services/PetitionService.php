@@ -9,7 +9,7 @@ use App\Entities\Human;
 use App\Entities\Petition;
 use App\Entities\Photo;
 use App\Entities\Template;
-use App\User;
+// use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use Storage;
@@ -59,7 +59,7 @@ class PetitionService
         $petitions = Petition::all()->where('visible', 'true')->sortByDesc('updated_at');
         $user = Auth::user();
 
-        return ['defender' => $supervisor, 'petitions' => $petitions, 'user' => $user];
+        return ['supervisor' => $supervisor, 'petitions' => $petitions, 'user' => $user];
     }
 
     public function defenderIndex() {
@@ -210,7 +210,7 @@ class PetitionService
         $petition->teacher_ok = null;
         $petition->supervisor_ok = null;
         $petition->defender_ok = null;
-        $petition->supervisor_id = null; //defensor nao deve estar vinculado a uma versao anterior, somente a vesao finalizada
+        $petition->supervisor_id = null;
         $petition->defender_id = null; //defensor nao deve estar vinculado a uma versao anterior, somente a vesao finalizada
         $petition->save();
     }
@@ -333,7 +333,7 @@ class PetitionService
             return $c->human->user->type == 'teacher';
         })->all();
         $supComments =  $comments->reject(function($c){
-            return $c->human->user->type == 'defender';
+            return $c->human->user->type == 'supervisor';
         })->all();
         $defComments =  $comments->reject(function($c){
             return $c->human->user->type == 'defender';

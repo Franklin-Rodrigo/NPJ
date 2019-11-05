@@ -127,6 +127,7 @@
                     <option value="">Selecione o sexo</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Feminino">Feminino</option>
+                    <option value="Não informar">Não informar</option>
                   </select>
                 </div>
             </div>

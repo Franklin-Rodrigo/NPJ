@@ -65,11 +65,13 @@
                                 @elseif($petition->student_ok == '')
                                   Rascunho
                                 @elseif($petition->teacher_ok == 'false' && $petition->student_ok == 'false')
-                                  Recusada - Professor
+                                  Petição recusada - Professor
                                 @elseif($petition->student_ok == 'true' && $petition->teacher_ok != 'true')
-                                  Avaliação - Professor
+                                  Avaliação pendente - Professor
                                 @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true')
-                                  Avaliação - Defensor
+                                  Avaliação pendente - Supervisor
+                                @elseif($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok == 'true')
+                                  Avaliação pendente - Defensor
                                 @endif
                               </td>
                               <td class="text-center align-middle">
