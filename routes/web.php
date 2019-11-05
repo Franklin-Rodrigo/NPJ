@@ -134,9 +134,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Professor'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'Supervisor'], function () {
     
     /*************Painel de Controle*************/
-    Route::get('', 'DefenderController@index')->name('index');
-    Route::get('Preferencias', 'DefenderController@preferences')->name('preferencias');
-    Route::post('Preferencias/Editar', 'DefenderController@preferencesEditar')->name('preferencias.editar');
+    Route::get('', 'SupervisorController@index')->name('index');
+    Route::get('Preferencias', 'SupervisorController@preferences')->name('preferencias');
+    Route::post('Preferencias/Editar', 'SupervisorController@preferencesEditar')->name('preferencias.editar');
     
     /*************Peticoes*************/
     Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes do grupo

@@ -155,7 +155,7 @@ class PetitionService
 
     public function newVersion(Request $request, Petition $petition) {
         //cria nova versao da peticao
-        $totalVersao = Petition::all()->where('petitionFirst', $petition->petitionFirst)->count();
+        $totalVersao = Petition::all()->where('petitionFirst', $petition->petitionFirst)->count(); //Pega o número de pertições que apontam para a primeira versão e define qual será o número da nova versão
 
         $newPetition = new Petition([
             'description' => $request['description'],
@@ -174,13 +174,15 @@ class PetitionService
             'petitionFirst' => $petition->petitionFirst,
         ]);
 
-        if($petition->student_ok != 'true'){ // aluno corrigindo 
+        if ($petition->student_ok != 'true'){ // aluno corrigindo 
             $newPetition['student_ok'] = 'true';
-        } else { // professor corrigindo
+        } elseif ($petition->teacher_ok != 'true') { // professor corrigindo
             $newPetition['teacher_ok'] = 'true';
+        } elseif ($petition->supervisor_ok != 'true') { // supervisor corrigindo
+            $newPetition['supervisor_ok'] = 'true';
         }
 
-        $newPetition->save();
+        $newPetition->save(); //Salva a nova versão da petição
 
         $photos = Photo::all()->where('petition_id', $petition->id);
         if ($photos != null) {

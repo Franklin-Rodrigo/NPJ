@@ -7,36 +7,32 @@ use App\Entities\Group;
 use App\Entities\Human;
 use App\Entities\Petition;
 use App\Services\PetitionService;
-use App\User;
+// use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
 class CommentService
 {
 
-    public function __construct(PetitionService $service)
-    {
+    public function __construct(PetitionService $service) {
         $this->service = $service;
     }
 
-    public function professorStore(Request $request, Petition $petition)
-    {
+    public function professorStore(Request $request, Petition $petition) {
 
         $group = Group::find($petition->group_id);
         $teacher = Human::find($group->teacher_id);
 
-        if ($request->botao == 'APROVAR') {
+        if ($request->botao == 'APROVAR') { // professor pode avaliar petição diretamente, como também pode editar e enviar
             $petition->teacher_ok = 'true';
             $petition->save();
 
-        }
-        else if($request->botao == 'ENVIAR'){ // professor poder corrigir e enviar petição de aluno desvinculado
+        } else if($request->botao == 'ENVIAR'){ // professor poder corrigir e enviar petição de aluno desvinculado
             $this->service->newVersion($request, $petition);
             $petition->teacher_ok = 'true';
             $petition->save();
-
             
-        }else if($request->botao == 'SALVAR'){ // salvar sem enviar
+        } else if($request->botao == 'SALVAR'){ // salvar sem enviar
             $this->service->updateDraft($request, $petition);
 
         } else if ($request->botao == 'REPROVAR') { //se estiver clicado em REPROVAR
@@ -48,13 +44,41 @@ class CommentService
             $petition->student_ok = 'false';
             $petition->teacher_ok = 'false';
             $petition->save();
-            $request->session()->flash('status', 'Avaliação realizada com Sucesso!!');
+            $request->session()->flash('status', 'Avaliação realizada com Sucesso!');
         }
-
     }
 
-    public function defensorStore(Request $request, Petition $petition)
-    {
+    public function supervisorStore(Request $request, Petition $petition) {
+
+        $supervisor = Human::where('user_id', Auth::user()->id)->first();
+
+        if ($request->botao == 'APROVAR') {
+            $petition->supervisor_ok = 'true';
+            $petition->save();
+
+        } else if($request->botao == 'ENVIAR'){ // professor poder corrigir e enviar petição de aluno desvinculado
+            $this->service->newVersion($request, $petition); // *************** Arrumar aqui!!!!! ****
+            $petition->supervisor_ok = 'true';
+            $petition->save();
+            
+        } else if($request->botao == 'SALVAR'){ // salvar sem enviar
+            $this->service->updateDraft($request, $petition);
+
+        } else if ($request->botao == 'REPROVAR') { //se estiver clicado em REPROVAR
+            Comment::create([
+                'content' => $request['comment'],
+                'human_id' => $supervisor->id,
+                'petition_id' => $request['idPetition'],
+            ]);
+            $petition->student_ok = 'true';
+            $petition->teacher_ok = 'false';
+            $petition->supervisor_ok = 'false';
+            $petition->save();
+            $request->session()->flash('status', 'Avaliação realizada com Sucesso!');
+        }
+    }
+
+    public function defensorStore(Request $request, Petition $petition) {
 
         $defender = Human::where('user_id', Auth::user()->id)->first();
 
@@ -70,11 +94,12 @@ class CommentService
                 'petition_id' => $request['idPetition'],
             ]);
             $petition->student_ok = 'true';
-            $petition->teacher_ok = 'false';
+            $petition->teacher_ok = 'true';
+            $petition->supervisor_ok = 'false';
             $petition->defender_ok = 'false';
             $petition->defender_id = $defender->id; //petição passa a estar vinculada ao defensor
             $petition->save();
-            $request->session()->flash('status', 'Avaliação realizada com Sucesso!!');
+            $request->session()->flash('status', 'Avaliação realizada com Sucesso!');
         }
     }
 

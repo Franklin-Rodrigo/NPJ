@@ -13,8 +13,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -23,16 +22,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index()
-
-    {
-      if(Auth::user()->type == "admin"){
+     public function index() {
+      if (Auth::user()->type == "admin"){
         return redirect('Admin');
-      }elseif(Auth::user()->type == "student"){
+      } elseif (Auth::user()->type == "student"){
         return redirect('Aluno');
-      }elseif(Auth::user()->type == "teacher"){
+      } elseif (Auth::user()->type == "teacher"){
         return redirect('Professor');
-      }elseif(Auth::user()->type == "defender"){
+      } elseif (Auth::user()->type == "supervisor"){
+        return redirect('Supervisor');
+      } elseif (Auth::user()->type == "defender"){
         return redirect('Defensor');
       }
       return view('auth.login');

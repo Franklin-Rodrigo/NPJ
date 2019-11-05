@@ -26,6 +26,12 @@ class CommentController extends Controller
 
             return redirect('Professor/Peticoes');
 
+        } else if (Auth::user()->type == 'supervisor') { //Área do Defensor
+
+            $this->service->supervisorStore($request, $petition);
+
+            return redirect('Supervisor/Peticoes');
+
         } else if (Auth::user()->type == 'defender') { //Área do Defensor
 
             $this->service->defensorStore($request, $petition);
@@ -33,7 +39,7 @@ class CommentController extends Controller
             return redirect('Defensor/Peticoes');
 
         } else {
-            $request->session()->flash('status', 'Você não possui Autorização de Acesso!!');
+            $request->session()->flash('status', 'Você não possui autorização de acesso!!');
             return redirect()->back();
         }
     }
