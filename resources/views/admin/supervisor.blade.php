@@ -79,13 +79,13 @@
                               </button>
                             </td>
                           </tr>
-                          @else
+                        
+                        @endif
+                      @empty
+                   
                          <tr class="my-auto align-middle">
                             <td class="text-center " colspan="6">Nenhum supervisor registrado!</td>
                          </tr>
-                        @endif
-                      @empty
-                    
                       @endforelse
                     </tbody>
                   </table>

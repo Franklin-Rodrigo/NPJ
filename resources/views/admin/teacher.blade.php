@@ -91,13 +91,13 @@
                             </button>
                           </td>
                         </tr>
-                        @else
-                         <tr class="my-auto align-middle">
-                            <td class="text-center " colspan="7">Nenhum professor registrado!</td>
-                         </tr>
+
+                        
                       @endif
                       @empty
-                    
+                      <tr class="my-auto align-middle">
+                            <td class="text-center " colspan="7">Nenhum professor registrado!</td>
+                         </tr>
                     @endforelse
                   </tbody>
                   </table>
