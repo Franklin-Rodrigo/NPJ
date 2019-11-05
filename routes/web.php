@@ -56,8 +56,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Admin'], function () {
     Route::post('Grupo/Cadastrar', 'GroupController@store')->name('grupo.cadastrar');
     Route::post('Grupo/Editar', 'GroupController@update')->name('grupo.editar');
     Route::post('Grupo/Excluir', 'GroupController@destroy')->name('grupo.excluir');
-    Route::post('Grupo/Desativar', 'GroupController@desactivate')->name('grupo .desactivate');
-    Route::post('Grupo/Ativar', 'GroupController@activate')->name('grupo .activate');
+    Route::post('Grupo/Desativar', 'GroupController@desactivate')->name('grupo.desactivate');
+    Route::post('Grupo/Ativar', 'GroupController@activate')->name('grupo.activate');
     
     /*************Defensores*************/
     Route::get('Defensores', 'DefenderController@index')->name('defensores');

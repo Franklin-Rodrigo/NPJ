@@ -38,8 +38,9 @@
                     </div>
                   </div>
               </div>
-             
+
                 <div class="table-responsive">
+                
                   <table class="table table-striped">
                     <thead class="thead-dark">
                       <tr>
@@ -51,6 +52,8 @@
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>
+
+
                     <tbody>
                       @forelse($supervisors as $supervisor)
                         @if($supervisor->user->type == "supervisor")
@@ -76,9 +79,13 @@
                               </button>
                             </td>
                           </tr>
+                          @else
+                         <tr class="my-auto align-middle">
+                            <td class="text-center " colspan="6">Nenhum supervisor registrado!</td>
+                         </tr>
                         @endif
                       @empty
-                       
+                    
                       @endforelse
                     </tbody>
                   </table>

@@ -76,9 +76,13 @@
                               </button>
                             </td>
                           </tr>
+                          @else
+                         <tr class="my-auto align-middle">
+                            <td class="text-center " colspan="6">Nenhum defensor registrado!</td>
+                         </tr>
                         @endif
                       @empty
-                      <td class="text-center">Nenhum Defensor registrado!</td>
+                     
                       @endforelse
                     </tbody>
                   </table>
