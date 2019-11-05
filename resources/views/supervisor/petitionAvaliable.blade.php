@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.supervisor')
 @section('component')
 
 <div class="container">

@@ -200,7 +200,7 @@ class PetitionController extends Controller
                 if ($doubleHu != null) { //se o usuario estiver consultando a sua peticao entoa OK
                     $autorizado = true;
                 }
-            } else if (Auth::user()->type == 'teacher' || Auth::user()->type == 'superivisor' || Auth::user()->type == 'defender') {
+            } else if (Auth::user()->type == 'teacher' || Auth::user()->type == 'supervisor' || Auth::user()->type == 'defender') {
                 $autorizado = true;
             }
             if ($autorizado) {
