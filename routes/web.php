@@ -121,9 +121,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Professor'], function () {
     Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes do grupo
     Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('peticao.avaliar');
     Route::post('Peticao/Template', 'PetitionController@template')->name('peticao.template'); //ver as peticoes do grupo
-    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');
-    // falta metodos de editar petição que o professor deve poder
-    
+    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');// falta metodos de editar petição que o professor deve poder    
     Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('peticao.edit');
     Route::post('Peticao/Editar', 'PetitionController@update')->name('peticao.editar');
     Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('peticao.deletePhoto');
@@ -141,13 +139,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Supervisor'], function () {
     Route::post('Preferencias/Editar', 'DefenderController@preferencesEditar')->name('preferencias.editar');
     
     /*************Peticoes*************/
-    Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes das quais ele pertence
-    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');
-    Route::get('Peticao/Emitir/{id}', 'PetitionController@emitir')->name('peticao,.emitir');
-    //Ao ver as peticoes, ele irá ver também todos os comentarios que ele fez referentes aquela peticao
+    Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes do grupo
     Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('peticao.avaliar');
-    Route::post('Peticao/Emitir', 'PetitionController@emitir')->name('peticao.emitir');
-    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('comentario.cadastrar'); //O defensor pode cadastrar comentario
+    Route::post('Peticao/Template', 'PetitionController@template')->name('peticao.template'); //ver as peticoes do grupo
+    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');// falta metodos de editar petição que o professor deve poder    
+    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('peticao.edit');
+    Route::post('Peticao/Editar', 'PetitionController@update')->name('peticao.editar');
+    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('peticao.deletePhoto');
+    
+    /*************Comentarios*************/
+    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('comentario.cadastrar'); //O professor pode cadastrar comentario
 });
 
 /* Rotas para usuário do tipo Defensor */
