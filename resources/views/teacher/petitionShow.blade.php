@@ -38,7 +38,7 @@
           </select>
         </div>
       </div>
-      @elseif($petitions->where('visible','true')->where('student_ok','true')->where('defender_ok','true')->first())
+      @elseif($petitions->where('visible','true')->where('student_ok','true')->first())
       <div class="row">        
         <div>
           <select class="custom-select" onchange="location.href=this.value" id="idPetition" style="width:100%;">
@@ -107,7 +107,7 @@
       @endif
       <div class="row">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
+          <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Professor/Peticoes')}}'">
             <span class="fas fa-arrow-left mr-2"></span>
             Voltar
           </button>

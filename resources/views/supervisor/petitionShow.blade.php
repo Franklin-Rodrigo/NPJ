@@ -4,7 +4,7 @@
   <div class="row justify-content-center my-3">
     <div class="col-lg-10">
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
-      @if($petitions->where('visible','true')->where('student_ok','!=','true')->first())
+      @if($petitions->where('visible','true')->where('teacher_ok','!=','true')->first())
       <div class="row">
         <div class="col-1">
           <div class="align-middle my-auto">
@@ -38,7 +38,7 @@
           </select>
         </div>
       </div>
-      @elseif($petitions->where('visible','true')->where('student_ok','true')->where('defender_ok','true')->first())
+      @elseif($petitions->where('visible','true')->where('student_ok','true')->where('teacher_ok','true')->where('defender_ok','')->first())
       <div class="row">        
         <div>
           <select class="custom-select" onchange="location.href=this.value" id="idPetition" style="width:100%;">

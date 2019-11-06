@@ -93,7 +93,7 @@
                         @endif
                         @empty
                         <tr>
-                          <td class="text-center" colspan="3">Nenhuma Petição à ser Avaliada!</td>
+                          <td class="text-center" colspan="4">Nenhuma Petição à ser Avaliada!</td>
                         </tr>
                       @endforelse
                     </tbody>

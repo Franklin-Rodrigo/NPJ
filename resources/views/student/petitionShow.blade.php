@@ -6,7 +6,7 @@
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
       @if($petitions->where('visible','true')->where('student_ok','!=','true')->first())
       <div class="row">
-        <div class="col-1">
+        <div class="col-lg-1 col-sm-1  mt-3">
           <div class="align-middle my-auto">
             @if($petition->visible != 'true')
             <button type="button" class="btn btn-dark" onclick="mudarPeticao()" title="Clique para trocar peticao">
@@ -19,7 +19,7 @@
             @endif
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-lg-3 col-sm-6 col-md-6 mt-3 ml-3">
           <select class="custom-select form-control" onchange="location.href=this.value" id="idPetition" style="width:100%;">
             @if($petition->visible == 'true')
             <option value="{{$petition->id}}">Versão Atual {{$petition->version}}.0</option>
@@ -38,15 +38,15 @@
           </select>
         </div>
       </div>
-      @elseif($petitions->where('visible','true')->where('student_ok','true')->where('defender_ok','true')->first())
-      <div class="row">
+      @elseif($petitions->where('visible','true')->where('student_ok','true')->first())
+      <div class="row mt-3">
         <div>
           <button type="button" class="btn btn-secondary mr-2" onclick="copiarPeticao()" title="Clique para copiar peticao">
             Copiar
             <span class="fas fa-copy"></span>
           </button>
         </div>
-        <div>
+        <div >
           <select class="custom-select" onchange="location.href=this.value" id="idPetition" style="width:100%;">
             @if($petition->visible == 'true')
             <option value="{{$petition->id}}">Versão Atual {{$petition->version}}.0</option>
@@ -66,7 +66,7 @@
         </div>
       </div>
       @endif
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-5">
         <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#comments"
           aria-expanded="false" aria-controls="comments">
           Ver comentários

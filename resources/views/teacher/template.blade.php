@@ -65,7 +65,7 @@
                             </td>
                           </tr>
                       @empty
-                      <td class="text-center">Nenhum Template registrado!</td>
+                      <td class="text-center" colspan="3">Nenhum Template registrado!</td>
                       @endforelse
                     </tbody>
                   </table>

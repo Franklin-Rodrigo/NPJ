@@ -4,6 +4,7 @@
 <div class="container">
   <div class="row justify-content-center my-3">
     <div class="col-lg-10">
+    
         <div class="row justify-content-center">
             <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#comments"
               aria-expanded="false" aria-controls="comments">
@@ -61,6 +62,7 @@
         <br>
         <div class="row">
           <label>Comentário:</label>
+          
           <textarea  cols="100" rows="10" maxlength="99999" name="comment" id="comment" placeholder="Preencha caso necessite de correção!" ></textarea>
         </div>
         <div class="row justify-content-center mt-3">
@@ -88,6 +90,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Comentários</h5>
+            
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

@@ -1,7 +1,7 @@
 @extends('layouts.student')
 @section('component')
   <div class="container">
-    <div class="row justify-content-center my-3">
+    <div class="row justify-content-center my-3 mt-5">
       <div class="text-center">
       <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">
           Ver comentários
@@ -85,11 +85,11 @@
               Cancelar
               <span class="fas fa-times ml-2"></span>
             </button>
-            <button type="submit" name="botao" class="btn btn-primary" value="SALVAR">
+            <button type="submit" name="botao" class="btn btn-primary" value="SALVAR" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
               Salvar
               <span class="fas fa-save ml-2"></span>
             </button>
-            <button type="submit" name="botao" class="btn btn-success" value="ENVIAR">
+            <button type="submit" name="botao" class="btn btn-success" value="ENVIAR" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
               Enviar
               <span class="fas fa-share ml-2"></span>
             </button>
