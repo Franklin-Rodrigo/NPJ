@@ -46,6 +46,7 @@
               <table class="table table-striped">
                 <thead class="thead-dark">
                   <tr>
+                  <th class="text-center">Status</th>
                     <th class="text-center">Dupla</th> 
                     <th class="text-center">Grupo</th>
                     <th class="text-center">Ações</th>
@@ -55,14 +56,16 @@
                   @forelse($doubleStudents as $doubleStudent)
                     @if($humans->find($doubleStudent->student_id) && $humans->find($doubleStudent->student2_id))
                       <tr class="object align-middle" name="{{$humans->find($doubleStudent->student_id)->name}}">
+                        <td>
+                        <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModaldoubleStudent" onclick="deletedoubleStudent('{{$doubleStudent->id}}')" title="Excluir Dupla"><i class="fa fa-trash"></i></button>
+                      </td>
                         <td class="text-center align-middle">
                           {{$humans->find($doubleStudent->student_id)->name}} | 
                           {{$humans->find($doubleStudent->student2_id)->name}}
                         </td>                            
                         <td class="text-center align-middle">{{$doubleStudent->group->name}}</td>
                         <td class="text-center align-middle">
-                          <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editModaldoubleStudent" onclick="editModaldoubleStudent('{{$doubleStudent->id}}','{{$humans->find($doubleStudent->student_id)->name}}','{{$humans->find($doubleStudent->student2_id)->name}}','{{$doubleStudent->group->name}}')" title="Editar Dupla"><i class="fa fa-edit"></i></button>
-                          <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModaldoubleStudent" onclick="deletedoubleStudent('{{$doubleStudent->id}}')" title="Excluir Dupla"><i class="fa fa-trash"></i></button>
+                          <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModaldoubleStudent" onclick="editModaldoubleStudent('{{$doubleStudent->id}}','{{$humans->find($doubleStudent->student_id)->name}}','{{$humans->find($doubleStudent->student2_id)->name}}','{{$doubleStudent->group->name}}')" title="Editar Dupla"><i class="fa fa-edit"></i>Editar</button>
                         </td>
                       </tr>
                     @endif
