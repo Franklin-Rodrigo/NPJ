@@ -14,7 +14,7 @@ class GroupService
 
         $petitions = Petition::all();
         $humans = Human::all();
-        $groups = Group::all();
+        $groups = Group::all()->sortByDesc('id');
         $doubleStudents = DoubleStudent::all();
         return ['petitions' => $petitions, 'humans' => $humans, 'groups' => $groups, 'doubleStudents' => $doubleStudents];
     }

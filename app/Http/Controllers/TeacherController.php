@@ -17,7 +17,7 @@ class TeacherController extends Controller
 
     public function index() {
         if (Auth::user()->type == 'admin') {
-            $teachers = Human::all();
+            $teachers = Human::all()->sortBy('name');
             return view('admin.teacher')->with(['teachers' => $teachers]);
         } else if (Auth::user()->type == 'teacher') {
             $dados = $this->service->index();

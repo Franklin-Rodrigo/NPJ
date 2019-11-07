@@ -1,0 +1,90 @@
+@extends('layouts.admin')
+@section('component')
+<div class="card">
+    <h4 class="card-title">Gerenciar Grupos</h4>
+    <div class="card-body">
+        <div class="col-lg-12">
+        <div class="card">
+            <div class="row">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+                </ul>
+            </div>
+            @endif
+            @if(Session::has('status'))
+                <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="text-center">
+                    <div class="input-group">
+                        <input type="search" name="" class="form-control" value="" placeholder="Buscar por nome..." onkeyup="filtroDeLog(this.value, 0)">
+                        <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <span class="text-center">
+                    <div class="input-group">
+                        <input type="search" name="" class="form-control" value="" placeholder="Buscar por tipo de usuário..." onkeyup="filtroDeLog(this.value, 1)">
+                        <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <span class="text-center">
+                    <div class="input-group">
+                        <input type="search" name="" class="form-control" value="" placeholder="Buscar por URL..." onkeyup="filtroDeLog(this.value, 2)">
+                        <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <span class="text-center">
+                    <div class="input-group">
+                        <input type="search" name="" class="form-control" value="" placeholder="Buscar por data..." onkeyup="filtroDeLog(this.value, 3)">
+                        <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                    <th style="font-size:18pt" class="text-center">NOME</th>
+                    <th style="font-size:18pt" class="text-center">TIPO</th>
+                    <th style="font-size:18pt" class="text-center">URL</th>
+                    <th style="font-size:18pt" class="text-center">PARÂMETROS</th>
+                    <th style="font-size:18pt" class="text-center">DATA E HORA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($records as $record)
+                    <tr class="object">
+                        <pre>{{$record}}</pre>
+                    </tr>
+                    @endforeach
+                </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+@endsection

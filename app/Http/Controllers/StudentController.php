@@ -17,7 +17,7 @@ class StudentController extends Controller
 
   public function index() {
     if(Auth::user()->type == 'admin') {
-      $students = Human::all();
+      $students = Human::all()->sortBy('name');
       return view('admin.student')->with(['students'=>$students]);
     } else if(Auth::user()->type == 'student') {
       $dados = $this->service->index();

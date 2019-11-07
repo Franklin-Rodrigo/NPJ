@@ -29,7 +29,7 @@ class DoubleStudentController extends Controller
             $users = User::all();
             $humans = Human::all()->where('status', 'active');
             $groups = Group::all()->where('status', 'active');
-            $doubleStudents = DoubleStudent::all()->where('status', 'active');
+            $doubleStudents = DoubleStudent::all()->where('status', 'active')->sortByDesc('id');
             return view('admin.doubleStundents')->with(['petitions' => $petitions, 'users' => $users, 'doubleStudents' => $doubleStudents, 'humans' => $humans, 'groups' => $groups]);
         } else if (Auth::user()->type == 'teacher') {
             $teachers = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active');

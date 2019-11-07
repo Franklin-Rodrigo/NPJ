@@ -67,6 +67,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Admin'], function () {
     Route::post('Defensor/Desativar', 'DefenderController@desactivate')->name('defender.desactivate');
     Route::post('Defensor/Ativar', 'DefenderController@activate')->name('defender.activate');
     
+    /*************Records*************/
+    Route::get('Records', 'RecordController@index')->name('records');
+
     /*************Logs*************/
     Route::get('Logs', 'LogController@index')->name('logs');
 });

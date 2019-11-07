@@ -20,7 +20,7 @@ class SupervisorController extends Controller
     public function index() {
         if (Auth::user()->type == 'admin') {
             $petitions = Petition::all()->where('visible', 'true');
-            $supervisors = Human::all();
+            $supervisors = Human::all()->sortBy('name');
             return view('admin.supervisor')->with(['supervisors' => $supervisors, 'petitions' => $petitions]);
         } else if (Auth::user()->type == 'supervisor') {
             $supervisors = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active');

@@ -22,7 +22,7 @@ class DefenderController extends Controller
     public function index() {
         if (Auth::user()->type == 'admin') {
             $petitions = Petition::all()->where('visible', 'true');
-            $defenders = Human::all();
+            $defenders = Human::all()->sortBy('name');
             return view('admin.defender')->with(['defenders' => $defenders, 'petitions' => $petitions]);
         } else if (Auth::user()->type == 'defender') {
             $defenders = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active');
