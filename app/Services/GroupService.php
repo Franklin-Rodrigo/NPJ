@@ -22,7 +22,7 @@ class GroupService
     public function store(Request $request) {
         $gp = Group::all()->where('name', $request['name'])->first();
         if ($gp != null) {
-            $request->session()->flash('status', 'Cadastro Impossível, Já existe um Grupo com esse Nome!');
+            $request->session()->flash('status', 'Cadastro indisponível! Já existe um grupo com esse nome.');
             return redirect()->back();
         }
 
@@ -60,7 +60,7 @@ class GroupService
             if ($request['name'] != null) {
                 $group->name = $request['name'];
             } else {
-                $request->session()->flash('status', 'Falha ao tentar editar Grupo! - O nome do grupo não pode ser nulo');
+                $request->session()->flash('status', 'Falha ao tentar editar grupo! O nome do grupo não pode ser nulo');
                 return redirect()->back();
             }
         }

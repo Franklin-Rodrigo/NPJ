@@ -9,6 +9,7 @@ use App\Entities\Human;
 use App\Entities\Petition;
 use App\Entities\Photo;
 use App\Entities\Template;
+use App\Entities\Record;
 // use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -90,15 +91,31 @@ class PetitionService
             'visible' => 'true',
         ];
 
-        if ($student_ok) {
-            $novapeticao['student_ok'] = 'true';
-        }
-
+        //Verifica se está enviando a petição, ou apenas salvando.
+        $student_ok ? $novapeticao['student_ok'] = 'true' : null;
+        
         $petition = Petition::create($novapeticao);
         $this->countPetition($doubleStudent);
-
+        
         $petition->petitionFirst = $petition->id;
         $petition->save();
+        
+        if ($student_ok) {
+            //Adiciona registo dos dois alunos que estão na dupla, no momento em que a petição é enviada
+            Record::create([
+                'student_id' => $doubleStudent->student_id,
+                'doubleStudent_id' => $doubleStudent->id,
+                'petition_id' => $petition->id,
+                'petitionFirst' => $petition->petitionFirst
+            ]);
+    
+            Record::create([
+                'student_id' => $doubleStudent->student2_id,
+                'doubleStudent_id' => $doubleStudent->id,
+                'petition_id' => $petition->id,
+                'petitionFirst' => $petition->petitionFirst
+            ]);
+        }
 
         if ($request['images'] != null) {
 
@@ -153,7 +170,7 @@ class PetitionService
         $group->save();
     }
 
-    public function newVersion(Request $request, Petition $petition) {
+    public function newVersion(Request $request, Petition $petition, $user = null) {
         //cria nova versao da peticao
         $totalVersao = Petition::all()->where('petitionFirst', $petition->petitionFirst)->count(); //Pega o número de pertições que apontam para a primeira versão e define qual será o número da nova versão
 
@@ -183,6 +200,25 @@ class PetitionService
         }
 
         $newPetition->save(); //Salva a nova versão da petição
+
+        if ($user != null) {
+            if ($user->type == 'student') {
+                // Verifica se o usuário que está enviando a petição é aluno, e então insere os registros
+                $doubleStudent = DoubleStudent::find($newPetition->doubleStudent_id);
+                Record::create([
+                    'student_id' => $doubleStudent->student_id,
+                    'doubleStudent_id' => $newPetition->doubleStudent_id,
+                    'petition_id' => $newPetition->id,
+                    'petitionFirst' => $newPetition->petitionFirst
+                ]);
+                Record::create([
+                    'student_id' => $doubleStudent->student2_id,
+                    'doubleStudent_id' => $newPetition->doubleStudent_id,
+                    'petition_id' => $newPetition->id,
+                    'petitionFirst' => $newPetition->petitionFirst
+                ]);
+            }
+        }
 
         $photos = Photo::all()->where('petition_id', $petition->id);
         if ($photos != null) {

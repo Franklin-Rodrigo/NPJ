@@ -8,6 +8,7 @@ use App\Entities\Human;
 use App\Entities\Petition;
 use App\Entities\Template;
 use App\Services\PetitionService;
+use App\Entities\Record;
 // use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class PetitionController extends Controller
         if (Auth::user()->type == 'student') { // só autenticação
 
             $student = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
-            $erro = $this->service->newPetition($request, $student);
+            $this->service->newPetition($request, $student);
             return redirect('Aluno/Peticoes');
 
         } else { //se nao for Aluno
@@ -71,7 +72,7 @@ class PetitionController extends Controller
             if ($petition != null) { // não requisitar id indisponível
                 if ($petition->student_ok == 'false' || ($petition->student_ok == 'true' && $petition->teacher_ok != 'true') || ($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok != 'true')) { //aluno esta editando Peticao RECUSADA, ou o professor está editando a petição, ou o supervisor
                     if ($request->botao == 'ENVIAR') { //aluno vai ENVIAR a Petição RECUSADA editada
-                        $this->service->newVersion($request, $petition);
+                        $this->service->newVersion($request, $petition, $user);
 
                         $request->session()->flash('status', 'Petição enviada com sucesso!');
 
@@ -90,6 +91,19 @@ class PetitionController extends Controller
 
                         $doubleStudent = DoubleStudent::find($petition->doubleStudent_id);
                         $this->service->countPetition($doubleStudent);
+
+                        Record::create([
+                            'student_id' => $doubleStudent->student_id,
+                            'doubleStudent_id' => $petition->doubleStudent_id,
+                            'petition_id' => $petition->id,
+                            'petitionFirst' => $petition->petitionFirst
+                        ]);
+                        Record::create([
+                            'student_id' => $doubleStudent->student2_id,
+                            'doubleStudent_id' => $petition->doubleStudent_id,
+                            'petition_id' => $petition->id,
+                            'petitionFirst' => $petition->petitionFirst
+                        ]);
 
                         $request->session()->flash('status', 'Petição enviada com sucesso!');
 
