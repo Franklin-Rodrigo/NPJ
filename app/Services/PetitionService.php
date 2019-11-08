@@ -103,14 +103,14 @@ class PetitionService
         if ($student_ok) {
             //Adiciona registo dos dois alunos que estão na dupla, no momento em que a petição é enviada
             Record::create([
-                'student_id' => $doubleStudent->student_id,
+                'user_id' => $doubleStudent->student_id,
                 'doubleStudent_id' => $doubleStudent->id,
                 'petition_id' => $petition->id,
                 'petitionFirst' => $petition->petitionFirst
             ]);
     
             Record::create([
-                'student_id' => $doubleStudent->student2_id,
+                'user_id' => $doubleStudent->student2_id,
                 'doubleStudent_id' => $doubleStudent->id,
                 'petition_id' => $petition->id,
                 'petitionFirst' => $petition->petitionFirst
@@ -206,13 +206,13 @@ class PetitionService
                 // Verifica se o usuário que está enviando a petição é aluno, e então insere os registros
                 $doubleStudent = DoubleStudent::find($newPetition->doubleStudent_id);
                 Record::create([
-                    'student_id' => $doubleStudent->student_id,
+                    'user_id' => $doubleStudent->student_id,
                     'doubleStudent_id' => $newPetition->doubleStudent_id,
                     'petition_id' => $newPetition->id,
                     'petitionFirst' => $newPetition->petitionFirst
                 ]);
                 Record::create([
-                    'student_id' => $doubleStudent->student2_id,
+                    'user_id' => $doubleStudent->student2_id,
                     'doubleStudent_id' => $newPetition->doubleStudent_id,
                     'petition_id' => $newPetition->id,
                     'petitionFirst' => $newPetition->petitionFirst

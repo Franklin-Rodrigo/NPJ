@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Record;
 use Illuminate\Http\Request;
+use App\User;
 use Auth;
 
 class RecordController extends Controller {
@@ -13,32 +14,8 @@ class RecordController extends Controller {
             return redirect()->back();
         }
 
-        $records = Record::all()->sortByDesc('petitionFirst'); # ordenar por mais recente
+        $user = User::with(['human' ,'records'])->where('type', 'student')->get();
 
-        return view('admin.record')->with(['records' => $records]);
-    }
-
-    public function create() {
-        //
-    }
-
-    public function store(Request $request) {
-        //
-    }
-
-    public function show($id) {
-        //
-    }
-
-    public function edit($id) {
-        //
-    }
-
-    public function update(Request $request, $id) {
-        //
-    }
-
-    public function destroy($id) {
-        //
+        return view('admin.record')->with(['records' => $user]);
     }
 }

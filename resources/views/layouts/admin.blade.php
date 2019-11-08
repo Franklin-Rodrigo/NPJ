@@ -13,6 +13,7 @@
     ['item' => 'Grupos', 'itemUrl' => '/Admin/Grupos', 'icon' => 'users'],
     ['item' => 'Supervisores', 'itemUrl' => '/Admin/Supervisores', 'icon' => 'user-edit'],
     ['item' => 'Defensores', 'itemUrl' => '/Admin/Defensores', 'icon' => 'user-tie'],
+    ['item' => 'Registros', 'itemUrl' => '/Admin/Records', 'icon' => 'history'],
   ]
 ])
 @endsidebar

@@ -6,21 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Record extends Model {
     protected $fillable = [
-        'student_id',
+        'user_id',
         'doubleStudent_id',
         'petition_id',
         'petitionFirst'
     ];
 
-    public function student() {
-      return $this->hasMany('App\User');
+    public function human() {
+      return $this->belongsTo('App\Entities\Human');
     }
 
     public function petition() {
-      return $this->morphToMany('App\Entities\Petition', 'taggable');
+      return $this->belongsTo('App\Entities\Petition');
     }
 
     public function doubleStudent() {
-      return $this->morphToMany('App\Entities\DoubleStudent', 'taggable');
+      return $this->belongsTo('App\Entities\DoubleStudent');
     }
 }

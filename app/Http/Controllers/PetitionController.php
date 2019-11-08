@@ -93,13 +93,13 @@ class PetitionController extends Controller
                         $this->service->countPetition($doubleStudent);
 
                         Record::create([
-                            'student_id' => $doubleStudent->student_id,
+                            'user_id' => $doubleStudent->student_id,
                             'doubleStudent_id' => $petition->doubleStudent_id,
                             'petition_id' => $petition->id,
                             'petitionFirst' => $petition->petitionFirst
                         ]);
                         Record::create([
-                            'student_id' => $doubleStudent->student2_id,
+                            'user_id' => $doubleStudent->student2_id,
                             'doubleStudent_id' => $petition->doubleStudent_id,
                             'petition_id' => $petition->id,
                             'petitionFirst' => $petition->petitionFirst

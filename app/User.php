@@ -22,8 +22,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function human()
-    {
+    public function human() {
         return $this->hasOne('App\Entities\Human');
+    }
+
+    public function records() {
+        return $this->belongsToMany('App\Entities\Petition', 'records');
+    }
+
+    public function  doubleStudents() {
+        return $this->belongsToMany('App\Entities\DoubleStudent', 'records');
     }
 }
