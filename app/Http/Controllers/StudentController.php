@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Entities\Human;
 use App\User;
 use Auth;
+use Illuminate\Support\Facades\Session;
 
 use App\Services\StudentService;
 
@@ -24,7 +25,9 @@ class StudentController extends Controller
       if (!isset($dados['error'])){
         return view('student.home')->with($dados);
       } else {//se o aluno nao tiver dupla
-        return redirect('Sair')->with('erro', $dados['error']);
+        Auth::logout();
+        Session::flash('erro', $dados['error']);
+        return view('auth.message');
       }
     }
   }
