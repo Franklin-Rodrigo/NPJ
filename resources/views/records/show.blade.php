@@ -54,6 +54,7 @@
               </div>
 
                 <div class="table-responsive">
+
                   <table class="table table-striped">
                     <thead class="thead-dark">
                       <tr>
@@ -62,40 +63,14 @@
                         <th class="text-center">E-mail</th>
                         <th class="text-center">Gênero</th>
                         <th class="text-center">Telefone</th>
-                        <th class="text-center">Nº de Petições</th>
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>
 
                     <tbody>
-                        @foreach($users as $user)
-                            <tr class="object align-middle" name="{{$user->human->name}}">
-                                <td class="text-center align-middle">
-                                    @if ($user->human->status == 'active')
-                                    <button type="button" class="btn btn-success" role="button"  title="Aluno em atividade">
-                                    <i class="fas fa-toggle-on"></i>
-                                    </button>
-                                @else
-                                    <button type="button" class="btn btn-danger" role="button"  title="Aluno desativado">
-                                    <i class="fas fa-toggle-off"></i>
-                                    </button> 
-                                @endif
-                                </td>
-                                <td class="text-center align-middle">{{$user->human->name}}</td>
-                                <td class="text-center align-middle">{{$user->email}}</td>
-                                <td class="text-center align-middle">{{$user->human->gender}}</td>
-                                @if($user->human->phone == ' ')
-                                <td class="text-center align-middle">{{$user->human->phone}}</td>
-                                @else
-                                <td class="text-center align-middle">Telefone não cadastrado</td>
-                                @endif
-                                <td class="text-center align-middle">{{$user->records->count()}}</td>
-                                <td class="text-center align-middle">
-                                    <a href="{{route('record.show', $user->id)}}" class="btn btn-primary text-white"><i class="fas fa-eye mr-1" title="Mostrar histórico do aluno">
-                                    </i> Mostrar histórico</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                      @foreach($user->records as $record)
+                        <pre>$record</pre>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>

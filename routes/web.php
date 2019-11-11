@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Admin'], function () {
     
     /*************Records*************/
     Route::get('Records', 'RecordController@index')->name('records');
+    Route::get('Records/Aluno/{id}', 'RecordController@show')->name('record.show');
 
     /*************Logs*************/
     Route::get('Logs', 'LogController@index')->name('logs');
