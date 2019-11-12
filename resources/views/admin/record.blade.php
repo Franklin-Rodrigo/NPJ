@@ -91,7 +91,7 @@
                                 @endif
                                 <td class="text-center align-middle">{{$user->records->count()}}</td>
                                 <td class="text-center align-middle">
-                                    <a href="{{route('record.show', $user->id)}}" class="btn btn-primary text-white"><i class="fas fa-eye mr-1" title="Mostrar histórico do aluno">
+                                    <a href="{{route('record.show', $user->id)}}" class="btn btn-success text-white"><i class="fas fa-eye mr-1" title="Mostrar histórico do aluno">
                                     </i> Mostrar histórico</a>
                                 </td>
                             </tr>

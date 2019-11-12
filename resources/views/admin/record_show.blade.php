@@ -59,16 +59,28 @@
                     <thead class="thead-dark">
                       <tr>
                         <th class="text-center">Status</th>
-                        <th class="text-center">petição</th>
-                        <th class="text-center">Descrição</th>
+                        <th class="text-center">Descrição da petição</th>
+                        <th class="text-center">Nome do template</th>
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>
 
                     <tbody>
-
-                        <pre>{{$user}}</pre>
-                     
+                      @foreach($user->records as $record)
+                          
+                          <tr class="object align-middle" name="{{$record->description}}">
+                                <td class="text-center align-middle">
+                                    @if ($record->defender_ok == 'true')
+                                      <span class="fas fa-check-circle fa-lg text-success" title="Petição finalizada"></span>
+                                    @else
+                                      <span class="fas fa-times-circle fa-lg text-danger"   title="Petição não finalizada"></span>
+                                    @endif
+                                </td>
+                                <td class="text-center align-middle">{{$record->description}}</td>
+                                <td class="text-center align-middle">{{$record->template->title}}</td>
+                                <td class="text-center align-middle"><button type="button" class="btn btn-success" role="button" onClick="location.href='Peticao/Show/{{$record->id}}'" title="Visualizar Petição"><i class="fa fa-eye mr-1"></i>Visualizar petição</button></td>
+                          </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
