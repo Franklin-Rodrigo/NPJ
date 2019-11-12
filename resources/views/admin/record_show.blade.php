@@ -6,7 +6,7 @@
       <div class="card my-5">
         <div class="card-header">
           <h4>
-            Historico de Alunos
+             Historico do(a) aluno(a): {{$user->human->name}}
           </h4>
         </div>
         <div class="card-body">
@@ -59,18 +59,16 @@
                     <thead class="thead-dark">
                       <tr>
                         <th class="text-center">Status</th>
-                        <th class="text-center">Nome</th>
-                        <th class="text-center">E-mail</th>
-                        <th class="text-center">Gênero</th>
-                        <th class="text-center">Telefone</th>
+                        <th class="text-center">petição</th>
+                        <th class="text-center">Descrição</th>
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>
 
                     <tbody>
-                      @foreach($user->records as $record)
-                        <pre>$record</pre>
-                      @endforeach
+
+                        <pre>{{$user}}</pre>
+                     
                     </tbody>
                   </table>
                 </div>

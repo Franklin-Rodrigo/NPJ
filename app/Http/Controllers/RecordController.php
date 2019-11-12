@@ -20,8 +20,8 @@ class RecordController extends Controller {
     }
 
     public function show($id) {
-        $user = User::with(['human' ,'records'])->where('id', $id)->get();
-        return $user;
-        return view('records.show')->with(['user' => $user]);
+        $user = User::with(['human' ,'records'])->where('id', $id)->get()->first();
+        
+        return view('admin.record_show')->with(['user' => $user]);
     }
 }
