@@ -35,11 +35,13 @@ class StudentService {
     }
     
     public function store(Request $request) {
+        //cria uma senha aleatória com dígitos do email do aluno, concatenado a dia, mês e ano
+        $password = $request->email[random_int(0, (strlen($request->email) - 1))] . $request->email[random_int(0, (strlen($request->email) - 1))] . $request->email[random_int(0, (strlen($request->email) - 1))] . date('d') . date('m') . date('y');
         
         $user = User::create([
             'type' => 'student',
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => bcrypt($password),
         ]);
 
         $human = Human::create([
@@ -51,7 +53,7 @@ class StudentService {
             'user_id' => $user->id, //id do human Student
         ]);
             
-        $request->session()->flash('status', 'Aluno cadastrado com sucesso!');
+        $request->session()->flash('status', "Aluno cadastrado com a senha: $password <br> A senha poderá ser editada após o login, em 'Preferências'.");
         return redirect()->back();
     }
 

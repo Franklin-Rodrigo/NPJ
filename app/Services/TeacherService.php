@@ -35,47 +35,40 @@ class TeacherService
     }
 
     public function store(Request $request) {
-        $validate = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+
+        $password = $request->email[random_int(0, strlen($request->email))] . $request->email[random_int(0, strlen($request->email))] . $request->email[random_int(0, strlen($request->email))] . date('d') . date('m') . date('y');
+
+        $user = User::create([
+            'type' => 'teacher',
+            'email' => $request->email,
+            'password' => bcrypt($password),
         ]);
 
-        if ($validate->fails()) {
-            $request->session()->flash('status', 'Falha ao tentar cadastrar novo professor!');
-        } else {
-            $user = User::create([
-                'type' => 'teacher',
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+        $human = Human::create([
+            'status' => 'active',
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'user_id' => $user->id,
+            'groupT' => 'NAO',
+        ]);
 
-            $human = Human::create([
-                'status' => 'active',
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'age' => $request->age,
-                'gender' => $request->gender,
-                'user_id' => $user->id,
-                'groupT' => 'NAO',
-            ]);
-
+        
+        // Cadastrar Grupo automaticamente -------------------------            
+        $periodo = date('Y') . '.' . ((date('n') > 6) ? 2 : 1); //Cadastra o grupo [período] - [professor]
+        
+        Group::create([
+            'name' => $periodo . ' - ' . $human->name,
+            'teacher_id' => $human->id,
+            'qtdPetitions' => 0,
+        ]);
             
-            // Cadastrar Grupo automaticamente -------------------------            
-            $periodo = date('Y') . '.' . ((date('n') > 6) ? 2 : 1); //Cadastra o grupo [período] - [professor]
-            
-            Group::create([
-                'name' => $periodo . ' - ' . $human->name,
-                'teacher_id' => $human->id,
-                'qtdPetitions' => 0,
-            ]);
-                
-            $human->groupT = 'SIM';
-            $human->save();
-            
-            $request->session()->flash('status', 'Professor e grupo cadastrado com sucesso!');
-            // --------------
-        }
-        return redirect()->back()->withErrors($validate)->withInput();
+        $human->groupT = 'SIM';
+        $human->save();
+        
+        $request->session()->flash('status', 'Professor e grupo cadastrado com sucesso!');
+        return redirect()->back();
     }
 
     public function editar(Human $human, User $user, Request $request) {

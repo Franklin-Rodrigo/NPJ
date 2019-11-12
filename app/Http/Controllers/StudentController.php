@@ -40,7 +40,7 @@ class StudentController extends Controller
     $this->validate($request, [
       'name' => 'required|string|min:3',
       'email' => 'required|string|email|max:255|unique:users',
-      'password' => 'required|string|min:4',
+      // 'password' => 'required|string|min:4',
     ]);
 
     return $this->service->store($request);              

@@ -18,19 +18,33 @@
         <div class="card-body">
           <div class="col-lg-12">
 
-              <div class="row">
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                </div>
-                @endif
-                @if(Session::has('status'))
-                  <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                @endif
+              <div>
+                  @if ($errors->any())
+                  <div class="alert alert-danger">
+                    <ul class="m-0">
+                      @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+                  @endif
+                  @if(Session::has('status'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {!! Session::get('status') !!}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                  @endif
+                  @if(Session::has('erro'))
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ Session::get('erro') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                  @endif
+
               </div>
               <div class="row mb-3">
                 <div class="col-md-4">
