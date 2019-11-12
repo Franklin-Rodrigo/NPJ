@@ -35,7 +35,7 @@ class TeacherService
     }
 
     public function store(Request $request) {
-
+        //cria uma senha aleatória com dígitos do email do aluno, concatenado a dia, mês e ano
         $password = $request->email[random_int(0, strlen($request->email))] . $request->email[random_int(0, strlen($request->email))] . $request->email[random_int(0, strlen($request->email))] . date('d') . date('m') . date('y');
 
         $user = User::create([
@@ -67,7 +67,8 @@ class TeacherService
         $human->groupT = 'SIM';
         $human->save();
         
-        $request->session()->flash('status', 'Professor e grupo cadastrado com sucesso!');
+        $request->session()->flash('status', "Professor cadastrado com a senha: $password <br> A senha poderá ser editada após o login, em 'Preferências'. <br>
+        Um grupo, referênte ao período e o professor, também foi criado!");
         return redirect()->back();
     }
 
