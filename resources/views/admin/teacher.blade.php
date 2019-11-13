@@ -174,7 +174,7 @@
             <div class="form-group">
               <label for="">Senha *</label>
               <div class="input-group">
-                <input type="password" name="password" class="form-control" id="inputSenha" required>
+                  A senha do professor sera gerada automaticamente!
               </div>
             </div>
             <div class="modal-footer">

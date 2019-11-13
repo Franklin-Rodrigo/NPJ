@@ -162,7 +162,7 @@
           <div class="form-group">
             <label for="password">Senha *</label>
             <div class="input-group">
-              <input type="password" id="password" name="password" class="form-control" required>
+              A senha do supervisor sera gerada automaticamente!
             </div>
           </div>
           <div class="modal-footer">
