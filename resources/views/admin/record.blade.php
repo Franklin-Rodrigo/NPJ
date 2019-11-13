@@ -88,15 +88,19 @@
                                 <td class="text-center align-middle">{{$user->human->name}}</td>
                                 <td class="text-center align-middle">{{$user->email}}</td>
                                 <td class="text-center align-middle">{{$user->human->gender}}</td>
-                                @if($user->human->phone == ' ')
+                                @if($user->human->phone != NULL)
                                 <td class="text-center align-middle">{{$user->human->phone}}</td>
                                 @else
                                 <td class="text-center align-middle">Telefone não cadastrado</td>
                                 @endif
                                 <td class="text-center align-middle">{{$user->records->count()}}</td>
                                 <td class="text-center align-middle">
+                                @if ($user->records->count() > 0)
                                     <a href="{{route('record.show', $user->id)}}" class="btn btn-success text-white"><i class="fas fa-eye mr-1" title="Mostrar histórico do aluno">
                                     </i> Mostrar histórico</a>
+                                @else
+                                   <button class="btn btn-danger text-white" disabled="disabled"> <i class="fas fa-eye mr-1" title="Histórico vazio"></i>Histórico vazio</button>
+                                @endif
                                 </td>
                             </tr>
                         @endforeach

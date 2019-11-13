@@ -1,4 +1,4 @@
-@extends('layouts.defender')
+@extends('layouts.admin')
 @section('component')
 <div class="container">
   <div class="row justify-content-center mt-3">
@@ -53,7 +53,7 @@
       @endif
       <div class="row">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Defensor/Peticoes')}}'">
+          <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Records/Aluno/')}}'">
             <span class="fas fa-arrow-left mr-2"></span>
             Voltar
           </button>
