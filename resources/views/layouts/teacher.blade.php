@@ -7,6 +7,7 @@
 @sidebar([
     'url' => "Professor",
     'items' => [
+        ['item' => 'Início', 'itemUrl' => '/Professor/', 'icon' => 'home'],
         ['item' => 'Duplas', 'itemUrl' => '/Professor/Duplas', 'icon' => 'user-friends'],
         ['item' => 'Petições', 'itemUrl' => '/Professor/Peticoes', 'icon' => 'file-alt'],
         ['item' => 'Templates', 'itemUrl' => '/Professor/Templates', 'icon' => 'file'],
@@ -43,7 +44,7 @@
   </footer>
   <!-- END Footer -->
   @bottombar  
-    {{Auth::user()->email}}  
+    {{Auth::user()->type}}  
   @endbottombar
 
 <!-- END Main container -->

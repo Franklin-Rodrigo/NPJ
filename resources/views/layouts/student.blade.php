@@ -7,10 +7,8 @@
 @sidebar([
   'url' => "Aluno",
     'items' => [
-        [
-            'item' => 'Petições', 'itemUrl' => '/Aluno/Peticoes', 'icon' => 'file-alt'
-        ], 
-      
+            ['item' => 'Início', 'itemUrl' => '/Aluno/', 'icon' => 'home'],
+            ['item' => 'Petições', 'itemUrl' => '/Aluno/Peticoes', 'icon' => 'file-alt'], 
     ]
 ])
 @endsidebar
@@ -43,8 +41,8 @@
   </nav>
 </footer>
 <!-- END Footer -->
-@bottombar  
-  {{Auth::user()->email}}  
+@bottombar
+  {{Auth::user()->type}}  
 @endbottombar
 
 <!-- END Main container -->

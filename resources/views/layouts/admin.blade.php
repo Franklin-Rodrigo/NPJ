@@ -48,7 +48,7 @@
   </footer>
   <!-- END Footer -->
   @bottombar  
-    {{Auth::user()->email}}  
+    {{Auth::user()->type}}  
   @endbottombar
 
 <!-- END Main container -->

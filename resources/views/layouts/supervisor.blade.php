@@ -7,6 +7,7 @@
 @sidebar([
 'url' => "Supervisor",
   'items' => [
+    ['item' => 'Início', 'itemUrl' => '/Supervisor/', 'icon' => 'home'],
     ['item' => 'Petições', 'itemUrl' => '/Supervisor/Peticoes', 'icon' => 'file-alt'],
   ]
 ])
@@ -41,7 +42,7 @@
   </footer>
   <!-- END Footer -->
   @bottombar  
-    {{Auth::user()->email}}  
+    {{Auth::user()->type}}  
   @endbottombar
 
 <!-- END Main container -->

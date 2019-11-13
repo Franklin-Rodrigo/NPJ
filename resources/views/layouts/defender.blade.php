@@ -7,10 +7,8 @@
 @sidebar([
 'url' => "Defensor",
   'items' => [
-      [
-          'item' => 'Petições', 'itemUrl' => '/Defensor/Peticoes', 'icon' => 'file-alt'
-      ], 
-    
+      ['item' => 'Início', 'itemUrl' => '/Defensor/', 'icon' => 'home'],
+      ['item' => 'Petições', 'itemUrl' => '/Defensor/Peticoes', 'icon' => 'file-alt'], 
   ]
 ])
 @endsidebar
@@ -44,7 +42,7 @@
   </footer>
   <!-- END Footer -->
   @bottombar  
-    {{Auth::user()->email}}  
+    {{Auth::user()->type}}  
   @endbottombar
 
 <!-- END Main container -->
