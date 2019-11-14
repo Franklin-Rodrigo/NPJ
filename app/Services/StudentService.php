@@ -62,7 +62,6 @@ class StudentService {
         $human->name = $request['name'];
         $human->gender = $request['gender'];
         $human->phone = $request['phone'];
-        $user->email = $request['email'];
 
         if ($request['password'] != null) {
             $user->password = bcrypt($request['password']);
@@ -70,7 +69,7 @@ class StudentService {
         
         $human->save();
         $user->save();
-        $request->session()->flash('status', 'Dados salvos com sucesso!');
+        $request->session()->flash('status', 'Dados atualizados com sucesso!');
 
         return redirect()->back();
 

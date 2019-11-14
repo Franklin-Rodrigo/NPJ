@@ -51,6 +51,25 @@ class SupervisorService
         $request->session()->flash('status', 'Supervisor editado com sucesso!');
         return redirect()->back();
     }
+//-------------------------------------------------------------------------------------------------
+    public function editar(Human $human, User $user, Request $request) {
+
+        $human->name = $request['name'];
+        $human->gender = $request['gender'];
+        $human->phone = $request['phone'];
+        // $user->email = $request['email'];
+
+        if ($request['password'] != null) {
+            $user->password = bcrypt($request['password']);
+        }
+        
+        $human->save();
+        $user->save();
+        $request->session()->flash('status', 'Dados atualizados com sucesso!');
+
+        return redirect()->back();
+
+    }
 //--------------------------------------------------------------------------------------------------
     public function destroy(Request $request, Human $supervisor, User $supervisor_User) {
         if ($supervisor != null) {

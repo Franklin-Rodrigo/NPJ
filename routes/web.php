@@ -80,24 +80,24 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Admin'], function () {
 Route::group(['middleware' => 'auth', 'prefix' => 'Aluno'], function () {
     
     /*************Painel de Controle*************/
-    Route::get('', 'StudentController@index')->name('index');
-    Route::get('Preferencias', 'StudentController@preferences')->name('preferencias');
-    Route::post('Preferencias/Editar', 'StudentController@preferencesEditar')->name('preferencias.editar');
+    Route::get('', 'StudentController@index')->name('aluno.index');
+    Route::get('Preferencias', 'StudentController@preferences')->name('aluno.preferencias');
+    Route::post('Preferencias/Editar', 'StudentController@preferencesEditar')->name('aluno.preferencias.editar');
     //Escolher Template
-    Route::post('Template/Escolher', 'PetitionController@escolherTemplate');
+    Route::post('Template/Escolher', 'PetitionController@escolherTemplate')->name('aluno.template.escolher');
     
     /*************Peticoes*************/
-    Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver suas peticoes
-    Route::get('Peticao/Add', 'PetitionController@add')->name('peticao.add');
-    Route::post('Peticao/MudarPeticao', 'PetitionController@changePetition')->name('peticao.mudarPeticao');
-    Route::post('Peticao/CopiarPeticao', 'PetitionController@copyPetition')->name('peticao.copiarPeticao');
-    Route::post('Peticao/save', 'PetitionController@save')->name('peticao.save');
-    Route::post('Peticao/Cadastrar', 'PetitionController@store')->name('peticao.cadastrar');
-    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('peticao.edit');
-    Route::post('Peticao/Editar', 'PetitionController@update')->name('peticao.editar');
-    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');
-    Route::post('Peticao/Delete', 'PetitionController@delete')->name('peticao.delete');
-    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('peticao.deletePhoto');
+    Route::get('Peticoes', 'PetitionController@index')->name('aluno.peticoes'); //ver suas peticoes
+    Route::get('Peticao/Add', 'PetitionController@add')->name('aluno.peticao.add');
+    Route::post('Peticao/MudarPeticao', 'PetitionController@changePetition')->name('aluno.peticao.mudarPeticao');
+    Route::post('Peticao/CopiarPeticao', 'PetitionController@copyPetition')->name('aluno.peticao.copiarPeticao');
+    Route::post('Peticao/save', 'PetitionController@save')->name('aluno.peticao.save');
+    Route::post('Peticao/Cadastrar', 'PetitionController@store')->name('aluno.peticao.cadastrar');
+    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('aluno.peticao.edit');
+    Route::post('Peticao/Editar', 'PetitionController@update')->name('aluno.peticao.editar');
+    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('aluno.peticao.show');
+    Route::post('Peticao/Delete', 'PetitionController@delete')->name('aluno.peticao.delete');
+    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('aluno.peticao.deletePhoto');
 });
 
 //-----------------------------------------------------------------------------
@@ -105,72 +105,72 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Aluno'], function () {
 /* Rotas para usuário do tipo Professor */
 Route::group(['middleware' => 'auth', 'prefix' => 'Professor'], function () {
     /*************Painel de Controle*************/
-    Route::get('', 'TeacherController@index')->name('index');
-    Route::get('Preferencias', 'TeacherController@preferences')->name('preferencias');
-    Route::post('Preferencias/Editar', 'TeacherController@preferencesEditar')->name('preferencias.editar'); 
+    Route::get('', 'TeacherController@index')->name('professor.index');
+    Route::get('Preferencias', 'TeacherController@preferences')->name('professor.preferencias');
+    Route::post('Preferencias/Editar', 'TeacherController@preferencesEditar')->name('professor.preferencias.editar'); 
     
     /*************Duplas*************/
-    Route::get('Duplas', 'DoubleStudentController@index')->name('duplas'); //Ver as duplas do seu grupo
+    Route::get('Duplas', 'DoubleStudentController@index')->name('professor.duplas'); //Ver as duplas do seu grupo
     
     /*************Templates*************/
-    Route::get('Templates', 'TemplateController@index')->name('templates');
-    Route::get('Template/Add', 'TemplateController@add')->name('template.add');
-    Route::post('Template/Cadastrar', 'TemplateController@store')->name('template.cadastrar');
-    Route::get('Template/Edit/{id}', 'TemplateController@edit')->name('template.edit');
-    Route::post('Template/Editar', 'TemplateController@update')->name('template.editar');
-    Route::post('Template/Excluir', 'TemplateController@destroy')->name('template.excluir');
-    Route::get('Template/Show/{id}', 'TemplateController@show')->name('template.show');
-    Route::post('Template/Status', 'TemplateController@editStatus')->name('template.status');
+    Route::get('Templates', 'TemplateController@index')->name('professor.templates');
+    Route::get('Template/Add', 'TemplateController@add')->name('professor.template.add');
+    Route::post('Template/Cadastrar', 'TemplateController@store')->name('professor.template.cadastrar');
+    Route::get('Template/Edit/{id}', 'TemplateController@edit')->name('professor.template.edit');
+    Route::post('Template/Editar', 'TemplateController@update')->name('professor.template.editar');
+    Route::post('Template/Excluir', 'TemplateController@destroy')->name('professor.template.excluir');
+    Route::get('Template/Show/{id}', 'TemplateController@show')->name('professor.template.show');
+    Route::post('Template/Status', 'TemplateController@editStatus')->name('professor.template.status');
     
     /*************Peticoes*************/
-    Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes do grupo
-    Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('peticao.avaliar');
-    Route::post('Peticao/Template', 'PetitionController@template')->name('peticao.template'); //ver as peticoes do grupo
-    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');// falta metodos de editar petição que o professor deve poder    
-    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('peticao.edit');
-    Route::post('Peticao/Editar', 'PetitionController@update')->name('peticao.editar');
-    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('peticao.deletePhoto');
+    Route::get('Peticoes', 'PetitionController@index')->name('professor.peticoes'); //ver as peticoes do grupo
+    Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('professor.peticao.avaliar');
+    Route::post('Peticao/Template', 'PetitionController@template')->name('professor.peticao.template'); //ver as peticoes do grupo
+    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('professor.peticao.show');// falta metodos de editar petição que o professor deve poder    
+    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('professor.peticao.edit');
+    Route::post('Peticao/Editar', 'PetitionController@update')->name('professor.peticao.editar');
+    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('professor.peticao.deletePhoto');
     
     /*************Comentarios*************/
-    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('comentario.cadastrar'); //O professor pode cadastrar comentario
+    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('professor.comentario.cadastrar'); //O professor pode cadastrar comentario
 });
 
 /* Rotas para usuário do tipo Supervisor */
 Route::group(['middleware' => 'auth', 'prefix' => 'Supervisor'], function () {
     
     /*************Painel de Controle*************/
-    Route::get('', 'SupervisorController@index')->name('index');
-    Route::get('Preferencias', 'SupervisorController@preferences')->name('preferencias');
-    Route::post('Preferencias/Editar', 'SupervisorController@preferencesEditar')->name('preferencias.editar');
+    Route::get('', 'SupervisorController@index')->name('supervisor.index');
+    Route::get('Preferencias', 'SupervisorController@preferences')->name('supervisor.preferencias');
+    Route::post('Preferencias/Editar', 'SupervisorController@preferencesEditar')->name('supervisor.preferencias.editar');
     
     /*************Peticoes*************/
-    Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes do grupo
-    Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('peticao.avaliar');
-    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');// falta metodos de editar petição que o professor deve poder    
-    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('peticao.edit');
-    Route::post('Peticao/Editar', 'PetitionController@update')->name('peticao.editar');
-    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('peticao.deletePhoto');
+    Route::get('Peticoes', 'PetitionController@index')->name('supervisor.peticoes'); //ver as peticoes do grupo
+    Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('supervisor.peticao.avaliar');
+    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('supervisor.peticao.show');// falta metodos de editar petição que o professor deve poder    
+    Route::get('Peticao/Edit/{id}', 'PetitionController@edit')->name('supervisor.peticao.edit');
+    Route::post('Peticao/Editar', 'PetitionController@update')->name('supervisor.peticao.editar');
+    Route::get('Peticao/Edit/{petition_id}/DeletePhoto/{photo_id}', 'PetitionController@deletePhoto')->name('supervisor.peticao.deletePhoto');
     
     /*************Comentarios*************/
-    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('comentario.cadastrar'); //O professor pode cadastrar comentario
+    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('supervisor.comentario.cadastrar'); //O professor pode cadastrar comentario
 });
 
 /* Rotas para usuário do tipo Defensor */
 Route::group(['middleware' => 'auth', 'prefix' => 'Defensor'], function () {
     
     /*************Painel de Controle*************/
-    Route::get('', 'DefenderController@index')->name('index');
-    Route::get('Preferencias', 'DefenderController@preferences')->name('preferencias');
-    Route::post('Preferencias/Editar', 'DefenderController@preferencesEditar')->name('preferencias.editar');
+    Route::get('', 'DefenderController@index')->name('defensor.index');
+    Route::get('Preferencias', 'DefenderController@preferences')->name('defensor.preferencias');
+    Route::post('Preferencias/Editar', 'DefenderController@preferencesEditar')->name('defensor.preferencias.editar');
     
     /*************Peticoes*************/
-    Route::get('Peticoes', 'PetitionController@index')->name('peticoes'); //ver as peticoes das quais ele pertence
-    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('peticao.show');
-    Route::get('Peticao/Emitir/{id}', 'PetitionController@emitir')->name('peticao,.emitir');
+    Route::get('Peticoes', 'PetitionController@index')->name('defensor.peticoes'); //ver as peticoes das quais ele pertence
+    Route::get('Peticao/Show/{id}', 'PetitionController@show')->name('defensor.peticao.show');
+    Route::get('Peticao/Emitir/{id}', 'PetitionController@emitir')->name('defensor.peticao.emitir');
     //Ao ver as peticoes, ele irá ver também todos os comentarios que ele fez referentes aquela peticao
-    Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('peticao.avaliar');
-    Route::post('Peticao/Emitir', 'PetitionController@emitir')->name('peticao.emitir');
-    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('comentario.cadastrar'); //O defensor pode cadastrar comentario
+    Route::get('Peticao/Avaliar/{id}', 'PetitionController@avaliar')->name('defensor.peticao.avaliar');
+    Route::post('Peticao/Emitir', 'PetitionController@emitir')->name('defensor.peticao.emitir');
+    Route::post('Comentario/Cadastrar', 'CommentController@store')->name('defensor.comentario.cadastrar'); //O defensor pode cadastrar comentario
 });
 
 //Route::post('Login', 'LoginController@index')->name('home');

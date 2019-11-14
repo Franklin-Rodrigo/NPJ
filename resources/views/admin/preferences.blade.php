@@ -5,7 +5,7 @@
     <div class="col-lg-10">
       <div class="card my-5">
             <div class="card-header">
-              <h4>Preferências</h4>
+              <h4 class="card-title mb-0">Preferências</h4>
             </div>
             <div class="card-body">
               <form action="{{URL::to('Admin/Preferencias/Editar')}}" method="post" enctype="multipart/form-data">
@@ -48,7 +48,7 @@
                 </div>
                 <hr>
                 <div class="row justify-content-center">
-                    <button type="submit" name="botao" class="btn btn-primary">SALVAR</button>
+                    <button type="submit" name="botao" class="btn btn-primary"><i class="fas fa-save mr-1"></i> SALVAR</button>
                 </div>
               </form>
             </div>

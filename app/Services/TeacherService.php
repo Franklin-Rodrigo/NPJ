@@ -9,7 +9,6 @@ use App\Entities\Petition;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
-use Validator;
 
 class TeacherService
 {
@@ -73,16 +72,18 @@ class TeacherService
     }
 
     public function editar(Human $human, User $user, Request $request) {
-        if ($request['password'] != null) {
-            $user->password = bcrypt($request['password']);
-        }
+
         $human->name = $request['name'];
         $human->gender = $request['gender'];
         $human->phone = $request['phone'];
-        $user->email = $request['email'];
+        
+        if ($request['password'] != null) {
+            $user->password = bcrypt($request['password']);
+        }
+
         $user->save();
         $human->save();
-        $request->session()->flash('status', 'Professor editado com sucesso!');
+        $request->session()->flash('status', 'Dados atualizados com sucesso!');
         return redirect()->back();
     }
 

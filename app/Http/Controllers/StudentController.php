@@ -101,6 +101,11 @@ class StudentController extends Controller
   }
 
   public function preferencesEditar(Request $request) {
+    $this->validate($request, [
+      'name' => 'required|string|min:3',
+      'password' => 'confirmed|nullable|string|min:4',
+    ]);
+
     $user = User::find($request['idUser']);
     $human = Human::find($request['idHuman']);
 

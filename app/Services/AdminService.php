@@ -52,7 +52,7 @@ class AdminService
         }
         $human->save();
         $user->save();
-        $request->session()->flash('status', 'Dados salvos com sucesso!!');
+        $request->session()->flash('status', 'Dados salvos com sucesso!');
 
         return redirect()->back();
 
