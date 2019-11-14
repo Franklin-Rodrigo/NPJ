@@ -53,10 +53,10 @@
       @endif
       <div class="row">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Records/Aluno/')}}'">
+          <a class="btn btn-secondary" href="{{route('record.show', $user->id)}}">
             <span class="fas fa-arrow-left mr-2"></span>
             Voltar
-          </button>
+          </a>
         </div>
       </div>
   </div>

@@ -78,7 +78,7 @@
                                 </td>
                                 <td class="text-center align-middle">{{$record->description}}</td>
                                 <td class="text-center align-middle">{{$record->template->title}}</td>
-                                <td class="text-center align-middle"><a class="btn btn-success" role="button" href="{{route('record.petition', $record->id)}}" title="Visualizar Petição"><i class="fa fa-eye mr-1"></i>Visualizar petição</a></td>
+                                <td class="text-center align-middle"><a class="btn btn-success" role="button" href="{{route('record.petition', [$user->id, $record->id])}}" title="Visualizar Petição"><i class="fa fa-eye mr-1"></i>Visualizar petição</a></td>
                           </tr>
                       @endforeach
                     </tbody>

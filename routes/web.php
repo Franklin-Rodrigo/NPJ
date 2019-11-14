@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'Admin'], function () {
     /*************Records*************/
     Route::get('Records', 'RecordController@index')->name('records');
     Route::get('Records/Aluno/{id}', 'RecordController@show')->name('record.show');
-    Route::get('Records/Peticao/Show/{id}', 'PetitionController@show')->name('record.petition');
+    Route::get('Records/Aluno/{user_id}/Peticao/Show/{petition_id}', 'RecordController@petition')->name('record.petition');
 
     /*************Logs*************/
     Route::get('Logs', 'LogController@index')->name('logs');
