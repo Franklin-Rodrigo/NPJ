@@ -5,10 +5,10 @@
     <div class="col-lg-12 my-5">
       <div class="card my-5">
         <div class="card-header">
-          <h4>Gerenciar Grupos
+          <h4>Gerenciar grupos
             <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalGroup" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
-              <i class="fa fa-plus"></i>
-              Novo Grupo
+              <i class="fa fa-plus mr-1"></i>
+              Novo grupo
             </button>
           </h4>
                
@@ -69,7 +69,6 @@
                       <th class="text-center">Nome</th>
                       <th class="text-center">Professor</th>
                       <th class="text-center">Duplas</th>
-                      <!--<th>QTD PETIÇÕES</th>-->
                       <th class="text-center">Ações</th>
                     </tr>
                   </thead>
@@ -116,13 +115,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Nova Dupla</h4>
+          <h4 class="modal-title" id="myModalLabel">Novo grupo</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
           <div class="row">            
             <div class="col-md-4">
-              <small class="text-danger">* Campos Obrigatórios</small>
+              <small class="pull-right text-danger">*Campos obrigatórios</small>
             </div>
           </div>
           <form action="{{URL::to('Admin/Grupo/Cadastrar')}}" method="post" enctype="multipart/form-data">
@@ -151,8 +150,8 @@
             </div>
             
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1"></i> Cadastrar</button>
             </div>        
           </form>
         </div>
@@ -164,35 +163,40 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Editar Grupo</h4>
+          <h4 class="modal-title" id="myModalLabel">Editar grupo</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
 
           <form action="{{URL::to('Admin/Grupo/Editar')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
-            <div class="row" style="margin-left:2%">
-              <input type="hidden" name="id" id="groupId">
-              <div class="form-group">
-                <label for="groupName">Nome</label>
-                <input type="text" name="name" class="form-control" maxlength="80" value="" id="groupName" required>
+            <input type="hidden" name="id" id="groupId">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="groupName">Nome</label>
+                  <input type="text" name="name" class="form-control" maxlength="80" value="" id="groupName" required>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="groupTeacher_id">Professor</label>
-                <select class="form-control" name="teacher_id" id="groupTeacher_id">
-                  <option value="">Selecione o professor</option>
-                  @foreach($humans as $human)
-                    <!--Está sem validação(precisa)-->
-                    @if($human->user->type == 'teacher' && $human->status == 'active' && $human->groupT == 'NÃO')
-                      <option value="{{$human->id}}">{{$human->name}}</option>
-                    @endif
-                  @endforeach
-                </select>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="groupTeacher_id">Professor</label>
+                  <select class="form-control" name="teacher_id" id="groupTeacher_id">
+                    <option value="">Selecione o professor</option>
+                    @foreach($humans as $human)
+                      <!--Está sem validação(precisa)-->
+                      @if($human->user->type == 'teacher' && $human->status == 'active' && $human->groupT == 'NÃO')
+                        <option value="{{$human->id}}">{{$human->name}}</option>
+                      @endif
+                    @endforeach
+                  </select>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle"></i> Salvar</button>
             </div>
           </form>
         </div>
@@ -238,8 +242,8 @@
             </div>
             <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o grupo <strong class="groupStatusName"></strong>?</p>
             <div class="text-center">
-              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Não</button>
+              <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-check-circle"></i> Sim</button>
             </div>
           </form>
         </div>
@@ -260,8 +264,8 @@
             </div>
             <p class="text-center mt-3 mb-0">Se você realmente deseja ativar o grupo <strong class="groupStatusName"></strong>?</p>
             <div class="text-center">
-              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-success btn-lg">Sim</button>
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Não</button>
+              <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-check-circle"></i> Sim</button>
             </div>
           </form>
         </div>

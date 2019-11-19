@@ -5,8 +5,8 @@
     <div class="col-lg-12 my-5">
       <div class="card my-5">
         <div class="card-header">
-          <h4>Gerenciar Supervisores
-            <button type="button" class="btn btn-md btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalDefender" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo supervisor"><i class="fa fa-plus"></i> Novo Supervisor</button>
+          <h4>Gerenciar supervisores
+            <button type="button" class="btn btn-md btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalDefender" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo supervisor"><i class="fa fa-plus"></i> Novo supervisor</button>
           </h4>
         </div>
         <div class="card-body">
@@ -121,7 +121,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Novo Supervisor </h4>
+        <h4 class="modal-title" id="myModalLabel">Novo supervisor </h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
@@ -129,7 +129,7 @@
           {{ csrf_field() }}
           <div class="row">            
             <div class="col-md-4">
-              <small class="text-danger">* Campos Obrigatórios</small>
+              <small class="pull-right text-danger">*Campos obrigatórios</small>
             </div>
           </div>
           <div class="form-group">
@@ -158,16 +158,15 @@
                 <input type="tel" id="phone" name="phone" class="form-control input-phone" value="">
               </div>
             </div>
-            </div>
-          <div class="form-group">
-            <label for="password">Senha *</label>
-            <div class="input-group">
-              A senha do supervisor sera gerada automaticamente!
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p class="pull-right text-danger">*A senha será gerada automaticamente</p>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1"></i> Cadastrar</button>
           </div>
         </form>
       </div>
@@ -181,7 +180,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Editar Supervisor</h4>
+          <h4 class="modal-title" id="myModalLabel">Editar supervisor</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -226,8 +225,8 @@
               <input type="password" id="supervisorPassowrd" name="password" id="password" class="form-control">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle"></i> Salvar</button>
             </div>
           </form>
         </div>
@@ -273,8 +272,8 @@
             </div>
             <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o supervisor <strong class="supervisorStatusName"></strong>?</p>
             <div class="text-center">
-              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Não</button>
+              <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-check-circle"></i> Sim</button>
             </div>
           </form>
         </div>
@@ -295,8 +294,8 @@
             </div>
             <p class="text-center mt-3 mb-0">Se você realmente deseja ativar o supervisor <strong class="supervisorStatusName"></strong>?</p>
             <div class="text-center">
-              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-success btn-lg">Sim</button>
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Não</button>
+              <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-check-circle"></i> Sim</button>
             </div>
           </form>
         </div>

@@ -6,7 +6,7 @@
       <div class="card my-5">
         <div class="card-header">
           <h4>
-            Historico de Alunos
+            Historico de alunos
           </h4>
         </div>
         <div class="card-body">
@@ -66,7 +66,7 @@
                         <th class="text-center">E-mail</th>
                         <th class="text-center">Gênero</th>
                         <th class="text-center">Telefone</th>
-                        <th class="text-center">Nº de Petições</th>
+                        <th class="text-center">Nº de petições</th>
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>

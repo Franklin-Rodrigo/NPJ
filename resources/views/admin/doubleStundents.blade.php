@@ -6,10 +6,10 @@
       <div class="card my-5">
         <div class="card-header">
           <h4>
-            Gerenciar Duplas
+            Gerenciar duplas
             <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModaldoubleStudent" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
               <i class="fa fa-plus"></i>
-              Nova Dupla
+              Nova dupla
             </button>
           </h4>
         </div>
@@ -107,7 +107,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Nova Dupla</h4>
+          <h4 class="modal-title" id="myModalLabel">Nova dupla</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -115,16 +115,16 @@
             {{ csrf_field() }}
             <div class="row">            
               <div class="col-md-4">
-                <small class="text-danger">* Campos Obrigatórios</small>
+                <small class="text-danger">*Campos obrigatórios</small>
               </div>
             </div>
             <br>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="firstStudent">Primeiro Estudante</label>
+              <label for="firstStudent">Primeiro estudante</label>
               <select class="form-control" id="firstStudent" name="student_id" id="student_id" onchange="verify(this.value, 1)" required>
-                <option value="">Selecione o Estudante</option>
+                <option value="">Selecione o estudante</option>
                 @foreach($humans as $human)
                   @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
                     <option value="{{$human->id}}" class="primeiros">{{$human->name}}</option>
@@ -136,9 +136,9 @@
         
           <div class="col-md-6">
               <div class="form-group">
-                <label for="secondStudent">Segundo Estudante</label>
+                <label for="secondStudent">Segundo estudante</label>
                 <select class="form-control" id="secondStudent" name="student2_id" id="student2_id" onchange="verify(this.value, 2)" required>
-                  <option value="">Selecione o Estudante</option>
+                  <option value="">Selecione o estudante</option>
                   @foreach($humans as $human)
                     <div>
                       @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
@@ -154,7 +154,7 @@
             <div class="form-group">
               <label for="group">Grupo</label>
               <select class="form-control" id="group" name="group_id" required>
-                <option value="">Selecione o Grupo</option>
+                <option value="">Selecione o grupo</option>
                 @foreach($groups as $group)
                   @if($group->status == 'active')
                     <option value="{{$group->id}}">{{$group->name}}</option>
@@ -181,7 +181,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Editar Dupla</h4>
+        <h4 class="modal-title" id="myModalLabel">Editar dupla</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
@@ -190,9 +190,9 @@
           <input type="hidden" name="id" id="doubleStudentId">
           <div class="row" style="margin-left:2px">
             <div class="form-group">
-            <label for="doubleStudent1">Primeiro Estudante</label>
+            <label for="doubleStudent1">Primeiro estudante</label>
             <select class="form-control" name="student_id" id="doubleStudent1" onchange="verifyEdit(this.value)"/>
-              <option value="">Selecione o Estudante</option>
+              <option value="">Selecione o estudante</option>
               @foreach($humans as $human)
                 @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
                   <option value="{{$human->id}}">{{$human->name}}</option>
@@ -202,7 +202,7 @@
           </div>
           <div class="row" style="margin-left:2px">
             <div class="form-group">
-            <label for="doubleStudent2">Selecione o Estudante</label>
+            <label for="doubleStudent2">Selecione o estudante</label>
             <select class="form-control" name="student2_id" id="doubleStudent2"/>
               <option value="">Selecione o estudante</option>
               @foreach($humans as $human)
@@ -217,7 +217,7 @@
             <div class="form-group">
             <label for="group-edit">Grupo</label>
             <select class="form-control" id="group-edit" name="group_id" id="doubleStudentGroup">
-              <option value="">Selecione o Grupo</option>
+              <option value="">Selecione o grupo</option>
               @foreach($groups as $group)
                 @if($group->status == 'active')
                   <option value="{{$group->id}}">{{$group->name}}</option>

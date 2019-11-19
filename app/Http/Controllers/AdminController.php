@@ -41,6 +41,12 @@ class AdminController extends Controller
 
     public function editar(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|string|min:3',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$request['idUser'],
+            'password' => 'confirmed|nullable|string|min:4',
+        ]);
+
         $user = User::find($request['idUser']);
         $human = Human::find($request['idHuman']);
 

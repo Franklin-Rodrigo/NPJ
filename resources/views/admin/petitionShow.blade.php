@@ -88,7 +88,7 @@
               @endforeach
             </ul>
             @if(count($profComments) < 1)
-            <p class="text-center">Nenhum Comentário!</p>
+            <p class="text-center">Nenhum comentário!</p>
             @endif
           </div>
 
@@ -107,12 +107,12 @@
                 @endforeach
             </ul>
             @if(count($defComments) < 1)
-            <p class="text-center">Nenhum Comentário!</p>
+            <p class="text-center">Nenhum comentário!</p>
             @endif
           </div>
         </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Voltar</button>
           </div>
         </div>
       </div>
