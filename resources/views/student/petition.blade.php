@@ -12,20 +12,38 @@
         <div class="card-body">
             <div class="col-lg-12">
 
-                <div class="row justify-content-center">
+                <div>
                   @if ($errors->any())
-                  <div class="alert alert-danger col-lg-6">
-                    <ul>
-                      @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                      @endforeach
-                    </ul>
-                  </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong>Os seguinte erros foram informados:</strong>
+                      <ul class="m-0">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                      </ul>
+                    </div>
                   @endif
                   @if(Session::has('status'))
-                    <p class="alert alert-info">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      {!! Session::get('status') !!}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>                  
+                  @endif
+                  @if(Session::has('erro'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      {{ Session::get('erro') }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>                  
                   @endif
                 </div>
+
                   <div class="row mb-3">
                       <div class="col-md-4">
                         <div class="input-group">
@@ -82,13 +100,13 @@
                                 @endif
                               </td>
                               <td class="text-center align-middle">
-                                  <button type="button" class="btn btn-outline-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'" title="Visualizar Petição"><i class="fa fa-eye"></i></button>
+                                  <button type="button" class="btn btn-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'" title="Visualizar petição"><i class="fa fa-eye"></i></button>
                                   @if($petition->student_ok != 'true')
-                                    <button type="button" class="btn btn-outline-warning" role="button" onClick="location.href='Peticao/Edit/{{$petition->id}}'" title="Editar Petição"><i class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-warning" role="button" onClick="location.href='Peticao/Edit/{{$petition->id}}'" title="Editar petição"><i class="fa fa-edit"></i></button>
                                   @endif
                                   <!-- Quando a Petição for rascunho -->
                                   @if($petition->student_ok == '')
-                                    <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModalPetition" onclick="deletePetition('{{$petition->id}}','{{$petition->description}}')" title="Excluir Petition"><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#deleteModalPetition" onclick="deletePetition('{{$petition->id}}','{{$petition->description}}')" title="Excluir petição"><i class="fa fa-trash"></i></button>
                                   @endif
                               </td>
                             </tr>

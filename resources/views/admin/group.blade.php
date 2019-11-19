@@ -87,9 +87,9 @@
                             </button> 
                           @endif
                         </td>
-                        <td class="text-center">{{$group->name}}</td>
-                        <td class="text-center">{{$humans->find($group->teacher_id)->name}}</td>
-                        <td class="text-center">{{$doubleStudents->where('group_id',$group->id)->count()}}</td>
+                        <td class="text-center align-middle">{{$group->name}}</td>
+                        <td class="text-center align-middle">{{$humans->find($group->teacher_id)->name}}</td>
+                        <td class="text-center align-middle">{{$doubleStudents->where('group_id',$group->id)->count()}}</td>
                         <!--Pegar qtd de peticoes por dupla-->
                         <td style="font-size:10pt;width:15%" class="text-center">
                           <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModalGroup" onclick="editModalGroup('{{$group->id}}','{{$group->name}}','{{$group->teacher_id}}')" title="Editar Grupo">

@@ -10,21 +10,39 @@
         </div>
         <div class="card-body">
           <div class="col-lg-12">
-            <div class="row">
-              @if ($errors->any())
-              <div class="alert alert-danger">
-                <ul>
-                  @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
+
+              <div>
+                @if ($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Os seguinte erros foram informados:</strong>
+                    <ul class="m-0">
+                      @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+                @endif
+                @if(Session::has('status'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {!! Session::get('status') !!}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                @endif
+                @if(Session::has('erro'))
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ Session::get('erro') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                @endif
               </div>
-              @endif
-              @if(Session::has('status'))
-              <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close"
-                  data-dismiss="alert" aria-label="close">&times;</a></p>
-              @endif
-            </div>
+            
             <div class="row mb-3">
               <div class="col-md-4">
                 <div class="input-group">
@@ -69,20 +87,20 @@
                         </td>
                         <td style="font-size:18pt;width:15%" class="text-center">
                           @if($petition->defender_ok == 'true' && $petition->defender_id == $defender->id)
-                            <button type="button" class="btn btn-outline-success" role="button" onClick="location.href='Peticao/Emitir/{{$petition->id}}'"
-                              title="Emitir Petição">
+                            <button type="button" class="btn btn-success" role="button" onClick="location.href='Peticao/Emitir/{{$petition->id}}'"
+                              title="Emitir petição">
                               <span class="fas fa-file-download"></span>
                             </button>
                           @endif
-                          @if(($petition->defender_ok == 'false' && $petition->teacher_ok == 'false') || $petition->defender_ok == '')
-                            <button type="button" class="btn btn-outline-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'"
-                              title="Visualizar Petição">
+                          @if(($petition->defender_ok == 'false' && $petition->supervisor_ok == 'false') || $petition->defender_ok == null)
+                            <button type="button" class="btn btn-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'"
+                              title="Visualizar petição">
                               <i class="fas fa-eye"></i>
                             </button>
                           @endif
-                          @if($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->defender_ok != 'true')
-                          <button type="button" class="btn btn-outline-primary" role="button" onClick="location.href='Peticao/Avaliar/{{$petition->id}}'"
-                            title="Avaliar Petição">
+                          @if($petition->student_ok == 'true' && $petition->teacher_ok == 'true' && $petition->supervisor_ok == 'true' && $petition->defender_ok != 'true')
+                          <button type="button" class="btn btn-primary" role="button" onClick="location.href='Peticao/Avaliar/{{$petition->id}}'"
+                            title="Avaliar petição">
                             <span class="fas fa-gavel"></span>
                           </button>
                           @endif

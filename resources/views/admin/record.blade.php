@@ -99,7 +99,7 @@
                                     <a href="{{route('record.show', $user->id)}}" class="btn btn-success text-white"><i class="fas fa-eye mr-1" title="Mostrar histórico do aluno">
                                     </i> Mostrar histórico</a>
                                 @else
-                                   <button class="btn btn-danger text-white" disabled="disabled"> <i class="fas fa-eye mr-1" title="Histórico vazio"></i>Histórico vazio</button>
+                                   <button class="btn btn-danger text-white" disabled="disabled"> <i class="fas fa-eye mr-1" title="Histórico vazio"></i> Histórico vazio</button>
                                 @endif
                                 </td>
                             </tr>

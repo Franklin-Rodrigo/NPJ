@@ -107,7 +107,7 @@
       @endif
       <div class="row">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
+          <button type="button" class="btn btn-secondary" onClick="location.href='{{route('supervisor.peticoes')}}'">
             <span class="fas fa-arrow-left mr-2"></span>
             Voltar
           </button>

@@ -13,20 +13,38 @@
         <div class="card-body">
           <div class="col-lg-12">
           
-              <div class="row">
+              <div>
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                </div>
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Os seguinte erros foram informados:</strong>
+                    <ul class="m-0">
+                      @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
                 @endif
                 @if(Session::has('status'))
-                  <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {!! Session::get('status') !!}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                @endif
+                @if(Session::has('erro'))
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ Session::get('erro') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
                 @endif
               </div>
+
               <div class="row mb-3">
                   <div class="col-md-4">
                     <div class="input-group">
@@ -77,14 +95,14 @@
                             </td>
                             <td class="text-center align-middle">
                               @if($petition->student_ok == 'true' && $petition->teacher_ok != 'true')
-                              <button type="button" class="btn btn-outline-primary" role="button" onClick="location.href='Peticao/Avaliar/{{$petition->id}}'" title="Avaliar Petição">
+                              <button type="button" class="btn btn-primary" role="button" onClick="location.href='Peticao/Avaliar/{{$petition->id}}'" title="Avaliar petição">
                                 <span class="fas fa-gavel"></span>
                               </button>
-                              <button type="button" class="btn btn-outline-warning" role="button" onClick="location.href='Peticao/Edit/{{$petition->id}}'" title="Editar Petição">
+                              <button type="button" class="btn btn-warning" role="button" onClick="location.href='Peticao/Edit/{{$petition->id}}'" title="Editar petição">
                                 <i class="fa fa-edit"></i>
                               </button>
                               @else
-                              <button type="button" class="btn btn-outline-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'" title="Visualizar Petição">
+                              <button type="button" class="btn btn-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'" title="Visualizar petição">
                                 <span class="fas fa-eye"></span>
                               </button>
                               @endif

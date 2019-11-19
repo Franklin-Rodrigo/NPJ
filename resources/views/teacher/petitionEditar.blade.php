@@ -11,21 +11,36 @@
     </div>
 
     <!-- pra mostrar quando a petição é salva -->
-    <div class="row justify-content-center">
-    @if ($errors->any())
-    <div class="alert alert-danger col-lg-6">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-    @if(Session::has('status'))
-      <p class="alert alert-info">
-      {{ Session::get('status') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-    @endif
+    <div>
+      @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Os seguinte erros foram informados:</strong>
+          <ul class="m-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+      @if(Session::has('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {!! Session::get('status') !!}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>                  
+      @endif
+      @if(Session::has('erro'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ Session::get('erro') }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>                  
+      @endif
     </div>
 
     <div class="row justify-content-center">

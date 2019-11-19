@@ -4,7 +4,7 @@
     <div class="row justify-content-center mt-3">
       <div class="col-lg-10">
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
-      <form action="{{ route('peticao.cadastrar')}}" method="post" enctype="multipart/form-data">
+      <form action="{{ route('aluno.peticao.cadastrar')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="template_id" value="{{$template->id}}"/>
         <label for="">Título da petição</label>
