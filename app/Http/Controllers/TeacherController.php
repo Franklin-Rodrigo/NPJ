@@ -54,7 +54,7 @@ class TeacherController extends Controller
         $human = Human::find($request['id']);
         $user = User::find($human->user_id);
 
-        return $this->service->update($human, $user, $request);
+        return $this->service->editar($human, $user, $request);
     }
 
     public function destroy(Request $request) {
