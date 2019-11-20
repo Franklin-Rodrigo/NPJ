@@ -6,7 +6,7 @@
       <div class="card my-5">
         <div class="card-header">
           <h4>
-            Historico de Alunos
+            Historico de alunos
           </h4>
         </div>
         <div class="card-body">
@@ -66,7 +66,7 @@
                         <th class="text-center">E-mail</th>
                         <th class="text-center">Gênero</th>
                         <th class="text-center">Telefone</th>
-                        <th class="text-center">Nº de Petições</th>
+                        <th class="text-center">Nº de petições</th>
                         <th class="text-center">Ações</th>
                       </tr>
                     </thead>
@@ -99,7 +99,7 @@
                                     <a href="{{route('record.show', $user->id)}}" class="btn btn-success text-white"><i class="fas fa-eye mr-1" title="Mostrar histórico do aluno">
                                     </i> Mostrar histórico</a>
                                 @else
-                                   <button class="btn btn-danger text-white" disabled="disabled"> <i class="fas fa-eye mr-1" title="Histórico vazio"></i>Histórico vazio</button>
+                                   <button class="btn btn-danger text-white" disabled="disabled"> <i class="fas fa-eye mr-1" title="Histórico vazio"></i> Histórico vazio</button>
                                 @endif
                                 </td>
                             </tr>

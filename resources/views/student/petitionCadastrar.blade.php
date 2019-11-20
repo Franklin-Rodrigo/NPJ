@@ -4,7 +4,7 @@
     <div class="row justify-content-center mt-3">
       <div class="col-lg-10">
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
-      <form action="{{ route('peticao.cadastrar')}}" method="post" enctype="multipart/form-data">
+      <form action="{{ route('aluno.peticao.cadastrar')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="template_id" value="{{$template->id}}"/>
         <label for="">Título da petição</label>
@@ -26,16 +26,16 @@
         <div class="row justify-content-center">
           <div class="text-center">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
+              <span class="fas fa-times mr-1"></span>
               Cancelar
-              <span class="fas fa-times ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-primary" value="SALVAR">
+              <span class="fas fa-save mr-1"></span>
               Salvar
-              <span class="fas fa-save ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-success" value="ENVIAR">
+              <span class="fas fa-share mr-1"></span>
               Enviar
-              <span class="fas fa-share ml-2"></span>
             </button>
           </div>
         </div>

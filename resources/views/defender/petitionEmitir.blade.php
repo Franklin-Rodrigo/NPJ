@@ -52,11 +52,11 @@
         <div class="row">
           <div>
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Defensor/Peticoes')}}'">
-              <span class="fas fa-arrow-left mr-2"></span>
+              <span class="fas fa-arrow-left mr-1"></span>
               Voltar
             </button>
             <button type="submit" class="btn btn-success" id="export">
-              <span class="fas fa-file-download mr-2"></span>
+              <span class="fas fa-file-download mr-1"></span>
               Emitir
             </button>
           </div>

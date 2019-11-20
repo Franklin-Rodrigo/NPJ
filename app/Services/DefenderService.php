@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entities\Human;
 use App\User;
 use Illuminate\Http\Request;
-use Validator;
 
 class DefenderService {
 
@@ -17,19 +16,19 @@ class DefenderService {
         //cria uma senha aleatória com dígitos do email do aluno, concatenado a dia, mês e ano
         $password = $request->email[random_int(0, (strlen($request->email) - 1))] . $request->email[random_int(0, (strlen($request->email) - 1))] . $request->email[random_int(0, (strlen($request->email) - 1))] . date('d') . date('m') . date('y');
 
-        // $user = User::create([
-        //     'type' => 'defender',
-        //     'email' => $request->email,
-        //     'password' => bcrypt($password),
-        // ]);
+        $user = User::create([
+            'type' => 'defender',
+            'email' => $request->email,
+            'password' => bcrypt($password),
+        ]);
 
-        // $human = Human::create([
-        //     'status' => 'active',
-        //     'name' => $request->name,
-        //     'phone' => $request->phone,
-        //     'gender' => $request->gender,
-        //     'user_id' => $user->id,
-        // ]);
+        $human = Human::create([
+            'status' => 'active',
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'user_id' => $user->id,
+        ]);
 
         $request->session()->flash('status', "Defensor cadastrado com a senha: $password <br> A senha poderá ser editada após o login, em 'Preferências'.");
         return redirect()->back();

@@ -7,10 +7,10 @@
       <div class="card my-5">
         <div class="card-header">
           <h4>
-            Gerenciar Professores
+            Gerenciar professores
             <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModalTeacher" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
               <i class="fa fa-plus"></i>
-              Novo Professor
+              Novo professor
             </button>
           </h4>
         </div>
@@ -132,7 +132,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Novo Professor</h4>
+          <h4 class="modal-title" id="myModalLabel">Novo professor</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -140,7 +140,7 @@
             {{ csrf_field() }}
             <div class="row mb-3">
               <div class="col-md-4">
-                <small class="text-danger">* Campos Obrigatórios</small>
+                <small class="pull-right text-danger">*Campos obrigatórios</small>
               </div>
             </div>
 
@@ -170,16 +170,15 @@
                   <input type="tel" name="phone" class="form-control input-phone" value="">
                 </div>
               </div>
-              </div>
-            <div class="form-group">
-              <label for="">Senha *</label>
-              <div class="input-group">
-                  A senha do professor sera gerada automaticamente!
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="pull-right text-danger">*A senha será gerada automaticamente</p>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1"></i> Cadastrar</button>
             </div>
           </form>
         </div>
@@ -193,7 +192,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Editar Professor</h4>
+          <h4 class="modal-title" id="myModalLabel">Editar professor</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -238,8 +237,8 @@
               <input type="password" name="password" class="form-control">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Salvar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle"></i> Salvar</button>
             </div>
           </form>
         </div>
@@ -286,8 +285,8 @@
             <p class="text-center mt-3 mb-0">Se você realmente deseja desativar o professor <strong class="teacherStatusName"></strong>?</p>
             <p class="text-center">Seus grupos serão removidos!</p>
             <div class="text-center">
-              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-danger btn-lg">Sim</button>
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Não</button>
+              <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-check-circle"></i> Sim</button>
             </div>
           </form>
         </div>
@@ -308,8 +307,8 @@
             </div>
             <p class="text-center">Se você realmente ativar o professor <strong class="teacherStatusName"></strong>?</p>
             <div class="text-center">
-              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Não</button>
-              <button type="submit" class="btn btn-success btn-lg">Sim</button>
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Não</button>
+              <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-check-circle"></i> Sim</button>
             </div>
           </form>
         </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Entities\Human;
 use App\Entities\Template;
 use App\Services\TemplateService;
-use App\User;
 use Auth;
 use Illuminate\Http\Request;
 

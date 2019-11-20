@@ -6,25 +6,44 @@
       <div class="card">
         <div class="card-header">
           <h4>
-            Visualizar Duplas
+            Visualizar duplas
           </h4>
         </div>
           <div class="card-body">
             <div class="col-lg-12">
-                <div class="row">
-                  @if ($errors->any())
-                  <div class="alert alert-danger">
-                    <ul>
+
+              <div>
+                @if ($errors->any())
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Os seguinte erros foram informados:</strong>
+                    <ul class="m-0">
                       @foreach ($errors->all() as $error)
                       <li>{{ $error }}</li>
                       @endforeach
                     </ul>
                   </div>
-                  @endif
-                  @if(Session::has('status'))
-                    <p class="alert alert-info" style="width:20%;">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                  @endif
-                </div>
+                @endif
+                @if(Session::has('status'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {!! Session::get('status') !!}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                @endif
+                @if(Session::has('erro'))
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ Session::get('erro') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>                  
+                @endif
+              </div>
+
                 <div class="row mb-3">
                     <div class="col-md-4">
                       <div class="input-group">
@@ -43,7 +62,7 @@
                         <tr>
                           <th class="text-center">Dupla</th>
                           <th class="text-center">Grupo</th>
-                          <th class="text-center">N° Petições</th>
+                          <th class="text-center">N° petições</th>
                           <!--<th class="text-center">Ações</th>-->
                         </tr>
                       </thead>
@@ -57,7 +76,7 @@
                               <td class="text-center align-middle">{{$petitions->where('visible','true')->where('doubleStudent_id',$doubleStudent->id)->count()}}</td>
                             </tr>
                         @empty
-                        <td class="text-center">Nenhuma Dupla registrada!</td>
+                        <td class="text-center">Nenhuma dupla registrada!</td>
                         @endforelse
                       </tbody>
                     </table>

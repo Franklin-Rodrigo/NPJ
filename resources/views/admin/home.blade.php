@@ -21,7 +21,7 @@
   </div>
   <div id="option1" style="display:block">
     <div class="text-center">
-      <h1 class="h1 h1-responsive text-center">Status das Petições</h1>
+      <h1 class="h1 h1-responsive text-center">Status das petições</h1>
     </div>
     <br>
 
@@ -87,7 +87,7 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-header">
-              <h4>Ranking de Duplas</h4>
+              <h4>Ranking de duplas</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -96,7 +96,7 @@
                     <tr>
                       <th class="text-center">Colocação</th>
                       <th class="text-center">Dupla</th>
-                      <th class="text-center">N° de Petições</th>
+                      <th class="text-center">N° de petições</th>
                       <th class="text-center">Grupo</th>
                     </tr>
                   </thead>
@@ -133,7 +133,7 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-header">
-              <h4>Ranking de Duplas</h4>
+              <h4>Ranking de duplas</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -142,7 +142,7 @@
                     <tr>
                       <th class="text-center">Colocação</th>
                       <th class="text-center">Grupo</th>
-                      <th class="text-center">N° de Petições</th>
+                      <th class="text-center">N° de petições</th>
                     </tr>
                   </thead>
                   <tbody>

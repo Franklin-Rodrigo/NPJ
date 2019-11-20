@@ -5,27 +5,45 @@
     <div class="col-lg-12 my-5">
       <div class="card">
         <div class="card-header">
-            <h4>Gerenciar Petições
-                <button type="button" class="btn btn-md btn-primary float-right" role="button" data-toggle="modal" data-target="#novaModalPetition" data-toggle="tooltip" data-placement="left" title="Clique para cadastrar nova petição"><i class="fa fa-plus"></i> Nova Peticão</button>
+            <h4>Gerenciar petições
+                <button type="button" class="btn btn-md btn-primary float-right" role="button" data-toggle="modal" data-target="#novaModalPetition" data-toggle="tooltip" data-placement="left" title="Clique para cadastrar nova petição"><i class="fa fa-plus"></i> Nova peticão</button>
             </h4>
         </div> 
         <div class="card-body">
             <div class="col-lg-12">
 
-                <div class="row justify-content-center">
+                <div>
                   @if ($errors->any())
-                  <div class="alert alert-danger col-lg-6">
-                    <ul>
-                      @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                      @endforeach
-                    </ul>
-                  </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong>Os seguinte erros foram informados:</strong>
+                      <ul class="m-0">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                      </ul>
+                    </div>
                   @endif
                   @if(Session::has('status'))
-                    <p class="alert alert-info">{{ Session::get('status') }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      {!! Session::get('status') !!}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>                  
+                  @endif
+                  @if(Session::has('erro'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      {{ Session::get('erro') }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>                  
                   @endif
                 </div>
+
                   <div class="row mb-3">
                       <div class="col-md-4">
                         <div class="input-group">
@@ -82,20 +100,20 @@
                                 @endif
                               </td>
                               <td class="text-center align-middle">
-                                  <button type="button" class="btn btn-outline-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'" title="Visualizar Petição"><i class="fa fa-eye"></i></button>
+                                  <button type="button" class="btn btn-success" role="button" onClick="location.href='Peticao/Show/{{$petition->id}}'" title="Visualizar petição"><i class="fa fa-eye"></i></button>
                                   @if($petition->student_ok != 'true')
-                                    <button type="button" class="btn btn-outline-warning" role="button" onClick="location.href='Peticao/Edit/{{$petition->id}}'" title="Editar Petição"><i class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-warning" role="button" onClick="location.href='Peticao/Edit/{{$petition->id}}'" title="Editar petição"><i class="fa fa-edit"></i></button>
                                   @endif
                                   <!-- Quando a Petição for rascunho -->
                                   @if($petition->student_ok == '')
-                                    <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModalPetition" onclick="deletePetition('{{$petition->id}}','{{$petition->description}}')" title="Excluir Petition"><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#deleteModalPetition" onclick="deletePetition('{{$petition->id}}','{{$petition->description}}')" title="Excluir petição"><i class="fa fa-trash"></i></button>
                                   @endif
                               </td>
                             </tr>
                           @endif
                         @empty
                         <tr>
-                          <td class="text-center" colspan="4">Nenhuma Petição registrada!</td>
+                          <td class="text-center" colspan="4">Nenhuma petição registrada!</td>
                         </tr>
                         @endforelse
                       </tbody>
@@ -117,7 +135,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Nova Petição</h4>
+        <h4 class="modal-title" id="myModalLabel">Nova petição</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
@@ -125,14 +143,14 @@
           {{ csrf_field() }}
             <div class="row">
               <div class="col-md-12">
-                <h3 class="text-center">Selecione um dos Templates abaixo:</h3>
+                <h3 class="text-center">Selecione um dos templates abaixo:</h3>
               </div>
             </div>
             <br>
             <div class="row" id="options">
               <div class="col-md-12 text-center">
                 <select class="form-control" name="template_id" required>
-                  <option value="">Selecione o Template</option>
+                  <option value="">Selecione o template</option>
                   @foreach($templates as $template)
                     <option value="{{$template->id}}">{{$template->title}}</option>
                   @endforeach
@@ -141,8 +159,8 @@
             </div>
        
             <div class="modal-footer ">
-              <button type="button" class="btn btn-danger"data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Criar</button>
+              <button type="button" class="btn btn-default"data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1"></i> Criar</button>
             </div>
         </form>
       </div>
@@ -167,10 +185,9 @@
           <h4 class="text-center"><strong id="deleteDescriptionPetition"></strong></h4>
           <br>
           <div class="text-center">
-            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Fechar</button>
             <button type="submit" class="btn btn-danger btn-lg">
-              Excluir
-              <span class="fas fa-trash ml-2"></span>
+              <span class="fas fa-trash mr-1"></span> Excluir
             </button>
           </div>
         </form>

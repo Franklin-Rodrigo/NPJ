@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('component')
 <div class="card">
-    <h4 class="card-title">Gerenciar Grupos</h4>
+    <h4 class="card-title">Gerenciar grupos</h4>
     <div class="card-body">
         <div class="col-lg-12">
         <div class="card">

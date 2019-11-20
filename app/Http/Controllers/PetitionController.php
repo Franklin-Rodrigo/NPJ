@@ -9,7 +9,6 @@ use App\Entities\Petition;
 use App\Entities\Template;
 use App\Services\PetitionService;
 use App\Entities\Record;
-// use App\User;
 use Auth;
 use Illuminate\Http\Request;
 

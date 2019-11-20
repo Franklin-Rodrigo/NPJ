@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entities\Human;
 use App\User;
 use Illuminate\Http\Request;
-use Validator;
 
 class SupervisorService
 {

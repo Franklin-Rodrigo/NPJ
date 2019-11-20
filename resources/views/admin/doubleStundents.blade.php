@@ -6,10 +6,10 @@
       <div class="card my-5">
         <div class="card-header">
           <h4>
-            Gerenciar Duplas
+            Gerenciar duplas
             <button type="button" class="btn btn-primary float-right" role="button" data-toggle="modal" data-target="#newModaldoubleStudent" data-toggle="tooltip" data-placement="left" title="Clique para abrir o formulário de novo aluno">
               <i class="fa fa-plus"></i>
-              Nova Dupla
+              Nova dupla
             </button>
           </h4>
         </div>
@@ -75,8 +75,8 @@
                   @forelse($doubleStudents as $doubleStudent)
                     @if($humans->find($doubleStudent->student_id) && $humans->find($doubleStudent->student2_id))
                       <tr class="object align-middle" name="{{$humans->find($doubleStudent->student_id)->name}}">
-                        <td>
-                        <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#deleteModaldoubleStudent" onclick="deletedoubleStudent('{{$doubleStudent->id}}')" title="Excluir Dupla"><i class="fa fa-trash"></i></button>
+                        <td class="text-center align-middle">
+                        <button type="button" class="btn btn-danger" role="button" data-toggle="modal" data-target="#deleteModaldoubleStudent" onclick="deletedoubleStudent('{{$doubleStudent->id}}')" title="Desativar dupla"><i class="fa fa-trash mr-1"></i> Desativar dupla</button>
                       </td>
                         <td class="text-center align-middle">
                           {{$humans->find($doubleStudent->student_id)->name}} | 
@@ -84,7 +84,7 @@
                         </td>                            
                         <td class="text-center align-middle">{{$doubleStudent->group->name}}</td>
                         <td class="text-center align-middle">
-                          <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModaldoubleStudent" onclick="editModaldoubleStudent('{{$doubleStudent->id}}','{{$humans->find($doubleStudent->student_id)->name}}','{{$humans->find($doubleStudent->student2_id)->name}}','{{$doubleStudent->group->name}}')" title="Editar Dupla"><i class="fa fa-edit"></i>Editar</button>
+                          <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#editModaldoubleStudent" onclick="editModaldoubleStudent('{{$doubleStudent->id}}','{{$humans->find($doubleStudent->student_id)->name}}','{{$humans->find($doubleStudent->student2_id)->name}}','{{$doubleStudent->group->name}}')" title="Editar Dupla"><i class="fa fa-edit mr-1"></i> Editar</button>
                         </td>
                       </tr>
                     @endif
@@ -107,7 +107,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Nova Dupla</h4>
+          <h4 class="modal-title" id="myModalLabel">Nova dupla</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
@@ -115,16 +115,16 @@
             {{ csrf_field() }}
             <div class="row">            
               <div class="col-md-4">
-                <small class="text-danger">* Campos Obrigatórios</small>
+                <small class="text-danger">*Campos obrigatórios</small>
               </div>
             </div>
             <br>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="firstStudent">Primeiro Estudante</label>
+              <label for="firstStudent">Primeiro estudante</label>
               <select class="form-control" id="firstStudent" name="student_id" id="student_id" onchange="verify(this.value, 1)" required>
-                <option value="">Selecione o Estudante</option>
+                <option value="">Selecione o estudante</option>
                 @foreach($humans as $human)
                   @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
                     <option value="{{$human->id}}" class="primeiros">{{$human->name}}</option>
@@ -136,9 +136,9 @@
         
           <div class="col-md-6">
               <div class="form-group">
-                <label for="secondStudent">Segundo Estudante</label>
+                <label for="secondStudent">Segundo estudante</label>
                 <select class="form-control" id="secondStudent" name="student2_id" id="student2_id" onchange="verify(this.value, 2)" required>
-                  <option value="">Selecione o Estudante</option>
+                  <option value="">Selecione o estudante</option>
                   @foreach($humans as $human)
                     <div>
                       @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
@@ -154,7 +154,7 @@
             <div class="form-group">
               <label for="group">Grupo</label>
               <select class="form-control" id="group" name="group_id" required>
-                <option value="">Selecione o Grupo</option>
+                <option value="">Selecione o grupo</option>
                 @foreach($groups as $group)
                   @if($group->status == 'active')
                     <option value="{{$group->id}}">{{$group->name}}</option>
@@ -166,8 +166,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-          <button type="submit" class="btn btn-primary">Cadastrar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1"></i> Cadastrar</button>
         </div>
       </form>
     </div>
@@ -181,65 +181,67 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Editar Dupla</h4>
+        <h4 class="modal-title" id="myModalLabel">Editar dupla</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <form action="{{URL::to('Admin/Dupla/Editar')}}" method="post" enctype="multipart/form-data">
           {{ csrf_field() }}
           <input type="hidden" name="id" id="doubleStudentId">
-          <div class="row" style="margin-left:2px">
-            <div class="form-group">
-            <label for="doubleStudent1">Primeiro Estudante</label>
-            <select class="form-control" name="student_id" id="doubleStudent1" onchange="verifyEdit(this.value)"/>
-              <option value="">Selecione o Estudante</option>
-              @foreach($humans as $human)
-                @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
-                  <option value="{{$human->id}}">{{$human->name}}</option>
-                @endif
-              @endforeach
-            </select>
-          </div>
-          <div class="row" style="margin-left:2px">
-            <div class="form-group">
-            <label for="doubleStudent2">Selecione o Estudante</label>
-            <select class="form-control" name="student2_id" id="doubleStudent2"/>
-              <option value="">Selecione o estudante</option>
-              @foreach($humans as $human)
-                @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
-                  <option value="{{$human->id}}" id="rr">{{$human->name}}</option>
-                @endif
-              @endforeach
-            </select>
-            </div>
-          </div>
-          <div class="row" style="margin-left:18px">
-            <div class="form-group">
-            <label for="group-edit">Grupo</label>
-            <select class="form-control" id="group-edit" name="group_id" id="doubleStudentGroup">
-              <option value="">Selecione o Grupo</option>
-              @foreach($groups as $group)
-                @if($group->status == 'active')
-                  <option value="{{$group->id}}">{{$group->name}}</option>
-                @endif
-              @endforeach
-            </select>
-            </div>
-          </div>
-      </div>
-          <br>
-          <div class="row">
-            <div class="modal-footer" style="text-align:left">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
-            </div>
-          </div>
-        </div>
-    </form>
 
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="doubleStudent1">Primeiro estudante</label>
+                <select class="form-control" name="student_id" id="doubleStudent1" onchange="verifyEdit(this.value)"/>
+                  <option value="">Selecione o estudante</option>
+                  @foreach($humans as $human)
+                    @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
+                      <option value="{{$human->id}}">{{$human->name}}</option>
+                    @endif
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="doubleStudent2">Selecione o estudante</label>
+                <select class="form-control" name="student2_id" id="doubleStudent2"/>
+                  <option value="">Selecione o estudante</option>
+                  @foreach($humans as $human)
+                    @if($human->user->type == 'student' && $human->status == 'active' && $human->doubleS == 'NAO')
+                      <option value="{{$human->id}}" id="rr">{{$human->name}}</option>
+                    @endif
+                  @endforeach
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="group-edit">Grupo</label>
+                <select class="form-control" id="group-edit" name="group_id" id="doubleStudentGroup">
+                  <option value="">Selecione o grupo</option>
+                  @foreach($groups as $group)
+                    @if($group->status == 'active')
+                      <option value="{{$group->id}}">{{$group->name}}</option>
+                    @endif
+                  @endforeach
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle mr-1"></i>Salvar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
   </div>
-  </div>
-  </div>
+</div>
 
 
   <div class="modal fade" id="deleteModaldoubleStudent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -250,14 +252,14 @@
           {{ csrf_field() }}
           <input type="hidden" name="id" id="deleteIdDoubleStudent" value="">
           <div class="text-center">
-            <i class="fa fa-exclamation-circle fa-x6" aria-hidden="true"></i>
+            <i class="fa fa-exclamation-circle fa-x6 text-danger" aria-hidden="true"></i>
           </div>
           <h3 class="text-center"><strong style="color:red;">Atenção!</strong></h3>
-          <p class="text-center">Caso deseje excluir a "DUPLA" clique no botão confirmar</p>
+          <p class="text-center">Você realmente deseja desativar esta dupla?<br>Ela não poderá ser ativa novamente!</p>
           <br>
           <div class="text-center">
-            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-danger btn-lg">Confirmar</button>
+            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
+            <button type="submit" class="btn btn-danger btn-lg"><i class="fa fa-trash mr-1"></i> Confirmar</button>
           </div>
         </form>
       </div>

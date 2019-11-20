@@ -15,7 +15,7 @@
         <div class="row">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Professor/Templates')}}'">
-              <span class="fas fa-arrow-left mr-2"></span>
+              <span class="fas fa-arrow-left mr-1"></span>
               Voltar
             </button>
           </div>

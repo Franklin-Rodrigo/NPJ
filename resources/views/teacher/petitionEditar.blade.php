@@ -1,31 +1,46 @@
-@extends('layouts.student')
+@extends('layouts.teacher')
 @section('component')
   <div class="container">
     <div class="row justify-content-center my-3">
       <div class="text-center">
       <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">
+        <span class="fas fa-comments mr-1"></span>
           Ver comentários
-          <span class="fas fa-comments ml-2"></span>
         </button>
       </div>
     </div>
 
     <!-- pra mostrar quando a petição é salva -->
-    <div class="row justify-content-center">
-    @if ($errors->any())
-    <div class="alert alert-danger col-lg-6">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-    @if(Session::has('status'))
-      <p class="alert alert-info">
-      {{ Session::get('status') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-    @endif
+    <div>
+      @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Os seguinte erros foram informados:</strong>
+          <ul class="m-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+      @if(Session::has('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {!! Session::get('status') !!}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>                  
+      @endif
+      @if(Session::has('erro'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ Session::get('erro') }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>                  
+      @endif
     </div>
 
     <div class="row justify-content-center">
@@ -82,16 +97,16 @@
         <div class="row justify-content-center">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Professor/Peticoes')}}'">
+              <span class="fas fa-times mr-1"></span>
               Cancelar
-              <span class="fas fa-times ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-primary" value="SALVAR">
+              <span class="fas fa-save mr-1"></span>
               Salvar
-              <span class="fas fa-save ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-success" value="ENVIAR">
+              <span class="fas fa-share mr-1"></span>
               Enviar
-              <span class="fas fa-share ml-2"></span>
             </button>
           </div>
         </div>
@@ -125,7 +140,7 @@
                   @endforeach
                 </ul>
                 @if(count($profComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 
@@ -144,7 +159,7 @@
                   @endforeach
                 </ul>
                 @if(count($defComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 

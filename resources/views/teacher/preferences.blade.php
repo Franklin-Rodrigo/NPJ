@@ -47,6 +47,11 @@
               {{ csrf_field() }}
               <input type="hidden" name="idUser" value="{{$user->id}}">
               <input type="hidden" name="idHuman" value="{{$human->id}}">
+              <div class="row">
+                <div class="col-md-4">
+                  <small class="pull-right text-danger">*Campos obrigatórios</small>
+                </div>
+              </div>
               <div class="form-group">
                 <label for="">Nome *</label>
                 <input type="text" name="name" class="form-control" maxlength="80" value="{{$human->name}}" required>
@@ -58,7 +63,7 @@
               <div class="row">
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <label for="">Sexo</label>
+                    <label for="">Sexo *</label>
                     <select class="form-control" name="gender" required>
                       <option value="Masculino" @if($human->gender == 'Masculino') selected @endif>Masculino</option>
                       <option value="Feminino" @if($human->gender == 'Feminino') selected @endif>Feminino</option>
@@ -77,22 +82,22 @@
   
               <div class="row">
                 <div class="col-md-4">
-                  <small class="pull-right" style="color:red">Caso deseje alterar sua senha, preencha os campos abaixo</small>
+                  <small class="pull-right text-danger">Caso deseje alterar sua senha, preencha os campos abaixo</small>
                 </div>
               </div>
   
               <div class="form-group">
-                <label for="">Senha *</label>
+                <label for="">Senha</label>
                 <input type="password" name="password" class="form-control">
               </div>
   
               <div class="form-group">
-                <label for="">Confirmação de senha *</label>
+                <label for="">Confirmação de senha</label>
                 <input type="password" name="password_confirmation" class="form-control">
               </div>
           </div>
           <div class="card-footer text-center">
-            <button type="submit" name="botao" class="btn btn-primary"><i class="fas fa-save mr-1"></i> SALVAR</button>
+            <button type="submit" name="botao" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Salvar</button>
           </div>
           </form>
         </div>
