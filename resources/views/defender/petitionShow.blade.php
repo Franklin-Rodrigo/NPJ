@@ -3,8 +3,8 @@
 <div class="container">
   <div class="row justify-content-center mt-3">
     <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">
+      <span class="fas fa-comments mr-1"></span>
       Ver comentários
-      <span class="fas fa-comments ml-2"></span>
     </button>
   </div>
   <div class="row justify-content-center mt-3">
@@ -54,7 +54,7 @@
       <div class="row">
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Defensor/Peticoes')}}'">
-            <span class="fas fa-arrow-left mr-2"></span>
+            <span class="fas fa-arrow-left mr-1"></span>
             Voltar
           </button>
         </div>
@@ -88,7 +88,7 @@
               @endforeach
             </ul>
             @if(count($profComments) < 1)
-            <p class="text-center">Nenhum Comentário!</p>
+            <p class="text-center">Nenhum comentário!</p>
             @endif
           </div>
 
@@ -107,12 +107,12 @@
                 @endforeach
             </ul>
             @if(count($defComments) < 1)
-            <p class="text-center">Nenhum Comentário!</p>
+            <p class="text-center">Nenhum comentário!</p>
             @endif
           </div>
         </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Fechar</button>
           </div>
         </div>
       </div>

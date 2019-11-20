@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-header">
             <h4>
-              Avaliar Petições
+              Avaliar petições
             </h4>
         </div>
         
@@ -111,7 +111,7 @@
                         @endif
                         @empty
                         <tr>
-                          <td class="text-center" colspan="4">Nenhuma Petição à ser Avaliada!</td>
+                          <td class="text-center" colspan="4">Nenhuma petição a ser avaliada!</td>
                         </tr>
                       @endforelse
                     </tbody>

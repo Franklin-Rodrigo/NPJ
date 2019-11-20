@@ -4,8 +4,8 @@
     <div class="row justify-content-center my-3 mt-5">
       <div class="text-center">
       <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">
+        <span class="fas fa-comments mr-1"></span>
           Ver comentários
-          <span class="fas fa-comments ml-2"></span>
         </button>
       </div>
     </div>
@@ -97,16 +97,16 @@
         <div class="row justify-content-center">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
+              <span class="fas fa-times mr-1"></span>
               Cancelar
-              <span class="fas fa-times ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-primary" value="SALVAR" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
+              <span class="fas fa-save mr-1"></span>
               Salvar
-              <span class="fas fa-save ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-success" value="ENVIAR" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
+              <span class="fas fa-share mr-1"></span>
               Enviar
-              <span class="fas fa-share ml-2"></span>
             </button>
           </div>
         </div>
@@ -140,7 +140,7 @@
                   @endforeach
                 </ul>
                 @if(count($profComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 
@@ -165,7 +165,7 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Voltar</button>
           </div>
         </div>
       </div>

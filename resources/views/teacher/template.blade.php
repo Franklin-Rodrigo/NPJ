@@ -6,8 +6,8 @@
       <div class="card">
         <div class="card-header">
             <h4>
-                Gerenciar Templates
-                <button type="button" class="btn btn-md btn-primary float-right" onClick="location.href='{{URL::to('Professor/Template/Add')}}'" title="Clique para abrir o formulário de novo Template" ><i class="fas fa-plus mr-2"></i>Novo Template</button>
+                Gerenciar templates
+                <button type="button" class="btn btn-md btn-primary float-right" onClick="location.href='{{URL::to('Professor/Template/Add')}}'" title="Clique para abrir o formulário de novo Template" ><i class="fas fa-plus mr-2"></i>Novo template</button>
             </h4>
         </div>
         <div class="card-body">
@@ -72,19 +72,19 @@
                           <tr class="object align-middle" name="{{$template->title}}">
                             <td class="text-center align-middle">
                               @if($template->status == 'inactive')
-                               <button class="btn btn-danger" onclick="mudarStatusTemplate({{$template->id}})" title="POSTAR Template">Postar</button>
-                             @else
-                               <button type="button" class="btn btn-md btn-success" role="button" onclick="mudarStatusTemplate({{$template->id}})" title="Tornar Rascunho">Tornar Rascunho</button>
-                             @endif
+                                <button class="btn btn-danger" onclick="mudarStatusTemplate({{$template->id}})" title="Postar template"><i class="fas fa-toggle-off mr-1"></i> Postar template</button>
+                              @else
+                                <button type="button" class="btn btn-md btn-success" role="button" onclick="mudarStatusTemplate({{$template->id}})" title="Tornar rascunho"><i class="fas fa-toggle-on mr-1"></i> Tornar rascunho</button>
+                              @endif
                             </td>
                             <td class="text-center align-middle">{{$template->title}}</td>
                             <td class="text-center align-middle">
-                              <button type="button" class="btn btn-outline-success" role="button" onClick="location.href='Template/Show/{{$template->id}}'" title="Editar Template"><i class="fa fa-eye"></i></button>
-                              <button type="button" class="btn btn-outline-warning" role="button" onClick="location.href='Template/Edit/{{$template->id}}'" title="Editar Template"><i class="fa fa-edit"></i></button>
+                              <button type="button" class="btn btn-success" role="button" onClick="location.href='Template/Show/{{$template->id}}'" title="Editar Template"><i class="fa fa-eye"></i></button>
+                              <button type="button" class="btn btn-warning" role="button" onClick="location.href='Template/Edit/{{$template->id}}'" title="Editar Template"><i class="fa fa-edit"></i></button>
                             </td>
                           </tr>
                       @empty
-                      <td class="text-center" colspan="3">Nenhum Template registrado!</td>
+                      <td class="text-center" colspan="3">Nenhum template registrado!</td>
                       @endforelse
                     </tbody>
                   </table>

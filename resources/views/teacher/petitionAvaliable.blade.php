@@ -8,8 +8,8 @@
         <div class="row justify-content-center">
             <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#comments"
               aria-expanded="false" aria-controls="comments">
+              <span class="fas fa-comments mr-1"></span>
               Ver comentários
-              <span class="fas fa-comments ml-2"></span>
             </button>
           </div>
       <script src="{{ asset('tools/ckeditor/ckeditor.js')}}"></script>
@@ -68,16 +68,16 @@
         <div class="row justify-content-center mt-3">
           <div class="text-center">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Professor/Peticoes')}}'">
+              <span class="fas fa-times mr-1"></span>
               Cancelar
-              <span class="fas fa-times ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-danger"  id="btnReprovar" value="REPROVAR">
+              <span class="fas fa-thumbs-down mr-1"></span>
               Reprovar
-              <span class="fas fa-thumbs-down ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-success" value="APROVAR">
+              <span class="fas fa-thumbs-up mr-1"></span>
               Aprovar
-              <span class="fas fa-thumbs-up ml-2"></span>
             </button>
   
           </div>
@@ -112,7 +112,7 @@
                   @endforeach
                 </ul>
                 @if(count($profComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 
@@ -131,13 +131,13 @@
                   @endforeach
                 </ul>
                 @if(count($defComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
             </div>
           </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Voltar</button>
         </div>
       </div>
     </div>

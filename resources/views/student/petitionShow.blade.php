@@ -22,14 +22,14 @@
         <div class="col-lg-3 col-sm-6 col-md-6 mt-3 ml-3">
           <select class="custom-select form-control" onchange="location.href=this.value" id="idPetition" style="width:100%;">
             @if($petition->visible == 'true')
-            <option value="{{$petition->id}}">Versão Atual {{$petition->version}}.0</option>
+            <option value="{{$petition->id}}">Versão atual {{$petition->version}}.0</option>
             @else
             <option value="{{$petition->id}}">Versão {{$petition->version}}.0</option>
             @endif
             @foreach($petitions as $p)
             @if($petition->id != $p->id)
             @if($p->visible == 'true')
-            <option value="{{$p->id}}">Versão Atual {{$p->version}}.0</option>
+            <option value="{{$p->id}}">Versão atual {{$p->version}}.0</option>
             @else
             <option value="{{$p->id}}">Versão {{$p->version}}.0</option>
             @endif
@@ -49,14 +49,14 @@
         <div >
           <select class="custom-select" onchange="location.href=this.value" id="idPetition" style="width:100%;">
             @if($petition->visible == 'true')
-            <option value="{{$petition->id}}">Versão Atual {{$petition->version}}.0</option>
+            <option value="{{$petition->id}}">Versão atual {{$petition->version}}.0</option>
             @else
             <option value="{{$petition->id}}">Versão {{$petition->version}}.0</option>
             @endif
             @foreach($petitions as $p)
             @if($petition->id != $p->id)
             @if($p->visible == 'true')
-            <option value="{{$p->id}}">Versão Atual {{$p->version}}.0</option>
+            <option value="{{$p->id}}">Versão atual {{$p->version}}.0</option>
             @else
             <option value="{{$p->id}}">Versão {{$p->version}}.0</option>
             @endif
@@ -69,8 +69,8 @@
       <div class="row justify-content-center mt-5">
         <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#comments"
           aria-expanded="false" aria-controls="comments">
+          <span class="fas fa-comments mr-1"></span>
           Ver comentários
-          <span class="fas fa-comments ml-2"></span>
         </button>
       </div>
       <div class="row">
@@ -114,7 +114,7 @@
       <div class="row">
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Aluno/Peticoes')}}'">
-            <span class="fas fa-arrow-left mr-2"></span>
+            <span class="fas fa-arrow-left mr-1"></span>
             Voltar
           </button>
         </div>
@@ -147,7 +147,7 @@
                   @endforeach
                 </ul>
                 @if(count($profComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 
@@ -166,13 +166,13 @@
                   @endforeach
                 </ul>
                 @if(count($defComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Fechar</button>
           </div>
         </div>
       </div>

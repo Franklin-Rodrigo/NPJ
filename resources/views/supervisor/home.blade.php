@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center mt-3">
     <div class="text-center">
-      <h1 class="h1 h1-responsive text-center">Status das Petições</h1>
+      <h1 class="h1 h1-responsive text-center">Status das petições</h1>
     </div>
   </div>
 

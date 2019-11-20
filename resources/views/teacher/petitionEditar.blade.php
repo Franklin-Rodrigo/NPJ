@@ -1,11 +1,11 @@
-@extends('layouts.student')
+@extends('layouts.teacher')
 @section('component')
   <div class="container">
     <div class="row justify-content-center my-3">
       <div class="text-center">
       <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#comments" aria-expanded="false" aria-controls="collapseExample">
+        <span class="fas fa-comments mr-1"></span>
           Ver comentários
-          <span class="fas fa-comments ml-2"></span>
         </button>
       </div>
     </div>
@@ -97,16 +97,16 @@
         <div class="row justify-content-center">
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onClick="location.href='{{URL::to('Professor/Peticoes')}}'">
+              <span class="fas fa-times mr-1"></span>
               Cancelar
-              <span class="fas fa-times ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-primary" value="SALVAR">
+              <span class="fas fa-save mr-1"></span>
               Salvar
-              <span class="fas fa-save ml-2"></span>
             </button>
             <button type="submit" name="botao" class="btn btn-success" value="ENVIAR">
+              <span class="fas fa-share mr-1"></span>
               Enviar
-              <span class="fas fa-share ml-2"></span>
             </button>
           </div>
         </div>
@@ -140,7 +140,7 @@
                   @endforeach
                 </ul>
                 @if(count($profComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 
@@ -159,7 +159,7 @@
                   @endforeach
                 </ul>
                 @if(count($defComments) < 1)
-                <p class="text-center">Nenhum Comentário!</p>
+                <p class="text-center">Nenhum comentário!</p>
                 @endif
               </div>
 

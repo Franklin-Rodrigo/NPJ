@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-header">
           <h4>
-            Visualizar Duplas
+            Visualizar duplas
           </h4>
         </div>
           <div class="card-body">
@@ -62,7 +62,7 @@
                         <tr>
                           <th class="text-center">Dupla</th>
                           <th class="text-center">Grupo</th>
-                          <th class="text-center">N° Petições</th>
+                          <th class="text-center">N° petições</th>
                           <!--<th class="text-center">Ações</th>-->
                         </tr>
                       </thead>
@@ -76,7 +76,7 @@
                               <td class="text-center align-middle">{{$petitions->where('visible','true')->where('doubleStudent_id',$doubleStudent->id)->count()}}</td>
                             </tr>
                         @empty
-                        <td class="text-center">Nenhuma Dupla registrada!</td>
+                        <td class="text-center">Nenhuma dupla registrada!</td>
                         @endforelse
                       </tbody>
                     </table>

@@ -5,7 +5,7 @@
     <div class="col-lg-12 my-5">
       <div class="card">
         <div class="card-header">
-          <h4>Gerenciar Petições
+          <h4>Gerenciar petições
           </h4>
         </div>
         <div class="card-body">

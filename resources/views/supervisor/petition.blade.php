@@ -70,7 +70,6 @@
                     </thead>
                     <tbody>
                       @forelse($petitions as $petition)
-                      <pre>{{$petition}}</pre>
                         @if($petition->student_ok != null)
                           <tr class="object align-middle" name="{{$petition->description}}">
                             <td class="text-center align-middle">
@@ -112,7 +111,7 @@
                         @endif
                         @empty
                         <tr>
-                          <td class="text-center" colspan="3">Nenhuma Petição à ser Avaliada!</td>
+                          <td class="text-center" colspan="3">Nenhuma petição a ser avaliada!</td>
                         </tr>
                       @endforelse
                     </tbody>
