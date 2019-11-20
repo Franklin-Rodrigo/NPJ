@@ -10,7 +10,6 @@ use App\Entities\Petition;
 use App\Entities\Photo;
 use App\Entities\Template;
 use App\Entities\Record;
-// use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use Storage;

@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entities\Human;
 use App\Entities\Petition;
 use App\Entities\Template;
-use App\User;
 use Auth;
 use Illuminate\Http\Request;
 

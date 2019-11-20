@@ -7,7 +7,6 @@ use App\Entities\Group;
 use App\Entities\Human;
 use App\Entities\Petition;
 use App\Services\PetitionService;
-// use App\User;
 use Auth;
 use Illuminate\Http\Request;
 

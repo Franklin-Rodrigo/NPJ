@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Entities\Petition;
 use App\Services\CommentService;
-use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
