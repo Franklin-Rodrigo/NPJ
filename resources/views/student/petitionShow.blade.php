@@ -42,8 +42,8 @@
       <div class="row mt-3">
         <div>
           <button type="button" class="btn btn-secondary mr-2" onclick="copiarPeticao()" title="Clique para copiar peticao">
+            <span class="fas fa-copy mr-1"></span>
             Copiar
-            <span class="fas fa-copy"></span>
           </button>
         </div>
         <div >
