@@ -218,7 +218,7 @@
                 <div class="col-lg-5">
                   <div class="form-group">
                     <label for="">Sexo</label>
-                    <select class="form-control" name="gender" required>
+                    <select class="form-control" name="gender" id="teacherGender" required>
                       <option value="">Selecione o sexo</option>
                       <option value="Masculino">Masculino</option>
                       <option value="Feminino">Feminino</option>
