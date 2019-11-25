@@ -367,14 +367,15 @@ class PetitionService
         $humans = Human::all()->where('status', 'active');
         $template = Template::find($petition->template_id);
         $comments = Comment::all()->where('petition_id', $petition->id);
-        $profComments = $comments->reject(function($c){
-            return $c->human->user->type == 'teacher';
+
+        $profComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'teacher';
         })->all();
-        $supComments =  $comments->reject(function($c){
-            return $c->human->user->type == 'supervisor';
+        $supComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'supervisor';
         })->all();
-        $defComments =  $comments->reject(function($c){
-            return $c->human->user->type == 'defender';
+        $defComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'defender';
         })->all();
 
         return ['petition' => $petition, 'photos' => $photos, 'humans' => $humans, 'template' => $template, 'comments' => $comments, 'profComments' => $profComments, 'supComments' => $supComments, 'defComments' => $defComments];
