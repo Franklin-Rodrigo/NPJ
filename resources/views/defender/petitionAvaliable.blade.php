@@ -1,4 +1,5 @@
 @extends('layouts.defender')
+@section('subtitle', 'Petições')
 @section('component')
 <div class="container">
   <div class="row justify-content-center mt-3">
@@ -74,6 +75,7 @@
 </div>
 </div>
 
+
 <div class="modal fade" id="comments" tabindex="-1" role="dialog" aria-labelledby="comments" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -84,18 +86,17 @@
         </button>
       </div>
       <div class="modal-body">
-      <div class="row">
-          <div class="col-6">
-            <div class="text-center">
-              <strong>Orientador</strong>
+        <div class="row">
+          <div class="col-12">
+            <div class="text-left ">
+              <strong><h4>Professor</h4></strong>
             </div>
             <ul>
               @foreach($profComments as $comment)
               <li>
                 {{$comment->human->name}}
                 <br>
-                <strong>Comentário:</strong>
-                <span>{{$comment->content}}</span>
+                <p class="text-justify"><strong>Comentário:</strong> {{$comment->content}}</p>
               </li>
               @endforeach
             </ul>
@@ -104,19 +105,37 @@
             @endif
           </div>
 
-          <div class="col-6">
-            <div class="text-center">
-              <strong>Defensor</strong>
+          <div class="col-12">
+            <div class="text-left">
+              <strong><h4>Supervisor</h4></strong>
             </div>
             <ul>
-              @foreach($defComments as $comment)
+              @foreach($supComments as $comment)
+              <li>
+                {{$comment->human->name}}
+                <br>
+                <p class="text-justify"><strong>Comentário:</strong> {{$comment->content}}</p>
+              </li>
+              @endforeach
+            </ul>
+            @if(count($supComments) < 1)
+            <p class="text-center">Nenhum comentário!</p>
+            @endif
+          </div>
+
+          <div class="col-12">
+            <div class="text-left ">
+              <strong><h4>Defensor</h4></strong>
+            </div>
+            <ul>
+                @foreach($defComments as $comment)
                 <li>
                   {{$comment->human->name}}
                   <br>
-                  <strong>Comentário:</strong>
-                  {{$comment->content}}
+                  <p class="text-justify"><strong>Comentário:</strong> {{$comment->content}}</p>
+                  
                 </li>
-              @endforeach
+                @endforeach
             </ul>
             @if(count($defComments) < 1)
             <p class="text-center">Nenhum comentário!</p>
@@ -132,9 +151,10 @@
   </div>
 
   <div id="myModal" class="img-modal">
-    <span id="close" class="img-close">&times;</span>
-    <img class="img-modal-content" id="img-view">
+      <span id="close" class="img-close">&times;</span>
+      <img class="img-modal-content" id="img-view">
   </div>
-
 </div>
+
+
 @stop

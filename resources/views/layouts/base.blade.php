@@ -9,8 +9,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>@yield('title') | @yield('subtitle')</title>
 
+
+    <link href="{{URL::asset('assets/img/NPJ.ico')}}" rel="icon">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 

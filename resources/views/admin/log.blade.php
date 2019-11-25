@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('subtitle', 'Logs')
 @section('component')
 <div class="card">
     <h4 class="card-title">Gerenciar grupos</h4>

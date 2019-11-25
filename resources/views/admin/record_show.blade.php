@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('subtitle', 'Registros')
 @section('component')
 <div class="container">
   <div class="row justify-content-center">

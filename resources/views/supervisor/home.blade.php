@@ -1,4 +1,5 @@
 @extends('layouts.supervisor')
+@section('subtitle', 'Home')
 @section('component')
 <div class="container-fluid">
   <div class="row justify-content-center mt-3">

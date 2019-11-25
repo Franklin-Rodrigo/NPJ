@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
+@section('title', 'Defensor')
+
 @section('content')
 <!-- Bootstrap -->
 

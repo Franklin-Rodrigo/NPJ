@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('subtitle', 'Preferências')
 @section('component')
 <div class="container">
   <div class="row justify-content-center">

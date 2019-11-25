@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('subtitle', 'Duplas')
 @section('component')
 <div class="container">
   <div class="row justify-content-center">

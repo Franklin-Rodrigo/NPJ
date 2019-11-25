@@ -1,4 +1,5 @@
 @extends('layouts.supervisor')
+@section('subtitle', 'Petições')
 @section('component')
 <div class="container">
   <div class="row justify-content-center my-5">

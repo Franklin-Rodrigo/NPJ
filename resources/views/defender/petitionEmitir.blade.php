@@ -1,4 +1,5 @@
 @extends('layouts.defender')
+@section('subtitle', 'Petições')
 @section('component')
 <div class="container">
   <div class="row justify-content-center mt-3">

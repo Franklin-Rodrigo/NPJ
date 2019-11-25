@@ -1,5 +1,5 @@
 @extends('layouts.base')
-
+@section('title', 'Supervisor')
 @section('content')
 <!-- Bootstrap -->
 

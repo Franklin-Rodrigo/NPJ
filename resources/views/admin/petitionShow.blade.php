@@ -73,17 +73,16 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-6">
-            <div class="text-center">
-              <strong>Orientador</strong>
+          <div class="col-12">
+            <div class="text-left ">
+              <strong><h4>Professor</h4></strong>
             </div>
             <ul>
               @foreach($profComments as $comment)
               <li>
                 {{$comment->human->name}}
                 <br>
-                <strong>Comentário:</strong>
-                <span>{{$comment->content}}</span>
+                <p class="text-justify"><strong>Comentário:</strong> {{$comment->content}}</p>
               </li>
               @endforeach
             </ul>
@@ -92,17 +91,35 @@
             @endif
           </div>
 
-          <div class="col-6">
-            <div class="text-center">
-              <strong>Defensor</strong>
+          <div class="col-12">
+            <div class="text-left">
+              <strong><h4>Supervisor</h4></strong>
+            </div>
+            <ul>
+              @foreach($supComments as $comment)
+              <li>
+                {{$comment->human->name}}
+                <br>
+                <p class="text-justify"><strong>Comentário:</strong> {{$comment->content}}</p>
+              </li>
+              @endforeach
+            </ul>
+            @if(count($supComments) < 1)
+            <p class="text-center">Nenhum comentário!</p>
+            @endif
+          </div>
+
+          <div class="col-12">
+            <div class="text-left ">
+              <strong><h4>Defensor</h4></strong>
             </div>
             <ul>
                 @foreach($defComments as $comment)
                 <li>
                   {{$comment->human->name}}
                   <br>
-                  <strong>Comentário:</strong>
-                  {{$comment->content}}
+                  <p class="text-justify"><strong>Comentário:</strong> {{$comment->content}}</p>
+                  
                 </li>
                 @endforeach
             </ul>

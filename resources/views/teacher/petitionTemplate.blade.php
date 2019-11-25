@@ -1,4 +1,5 @@
 @extends('layouts.teacher')
+@section('subtitle', 'Templates')
 @section('component')
 <div class="component">
   <div class="row justify-content-center">
