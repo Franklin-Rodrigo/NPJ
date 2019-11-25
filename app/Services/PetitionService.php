@@ -327,14 +327,15 @@ class PetitionService
         $photos = Photo::all()->where('petition_id', $petition->id);
         $IsPhotos = $photos->count() != 0 ? 'true' : 'false';
         $comments = Comment::all()->where('petition_id', $petition->id);
-        $profComments = $comments->reject(function($c){
-            return $c->human->user->type == 'teacher';
+
+        $profComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'teacher';
         })->all();
-        $supComments = $comments->reject(function($c){
-            return $c->human->user->type == 'supervisor';
+        $supComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'supervisor';
         })->all();
-        $defComments =  $comments->reject(function($c){
-            return $c->human->user->type == 'defender';
+        $defComments = $comments->reject(function ($c) {
+            return $c->human->user->type != 'defender';
         })->all();
 
         return ['petition' => $petition, 'templates' => $templates, 'photos' => $photos, 'IsPhotos' => $IsPhotos, 'comments' => $comments, 'profComments' => $profComments, 'supComments' => $supComments,'defComments' => $defComments];
