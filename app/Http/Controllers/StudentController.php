@@ -39,11 +39,21 @@ class StudentController extends Controller
 
     $this->validate($request, [
       'name' => 'required|string|min:3',
-      'email' => 'required|string|email|max:255|unique:users',
-      // 'password' => 'required|string|min:4',
+      'email' => 'required|string|max:255|min:3|alpha_dash'
     ]);
 
-    return $this->service->store($request);              
+    if (count(User::all()->where('email', $request->email . '@aluno.fapce.edu.br')) > 0) {
+      $request->session()->flash('erro', "O e-mail informado <strong>já está cadastrado</strong>.");
+      return redirect()->back();
+    }
+
+    if ($this->service->studentEmailVerify($request) == 'true') {
+      return $this->service->store($request);              
+    } else {
+      $request->session()->flash('erro', "O e-mail informado <strong>não foi encontrado</strong> na base de dados de e-mails institucionais.");
+      return redirect()->back();
+    }
+
   }
 
 
@@ -54,14 +64,23 @@ class StudentController extends Controller
     
     $this->validate($request, [
       'name' => 'required|string|min:3',
-      'email' => 'required|string|email|max:255|unique:users,email,'.$request['id'],
+      'email' => 'required|string|max:255|min:3|alpha_dash',
       'password' => 'nullable|string|min:4',
     ]);
 
-    $human = Human::find($request['id']);
-    $user = User::find($human->user->id);
+    if (count(User::all()->where('email', $request->email . '@aluno.fapce.edu.br')->where('id', '!=', $request->id)) > 0) {
+      $request->session()->flash('erro', "O e-mail informado <strong>já está cadastrado</strong>.");
+      return redirect()->back();
+    }
 
-    return $this->service->update($human, $user, $request);
+    if ($this->service->studentEmailVerify($request) == 'true') {              
+      $human = Human::find($request['id']);
+      $user = User::find($human->user->id);
+      return $this->service->update($human, $user, $request);
+    } else {
+      $request->session()->flash('erro', "O e-mail informado <strong>não foi encontrado</strong> na base de dados de e-mails institucionais.");
+      return redirect()->back();
+    }
   }
 
   public function destroy(Request $request) {  

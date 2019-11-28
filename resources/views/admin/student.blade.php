@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('subtitle', 'Alunos')
 @section('component')
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-12 my-5">
@@ -41,7 +42,7 @@
               @endif
               @if(Session::has('erro'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  {{ Session::get('erro') }}
+                  {!! Session::get('erro') !!}
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -133,7 +134,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <form action="{{URL::to('Admin/Aluno/Cadastrar')}}" method="post" enctype="multipart/form-data">
+          <form id="newStudentForm" action="{{URL::to('Admin/Aluno/Cadastrar')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-4">
@@ -146,7 +147,12 @@
             </div>
             <div class="form-group">
               <label for="email">E-mail *</label>
-              <input type="email" id="email" name="email" class="form-control" maxlength="80" value="" required>
+              <div class="input-group">
+                <input type="text" id="email" name="email" class="form-control" maxlength="80" required>
+                <div class="input-group-append">
+                  <span class="input-group-text">@aluno.fapce.edu.br</span>
+                </div>
+              </div>
             </div>
             <div class="row">
               <div class="col-lg-5">
@@ -175,8 +181,9 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-undo mr-1"></i> Cancelar</button>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1"></i> Cadastrar</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle mr-1" disabled></i> Cadastrar</button>
             </div>
+            
           </form>
         </div>
       </div>
@@ -186,7 +193,7 @@
 
   <!-- Modal -->
   <div class="modal fade" id="editModalStudent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel">Editar aluno</h4>
@@ -207,9 +214,15 @@
             </div>
 
             <div class="form-group">
-              <label for="studentEmail">E-mail</label>
-              <input type="email" name="email" class="form-control" maxlength="80" value="" id="studentEmail" required>
+              <label for="studentEmail">E-mail *</label>
+              <div class="input-group">
+                <input type="text" id="studentEmail" name="email" id="studentEmail" class="form-control" maxlength="80" required>
+                <div class="input-group-append">
+                  <span class="input-group-text">@aluno.fapce.edu.br</span>
+                </div>
+              </div>
             </div>
+            
             <div class="row">
                 <div class="col-lg-5">
                   <div class="form-group">

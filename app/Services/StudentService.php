@@ -33,6 +33,29 @@ class StudentService {
             return ['error' => 'Aluno não registrado em nenhuma dupla.'];
         }
     }
+
+    public function studentEmailVerify(Request $request) {
+        $url = "https://api-cf.fapce.edu.br/v1/user-email-edu/" . $request->email;
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            "Authorization: Basic a0d2Yyo0dUA0OEtRNjQydzpXSjQhSDhzc2czeVdHOHB0",
+            "Content-Type: application/json"
+        ));
+    
+        $res = curl_exec($curl);
+        $arrayRes = json_decode($res, true);
+    
+        curl_close($curl);
+    
+        if ($arrayRes['resposta']) {
+            //Email existe
+            return 'true';
+        } else {
+            //Email não existe
+            return 'false';
+        }
+    }
     
     public function store(Request $request) {
         //cria uma senha aleatória com dígitos do email do aluno, concatenado a dia, mês e ano
@@ -40,7 +63,7 @@ class StudentService {
         
         $user = User::create([
             'type' => 'student',
-            'email' => $request->email,
+            'email' => $request->email . '@aluno.fapce.edu.br',
             'password' => bcrypt($password),
         ]);
 
@@ -80,7 +103,7 @@ class StudentService {
         $human->name = $request['name'];
         $human->gender = $request['gender'];
         $human->phone = $request['phone'];
-        $user->email = $request['email'];
+        $user->email = $request['email'] . '@aluno.fapce.edu.br';
 
         !empty($request['password']) ? $user->password = bcrypt($request['password']) : null;
 

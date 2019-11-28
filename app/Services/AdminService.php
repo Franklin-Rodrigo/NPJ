@@ -14,9 +14,8 @@ use Illuminate\Http\Request;
 class AdminService
 {
 
-    public function index()
-    {
-
+    public function index() {
+        
         $count = 1;
         //
         $countG = 1;

@@ -119,9 +119,10 @@
   }
 
   function editStudent(id,name,email,gender,phone,password){
+    email_array = email.split('@');
     $('#studentId').val(id);
     $('#studentName').val(name);
-    $('#studentEmail').val(email);
+    $('#studentEmail').val(email_array[0]);
     $('#studentGender').val(gender).change();
     $('#studentPhone').val(phone);
     $('#studentPassword').val(password);
