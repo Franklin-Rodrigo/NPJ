@@ -80,7 +80,7 @@
                             </td>
                             <td class="text-center align-middle">{{$template->title}}</td>
                             <td class="text-center align-middle">
-                              <button type="button" class="btn btn-success" role="button" onClick="location.href='Template/Show/{{$template->id}}'" title="Editar Template"><i class="fa fa-eye"></i></button>
+                              <button type="button" class="btn btn-success" role="button" onClick="location.href='Template/Show/{{$template->id}}'" title="Visualizar Template"><i class="fa fa-eye"></i></button>
                               <button type="button" class="btn btn-warning" role="button" onClick="location.href='Template/Edit/{{$template->id}}'" title="Editar Template"><i class="fa fa-edit"></i></button>
                             </td>
                           </tr>
