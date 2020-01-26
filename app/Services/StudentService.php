@@ -174,6 +174,7 @@ class StudentService {
                     } //fim foreach
                 }
 
+                $student->doubleS = 'NAO';
                 $student->status = "inactive";
                 $student->save();
                 $request->session()->flash('status', 'Aluno desativado com sucesso!');
