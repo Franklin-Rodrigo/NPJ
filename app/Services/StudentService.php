@@ -15,6 +15,10 @@ class StudentService {
     public function index() {
         $student = Human::all()->where('user_id', '=', Auth::user()->id)->where('status', '=', 'active')->first();
 
+        if (!$student) {
+            return ['error' => 'Usuário não registrado, ou destivado.'];
+        }
+
         $doubleStudent = DoubleStudent::all()->where('student_id', '=', $student->id)->where('status', 'active')->first();
 
         if ($doubleStudent == null) { // se não for o aluno 1 da dupla talvez seja o 2
