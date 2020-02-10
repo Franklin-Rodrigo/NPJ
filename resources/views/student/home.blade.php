@@ -12,7 +12,7 @@
 
     <div class="col-lg-3 col-md-3 col-12 mb-3">
       @cardhome(['items' => ['title' => 'ALUNO', 'icon' => 'fa-user', 'color' => 'primary']])
-      {{$petitions->where('student_ok','=','false')->count()}}
+      {{$petitions->where('student_ok','!=','true')->count()}}
       @endcardhome
     </div>
 
