@@ -39,7 +39,7 @@ class StudentController extends Controller
 
     $this->validate($request, [
       'name' => 'required|string|min:3',
-      'email' => 'required|string|max:255|min:3|alpha_dash'
+      'email' => 'required|string|max:255|min:3'
     ]);
 
     if (count(User::all()->where('email', $request->email . '@aluno.fapce.edu.br')) > 0) {
